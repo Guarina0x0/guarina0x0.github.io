@@ -1,0 +1,467 @@
+html {
+  font-size: 100%;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'IBM Plex Mono', sans-serif;
+  color: #e5d09a;
+  background-color: #191a1a;
+  font-size: 12px;
+  line-height: 1.5em;
+  padding: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60%;
+  align: center;
+}
+
+a {
+  color:#98971a;
+}
+
+/* a:visited { */
+/*   color: #b8bb26; */
+/* } */
+
+a:hover {
+  color:#8ec07c;
+  cursor:pointer;
+}
+
+a:active {
+  color: #faa700;
+}
+
+a:focus {
+  outline: thin dotted;
+}
+
+a:hover,
+a:active {
+  outline: 0;
+}
+
+::-moz-selection {
+  background: #ffa86a;
+  color: #000;
+}
+
+::selection {
+  background: #ffa86a;
+  color: #000;
+}
+
+a::-moz-selection {
+  background: #ffa86a;
+  color: #0645ad;
+}
+
+a::selection {
+  background: #ffa86a;
+  color: #0645ad;
+}
+
+p {
+  font-size: 0.9em;
+  margin: 1em 0;
+  text-align: left;
+}
+
+p > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.figure {
+  text-align: center;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+	border:5px solid #fff;
+    align: center;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Courier Prime', monospace, sans-serif;
+  color: #ff6666;
+  line-height: 1em;
+}
+
+h1 > a {
+    all: unset;
+    color: inherit;
+}
+
+h1::before {
+    content: "# "
+}
+h2::before {
+    content: "## "
+}
+
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+
+h1 {
+    font-size: 1.5em;
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #282828;
+}
+
+h2 {
+  font-size: 1.3em;
+	padding-top: 0.5em;
+	padding-bottom: 0.3em;
+	border-bottom: 1px solid #282828;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.9em;
+}
+
+h6 {
+  font-size: 0.9em;
+}
+
+blockquote {
+    color: #ffa64d;
+    border-left: 3px solid #ffa64d;
+    padding-left: 20px;
+}
+
+hr {
+  display: block;
+  border: 0;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #eee;
+  margin: 1em 0;
+  padding: 0;
+}
+
+code,
+kbd,
+samp {
+    font-family: Cousine, monospace;
+    font-size: 0.95em;
+    white-space : pre !important;
+    background:#252727;
+    color:#ffa64d;
+    margin:0 2px;
+    border-radius: 5px;
+    padding: 3px;
+
+}
+
+.sourceCode {
+    font-size: 0.95em;
+    font-family: Fira Mono;
+    /* background: #1c1b19; */
+    background: #202222;
+    color: #e5d09a;
+}
+
+.sourceCode pre {
+    padding: 20px 20px 20px 20px;
+}
+
+pre {
+    word-wrap: break-word;
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 0px;
+    overflow: auto;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+dfn {
+  font-style: italic;
+}
+
+ins {
+  background: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+ul,
+ol {
+  margin-left: 1em 0;
+  padding: 0 0 0 2em;
+}
+
+
+li p:last-child {
+  margin: 0;
+}
+
+dd {
+  margin: 0 0 0 2em;
+}
+
+img {
+	border:1px solid #333;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+  align: center;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td {
+  vertical-align: top;
+}
+
+@media only screen and (max-width: 1020px) {
+  body {
+    font-size: 14px;
+    margin-left: 0%;
+    max-width: 100%;
+  }
+  .logo {
+      max-height: 100px
+  }
+}
+
+@media only screen and (max-width: 5000px) {
+  body {
+    font-size: 16px;
+  }
+  .logo {
+      max-height: 100px;
+  }
+  article {
+      margin: 0px 0;
+  }
+}
+
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    filter: none !important;
+    -ms-filter: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    max-width: 100%;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  hr {
+    height: 1px;
+    border: 0;
+    border-bottom: 1px solid black;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page :left {
+    margin: 15mm 20mm 15mm 10mm;
+  }
+
+  @page :right {
+    margin: 15mm 10mm 15mm 20mm;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    background-color: #191a1a;
+    text-align: center;
+    color: #e5d09a;
+    border-bottom: 1px solid #444;
+    padding-bottom: 1em;
+    font-size: 0.8em;
+}
+
+nav > a {
+    all: unset;
+    color: #e5d09a;
+    text-decoration: underline;
+}
+
+nav>a::before {
+    content: "/"
+}
+
+.blogtitle {
+    max-width: 70%;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+    font-size: 1.5em;
+    padding-top: 0em;
+    padding-bottom: 0.3em;
+	border-bottom: 2px solid;
+}
+
+.blogtitle::before{
+    content: none;
+}
+
+.blogtitle:after {
+  content: '';
+  width: 0.4em;
+  height: 0.7em;
+  background: #ff6666;
+  opacity: 0;
+  display: inline-block;
+  animation: blink 1s infinite step-end;
+}
+
+@keyframes blink {
+  from,to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.logo {
+    max-height: 100px;
+    border: None;
+    box-shadow: None;
+    /* border-radius:50px; */
+    -webkit-transition: -webkit-transform .5s ease-in-out;
+    transition:         transform .5s ease-in-out;
+}
+
+.logo:hover {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+article img {
+    margin: 1em 0;
+    text-align: center;
+}
+p.date {
+    font-size: 13px;
+    color: #666;
+}
+ul.articles {
+    list-style: none;
+    padding: 0;
+}
+#Articles {
+    margin-top: 2em;
+}
+footer {
+    font-size: 13px;
+    text-align: center;
+	padding-top: 1.5em;
+}
+
+mark{
+    background: orange;
+    color: black;
+}
+
+vbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+hr {
+    border: 1px solid #333;
+}
