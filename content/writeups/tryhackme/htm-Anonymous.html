@@ -64,10 +64,10 @@
 <p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
 <p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
 <p>We have a look at the webpage where it lets us view some dot or cat pictures</p>
-<p><img src="/img/tryhackme_anonymous/1.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/1.png" /></p>
 <h2 id="nmap-scan">## Enumeracion de Puertos:</h2>
 <p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar un enumeracion de puertos: </p>
-<p><img src="/img/tryhackme_anonymous/2.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/2.png" /></p>
 <p>Vamos a ver que tiene los siguientes puertos abiertos:</p>
 <p>-Puerto 21 FTP</p>
 <p>-Puerto 22 SSH</p>
@@ -75,45 +75,45 @@
 <p>-Puerto 445 Microsoft-ds</p>
 <h2 id="ftp">## FTP:</h2>
 <p>Vamos a enumrar el servicio FTP para poder ver si tiene activo el login mediante el usuario Anonymous</p>
-<p><img src="/img/tryhackme_anonymous/3.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/3.png" /></p>
 <p>No solo tiene activo el usuario Anonymous , si no que tenemos dentro un directorio llamado "scripts"</p>
 <p> El cual contiene 3 ficheros , 1 fichero sh , 1 fichero log y un fichero de cosar por hacer</p>
-<p><img src="/img/tryhackme_anonymous/4.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/4.png" /></p>
 <p> Mediante el comando "get" vamos a descargar estos 3 ficheros a nuestro directorio para poder analizarlos en busca de informacion</p>
-<p><img src="/img/tryhackme_anonymous/5.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/5.png" /></p>
 <p> Si investigamos estos ficheros , en el to_do.txt tenemos una frase que dice "Necesito deshabilitar el modo Anonymous , no es realmente seguro" , y si vemos el fichero clean.sh aqui ya tenemos algo mas interesante es un script que elimina archivos que esten en el directorio /tmp</p>
-<p><img src="/img/tryhackme_anonymous/6.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/6.png" /></p>
 <h2 id="smb">## Enumeracion SMB:</h2>
 <p> En la enumeracion de servicios activos , estaba el SMB abierto por lo que vamos a enumerar el recurso compartido de Samba mediante una Null Session</p>
-<p><img src="/img/tryhackme_anonymous/7.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/7.png" /></p>
 <p>Nos vamos a encontrar ante un directorio llamado "pics" el cual contiene 2 imagenes que puede contener informacion oculta por lo que vamos a descargar esas 2 imagenes</p>
-<p><img src="/img/tryhackme_anonymous/8.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/8.png" /></p>
 <p> Si abrimos esas 2 imagenes , son imagenes de perros que no tiene nada interesante en principio</p>
-<p><img src="/img/tryhackme_anonymous/10.png" /></p>
-<p><img src="/img/tryhackme_anonymous/11.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/10.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/11.png" /></p>
 <p> Se puede pensar que puede ser estenegrafia pero en principio vamos a volver al script clean.sh que parece que podemos obtener una shell reversa</p>
 <h2 id="clean.sh">## Script Clean.sh:</h2>
 <p> Si intentamos meter una shell reversa y reemplazar el script en el servidor ftp y que cuando lo ejecute en vez de escribir que se ha realizado el borrado y guardarlo en el log , nos diera una shell reversa tendriamos acceso a una shell reversa  </p>
-<p><img src="/img/tryhackme_anonymous/12.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/12.png" /></p>
 <p>Si volvemos al servicio FTP y buscamos algo para reemplazar el fichero clean.sh por el que hemos creado nosotros con la shell reversa , para ello vamos a tener que utilizar el comando append que nos permite reemplazar el archivo</p>
-<p><img src="/img/tryhackme_anonymous/13.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/13.png" /></p>
 <p> Mediante el comando append vamos a proceder a remplazar dicho script</p>
-<p><img src="/img/tryhackme_anonymous/14.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/14.png" /></p>
 <h2 id="user.txt">## User.txt:</h2>
 <p> Nos esperamos a que se ejecute el script y nos ponemos a la escucha mediante Netcat</p>
 <code>nc -lvnp 443 </code>
 <p> Y tras unos segundos tendremos nuestra Shell Reversa y podremos ver el flag del Usuario</p>
-<p><img src="/img/tryhackme_anonymous/15.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/15.png" /></p>
 <h2 id="escalar-privilegios">## Escalar Privilegios:</h2>
 <p>Para escalar privilegios vamos a tener que buscar por permisos SUID que tenga el usuario y que podamos ejecutar un proceso como el usuario Root</p>
 <code>find / -perm -u0s 2>/dev/null</code>
-<p><img src="/img/tryhackme_anonymous/19.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/19.png" /></p>
 <p> Si vemos todos los recursos con permisos SUID vamos a encontrarnos con un proceso que nos interesa , ya que nos podemos convertir en root facilmente</p>
-<p><img src="/img/tryhackme_anonymous/20.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/20.png" /></p>
 <p>Si buscamos como explotar el SUID de /usr/bin/env: https://gtfobins.github.io/gtfobins/env/</p>
 <p>Para explotar este SUID vamos a tener que ejecutar el siguiente comando:</p>
 <code> /usr/bin/env /bin/sh -p</code>
-<p><img src="/img/tryhackme_anonymous/21.png" /></p>
+<p><img src="../../../img/tryhackme_anonymous/21.png" /></p>
 <p> Y ya estaria explotada la maquina Anonymous!! </p>
 
 
