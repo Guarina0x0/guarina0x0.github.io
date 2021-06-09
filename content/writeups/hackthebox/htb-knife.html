@@ -63,17 +63,17 @@
 <p><img src="/img/htb-knife/1.PNG" /></p>
 <h2 id="nmap-scan">## Enumeracion de Puertos:</h2>
 <p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos: </p>
-<p><img src="../../../../img/htb-knife/2.PNG" /></p>
+<p><img src="/img/htb-knife/2.PNG" /></p>
 <p>Vamos a ver que tiene los siguientes puertos abiertos:</p>
 <p>-Puerto 22 SSH</p>
 <p>-Puerto 80 HTTP</p>
 <h2 id="http">## HTTP:</h2>
 <p> Vamos a proceder a ver si estamos ante un gestor de contenidos como puede ser (Wordpress, Joomla) para ello vamos a usar la herramienta WhatWeb</p>
 <code> whatweb 10.10.10.242</code>
-<p><img src="../../../../img/htb-knife/3.PNG" /></p>
+<p><img src="/img/htb-knife/3.PNG" /></p>
 <p>Podemos ver que estamos ante un servidor Apache en su version 2.4.41 y ante la version de PHP 8.1.0 , podemos buscar si alguna de estas dos versiones tiene alguna vulnerabilidad</p>
 <p> Si procedemos a ver la pagina web nos encontramos ante una pagina web de un hospital</p>
-<p><img src="../../../../img/htb-knife/4.PNG" /></p>
+<p><img src="/img/htb-knife/4.PNG" /></p>
 <p> Si buscamos si alguna version de las anteriores es vulnerable vamos a ver que PHP 8.1.0 es vulnerable a Remote Code Execution , por lo que vamos a tener capacidad de Ejecucion de Codigo Remoto</p>
 <p><img src="../../../../img/htb-knife/6.PNG" /></p>
 <h2 id="php">## Explotacion PHP - User Agent:</h2>
