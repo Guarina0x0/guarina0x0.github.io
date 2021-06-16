@@ -59,56 +59,56 @@
 <h2 id="enumeracion">## Enumeracion:</h2>
 <p>Vamos a relizar una enumeracion de puertos mediante Nmap para ver que servicios tiene activos</p>
 <pre class="enumeracion:#"><code>nmap -sS -sV -Pn --open -n 10.10.109.37</code></pre>
-<p><img src="/img/htb-knife/2.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/2.PNG" /></p>
 <p>Mediante los Script de Nmap vamos a enumerar los servicios de Samba , ya que tenemos el puerto abierto </p>
 <pre class="samba-enumeracion:#"><code>nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.109.37</code></pre>
-<p><img src="/img/htb-knife/3.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/3.PNG" /></p>
 <p> Vamos a intentar verificar los recursos compartidos de samba mediante anonymous , para ello vamos a utilizar la herramienta smbclient</p>
 <code>smb client //10.10.109.37/anonymous</code>
-<p><img src="/img/htb-knife/4.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/4.PNG" /></p>
 <p> Vamos a ver un fichero log en formato de texto , vamos a proceder a descargar ese fichero y ver que contiene</p>
-<p><img src="/img/htb-knife/5.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/5.PNG" /></p>
 <p> Se puede observar que es una key de SSH</p>
 <h2 id="enumeracion-rcp">## Enumeracion RPCBIND:</h2>
 <p>En el escaneo de Nmap veiamos que teniamos el puerto 111 abierto , donde se ejecutaba el servicio rpcbind , es un servidor que convierte el numero de programa de llamada a procedimiento remoto en direcciones universales</p>
 <p> Vamos a enumerar el sistema de archivos de red , mediante los scripts de NSE de Nmap</p>
 <code>nmap -p 111 --script=nfs-ls,nfs-statfs,nfs-showmount 10.10.109.37 </code>
-<p><img src="/img/htb-knife/6.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/6.PNG" /></p>
 <p>No encontramos nada interesante , por lo que vamos a seguir enumerando activos , tenemos un servicio ftp llamado ProFTPD en la version 1.3.5 corriendo en el puerto 21 </p> 
 <h2 id="ftp">## Explotacion FTP:</h2>
 <p> Mediante la herramienta searchsploit que esta conectada directamente con exploitdb vamos a buscar exploit sobre el servicio ProFTPd</p>
 <code> searchsploit ProFtpd 1.3.5</code>
 <p> Vamos a ver 3 exploits que se van a poder utilizar , 2 de ellos nos interesan para la explotacion de la maquina , entre ellos nos vamos a quedar con el que no utiliza Metasploit</p>
-<p><img src="/img/htb-knife/7.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/7.PNG" /></p>
 <p> Si mediante nc nos conectamos al servicio</p>
-<p><img src="/img/htb-knife/8.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/8.PNG" /></p>
 <p>La salida muestra un modulo de exploit mod_copy. Este modulo nos permite usar SITE CPFR y el comando SITE CPTO para copiar archivos/directorios de un lugar a otro en el servidor</p>
 <p> Tenemos que tener en cuenta que tenemos un fichero llamado log.txt que el servicio ftp se esta ejecutando como el usuario de Kenobi y se genera la clave ssh para ese usuario</p>
 <p>Tambien sabemos que tenemos acceso al directorio /var , que podemos montar en nuestro sistema. La clave privada de Kenobi se puede copiar al directorio /var/tmp</p>
 <p>Por lo que vamos a montar el sistema var en un directorio que vamos a crear llamado /mnt/KenobiNFS/</p>
 <code>sudo mount 10.10.109.37:/var /mnt/KenobiNFS/</code>
-<p><img src="/img/htb-knife/9.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/9.PNG" /></p>
 <p> Ahora que tenemos el montaje de red en nuestra maquina , podemos obtener la clave privada que se puede usar para iniciar sesion mediante SSH</p>
 <code> sudo cp id_rsa [directorio]</code>
-<p><img src="/img/htb-knife/10.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/10.PNG" /></p>
 <h2 id="ssh">## SSH:</h2>
 <p> Gracias al id_rsa vamos a poder logearnos mediante el usuario Kenobi sin proporcionar contraseña</p>
 <code>sudo ssh -i id_rsa kenobi@10.10.109.37</code>
-<p><img src="/img/htb-knife/11.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/11.PNG" /></p>
 <h2 id="flag-user">## FLAG USER.txt:</h2>
 <p> Ya dentro del usuario Kenobi ya podremos visualizar el flag</p>
-<p><img src="/img/htb-knife/12.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/12.PNG" /></p>
 <h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
 <p> Ahora tenemos que buscar permisos SUID para poder ejecutar tareas como el usuario Root , es un tipo especial de permiso. Los bits de UID puede ser extremadamente peligrosos.</p>
 <p> Algunos binarios como passwd deben ejecutarse con privilegios elevados. Podemos buscar en el sistema para buscar archivos con el bit SUID , que nos sirva para escalar privilegios</p>
 <code>find / -perm -u=s -type f 2>/dev/null</code>
-<p><img src="/img/htb-knife/13.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/13.PNG" /></p>
 <p> Tenemos algo interesante /usr/bin/menu</p>
 <p> Al ejecutar el binario , nos da 3 opciones. Las 3 opciones no son muy interesantes , pero usando el comando strings podemos buscar cadenas legibles por personas en un binario</p>
 <p> Realizando el siguiente proceso vamos a poder obtener los permisos de administrador </p>
-<p><img src="/img/htb-knife/14.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/14.PNG" /></p>
 <p> Y ya podemos ver el flag de ROOT , tendriamos la maquina explotada</p>
-<p><img src="/img/htb-knife/15.PNG" /></p>
+<p><img src="/img/tryhackme-kenobi/15.PNG" /></p>
 
 </article>
 
