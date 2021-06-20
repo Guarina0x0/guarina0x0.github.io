@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>TryHackMe - Coldd Box Easy Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Bounty Hacker Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - Coldd Box Easy Writeup</td>
+</tr>
+<tr class="even">
+<td>Fecha: 20-06-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumearacion - WordPress - WpScan  </td>
+</tr>
+</tbody>
+</table>
+<h1 id="tryhackme-coldd-box-easy-writeup">TryHackMe - Coldd Box Easy Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.213.220</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/coldd-box-easy/1.PNG" /></p>
+<h2 id="nmap-scan">## Enumeracion de Puertos:</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos: </p>
+<p>Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo</p>
+<p><img src="/img/coldd-box-easy/2.PNG" /></p>
+<p>Vamos a ver que tiene los siguientes puertos abiertos:</p>
+<p>-Puerto 80 HTTP</p>
+<p>-Puerto 4512 SSH</p>
+<p>Tenemos 2 puertos solos abiertos , por lo que tendremos que explotar el servicio http , vamos a ver ante que estamos si estamos ante algun gestor de contenido mediante la herramienta WhatWeb </p>
+<code>whatweb 10.10.204.123</code>
+<p><img src="/img/coldd-box-easy/3.PNG" /></p>
+<p> Podemos ver que nos reporta que estamos ante el gestor de contenido WordPress, si nos vamos a la pagina vamos a ver un aspecto muy basico y que nos reporta ya un usuario potencial llamado "C0ldd"</p>
+<p><img src="/img/coldd-box-easy/4.PNG" /></p>
+<h2 id="fuzzing">## Fuzzing Script Nmap:</h2>
+<p>La herramienta nmap tiene varios scripts .nse , vamos a utilizar uno que tiene unas 1000 lineas de diccionario para aplicar fuzzing en busqueda de directorio web potenciales</p>
+<code>sudo nmap --script=http-enum -p 80 10.10.204.123</code>
+<p><img src="/img/coldd-box-easy/5.PNG" /></p>
+<p> Vamos a tener varios directorios web potenciales entre ellos:
+    -/hidden/
+</p>
+<p><img src="/img/coldd-box-easy/7.PNG" /></p>
+<p> Nos da una pista , nos reporta 3 posibles usuarios potenciales</p>
+<h2 id="wp-scan">## WP-Scan :</h2>
+<p> Mediante la herramienta Wp-Scan vamos intentar reventar la contraseña del usuario c0ldd mediante el diccionario rockyou</p>
+<code>sudo wpscan --url http://10.10.204.123/ -U c0ldd -P /usr/share/wordlists/rockyou.txt</code>
+<p><img src="/img/coldd-box-easy/8.PNG" /></p>
+<p> Tras un timepo nos reporta la contraseña del usuario c0ldd</p>
+<p><img src="/img/coldd-box-easy/9.PNG" /></p>
+<p>Una vez tenemos acceso a WordPress entrar dentro del sistema es muy facil , tan solo tenemos que ir a la plantilla de 404.php y colocar una reverse shell</p>
+<p><img src="/img/coldd-box-easy/11.PNG" /></p>
+<h2 id="reverse-shell">## Shell Reversa y busqueda de usuario :</h2>
+<p> Nos ponemos a la escucha por el puerto 443 y vamos a ejecutar la pagina de error 404.php</p>
+<p><img src="/img/coldd-box-easy/12.PNG" /></p>
+<p>Si ejecutamos la pagina ya nos va a dar el acceso</p>
+<p><img src="/img/coldd-box-easy/13.PNG" /></p>
+<p>Los permisos que tenemos es www-data por lo que necesitamos la contraseña del usuario c0ldd</p>
+<p><img src="/img/coldd-box-easy/14.PNG" /></p>
+<p> Si nos vamos al fichero config.php que tenemos de Wordpress en el directorio /var/www/html , vamos a poder ver en texto plano la contraseña para poder acceder desde el servicio ssh que teniamos abierto</p>
+<p><img src="/img/coldd-box-easy/15.PNG" /></p>
+<h2 id="ssh">## SSH :</h2>
+<p>Una vez tenemos el usuario y una credencial potencial vamos a intentar autentificarnos en el servicio ssh</p> 
+<code>sudo ssh c0ldd@10.10.204.123 -p4512</code>
+<p><img src="/img/coldd-box-easy/16.PNG" /></p>
+<p> Ya vamos a poder visualizar el flag del usuario:</p>
+<p><img src="/img/coldd-box-easy/17.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios :</h2>
+<p>Mediante el comando sudo -l vamos a poder ver los procesos que podemos ejecutar como el usuario root y nos vamos a fijar en el servicio /usr/bin/vim</p>
+<p><img src="/img/coldd-box-easy/18.PNG" /></p>
+<p> Para poder ejecutar una shell siendo root , vamos abrir vim con permisos de sudo y vamos a ejecutar el siguiente comando:</p>
+<code>!sh</code>
+<p><img src="/img/coldd-box-easy/19.PNG" /></p>
+<p>Y ya tendremos permisos de root y podremos visualizar el flag</p> 
+<p><img src="/img/coldd-box-easy/20.PNG" /></p>
+<p> Tendriamos explotada la maquina</p>
+<p><img src="/img/coldd-box-easy/21.PNG" /></p>
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
