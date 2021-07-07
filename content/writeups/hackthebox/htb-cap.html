@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>HackTheBox - CAP Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="HackTheBox - CAP Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: HackTheBox - CAP Writeup</td>
+</tr>
+<tr class="even">
+<td>Fecha: 07-07-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing - Wireshark - FTP </td>
+</tr>
+</tbody>
+</table>
+<h1 id="tryhackme-coldd-box-easy-writeup">TryHackMe - Dav Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.10.245</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Cap/1.PNG" /></p>
+<h2 id="nmap-scan">## Enumeracion de Puertos:</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos: </p>
+<p>Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo</p>
+<p><img src="/img/Cap/2.PNG" /></p>
+<p> Nmap nos reporta los siguientes puertos abiertos:
+
+    <ul>21 FTP</ul>
+    <ul>22 SSH</ul>
+    <ul>80 HTTP</ul>
+    
+</p>
+<p> Mediante la herramienta WhatWeb vamos a ver si estamos ante algun gestor de contenido ya que tenemos el puerto 80 abierto</p>
+<code>whatweb 10.10.10.245</code>
+<p><img src="/img/Cap/4.PNG" /></p>
+<h2 id="web">## Reconocimiento Web:</h2>
+<p> Vamos abrir la pagina web para ver ante que estamos ya que el reporte de whatweb no nos proporciona mucha informacion</p>
+<p>Como podemos ver estamos ante un DashBoard que nos proporciona informacion sobre eventos , puertos escaneados y accesos de login fallidos , tenemos un usuario potencial llamado "Nathan"</p>
+<p><img src="/img/Cap/5.1.PNG" /></p>
+<h2 id="fuzzing">## Fuzzing Web:</h2>
+<p> Mediante Wfuzz vamos a proceder a realizar una enumeracion de directorios web para encontrar posibles directorios ocultos que nos proporcionen mas informacion.</p>
+<code>sudo wfuzz -c --hc=404 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.10.245/FUZZ</code>
+<p><img src="/img/Cap/6.PNG" /></p>
+<p> Nos reporta dos posibles potenciales directorios web:
+    <ul>/data</ul>
+    <ul>/ip</ul>
+</p>
+<p> Si abrimos el directorio web /ip vamos a ver la interfaz de red de la maquina</p>
+<p><img src="/img/Cap/7.PNG" /></p>
+<p> Si seguimos fuzzeando directorios mediante Wfuzz nos va a reportar 2 mas
+    <ul>/netstat</ul>
+    <ul>/capture</ul>
+</p>
+<p><img src="/img/Cap/10.PNG" /></p>
+<p> Si abrimos el directorio web data vamos a poder ver que tenemos un boton para descarganos un fichero .pcap </p>
+<p><img src="/img/Cap/9.PNG" /></p>
+<h2 id="Wireshark">## Wireshark:</h2>
+<p>Procedemos abrir el fichero .pcap mediante la herramienta Wireshark , y vamos a proceder a filtrar los diferentes protocolos en busca de informacion</p>
+<p><img src="/img/Cap/11.PNG" /></p>
+<p> Si filtramos mediante el protocolo FTP vamos a ver que tenemos unas cabeceras de informacion y que nos proporcionan unas credenciales</p>
+<p><img src="/img/Cap/12.PNG" /></p>
+<p> Para el usuario nathan podemos ver una posible contraseña de FTP , en la enumeracion de puertos teniamos el servicio FTP abierto </p>
+<h2 id="FTP">## FTP:</h2>
+<p> Realizamos el login mediante las credenciales que hemos visto y podemos ver que esas credenciales son correctas y que tenemos ya el flag del usuario</p>
+<p><img src="/img/Cap/13.PNG" /></p>
+<p> Si intentamos otra autenticacion mediante la contraseña pero en este caso en el servicio SSH en busca de reutilizacion de credenciales</p>
+<h2 id="SSH">## SSH:</h2>
+<p> Podemos ver que existe una reutilizacion de credenciales</p>
+<p><img src="/img/Cap/14.PNG" /></p>
+<p> Ahora solo nos queda escalar privilegios , si buscamos permisos SUID en busca de ejecutar procesos del sistema como el usuario ROOT , podemos ver que con python3 va a ser posible</p>
+<code>python3 -c 'import os; os.setuid(0); os.system("whoami")'
+    <p><img src="/img/Cap/15.PNG" /></p>
+    <p> Ya tenemos ejecucion de comandos mediante el usuario root por lo que nos queda crearnos una shell con permisos de root y ejecutarlo mediante el usuario nathan </p>
+    <code>python3 -c 'import os; os.setuid(0); os.system("chmod +s /bin/bash")'</code>
+    <p><img src="/img/Cap/16.PNG" /></p>
+    <p> Ya tenemos los permisos de Root y podremos visualizar el flag de Root</p>
+    <p><img src="/img/Cap/17.PNG" /></p>
+    <p> Y ya tendriamos la maquina CAP de HackTheBox explotada!</p>
+    <p><img src="/img/Cap/18.PNG" /></p>
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
