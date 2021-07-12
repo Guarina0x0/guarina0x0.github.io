@@ -65,62 +65,62 @@
 <h2 id="nmap-scan">## Enumeracion de Puertos:</h2>
 <p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos: </p>
 <p>Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo</p>
-<p><img src="/img/Break-Out-The-Cag/2.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/2.PNG" /></p>
 <p> Nos reporta que tenemos los siguientes puertos abiertos:</p>
 <li>21 FTP</li>
 <li>22 SSH</li>
 <li>80 HTTP</li>
 <p>Vamos a realizar un escaneo tambien con Nmap mas intensivo buscando la version de los servicios que corren y algunos scripts basicos de Nmap</p>
-<p><img src="/img/Break-Out-The-Cag/3.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/3.PNG" /></p>
 <p> Mediante la herramienta WhatWeb vamos a ver si el servidor web tiene algun gestor de contenido</p>
 <code>whatweb 10.10.14.174</code>
-<p><img src="/img/Break-Out-The-Cag/4.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/4.PNG" /></p>
 <p> En el escaneo anterior de Nmap nos reporto que teniamos el usuario de anonymous abierto en el servicio del FTP por lo que vamos a poder acceder y ver si tiene algun fichero</p>
-<p><img src="/img/Break-Out-The-Cag/5.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/5.PNG" /></p>
 <p>Tenemos un fichero de texto llamoad dad_tasks , vamos a descargarlo y ver que contiene</p>
-<p><img src="/img/Break-Out-The-Cag/6.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/6.PNG" /></p>
 <p> Se puede apreciar que estamos antes un codigo en principio que parece Base64 , vamos a decodificarlo</p>
-<p><img src="/img/Break-Out-The-Cag/11.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/11.PNG" /></p>
 <p> Nos resporta informacion que no es legible a primera vista , se puede ver que parece una codificacion por sustitucion de caracteres.</p>
 <h2 id="ping">## Reconocimiento Web:</h2>
 <p>Vamos a proceder a ir enumerando diferentes directorios web que se puedan encontrar en la pagina web , mediante un script basico de enumeracion de Nmap </p>
 <code>sudo nmap --script=http-enum -p80 10.10.14.174</code>
-<p><img src="/img/Break-Out-The-Cag/8.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/8.PNG" /></p>
 <p> Podemos ver que nos reporta algunos potenciales directorios web , si seguimos investigando vamos a ver tambien otro llamado /auditions</p>
-<p><img src="/img/Break-Out-The-Cag/9.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/9.PNG" /></p>
 <p> Contiene un fichero de lo que parece musica , si intentamos reproducirlo no se escucha nada , tenemos que saber que mediante tecnicas de Estenografia se puede ocultar texto en fichero de audio</p>
-<p><img src="/img/Break-Out-The-Cag/10.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/10.PNG" /></p>
 <p> Mediante una herramienta de Estenografia vamos a poder que tenemos un mensaje oculto o una frase que es "namelesstwo" , puede ser la llave del texto anterior que hemos descodificado en Base64</p>
 <h2 id="cipher">## Decodificacion Vigenére:</h2>
 <p>Si buscamos alguna herramienta online de descodificacion de lo que se llama Cifrado Vigenére , y le pasamos como llave el texto que nos hemos encontrado oculto en el audio y como el texto principal el resultado de la extraccion del Base64 </p>
-<p><img src="/img/Break-Out-The-Cag/12.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/12.PNG" /></p>
 <p> Nos da una nota ya que es legible y nos reporta una potencial contraseña para el usuario "weston" que vamos a intentar loguearnos en el servicio SSH</p>
 <h2 id="ssh">## SSH:</h2>
 <p> Ya estariamos dentro de la maquina , pero en principio sin permisos de Root</p>
-<p><img src="/img/Break-Out-The-Cag/13.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/13.PNG" /></p>
 <p>Ahora nos toca buscar permisos SUID en busca de procesos que nos permita ejecutarlos como el usuario Root</p>
-<p><img src="/img/Break-Out-The-Cag/14.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/14.PNG" /></p>
 <p> Tenemos un proceso o servicio llamado bees , si lo ejecutamos nos devuelve el siguiente mensaje</p>
-<p><img src="/img/Break-Out-The-Cag/15.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/15.PNG" /></p>
 <p> Si seguimos buscando permisos para intentar cambiarnos de usuario al usuario "cage" nos encontraremos ante estos 2 procesos</p>
-<p><img src="/img/Break-Out-The-Cag/16.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/16.PNG" /></p>
 <p>Podemos ver que contienen</p>
-<p><img src="/img/Break-Out-The-Cag/17.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/17.PNG" /></p>
 <h2 id="escalada-de-privilegios">## Escalada de Privilegios:</h2>
 <p> Podemos realizar una ejecucion maliciosa y enviarnos una reverse shell con permisos del usuario Cage explotando permisos SUID</p>
-<p><img src="/img/Break-Out-The-Cag/18.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/18.PNG" /></p>
 <p> Nos ponemos a la escucha y ya tendriamos una shell como el usuario Cage </p>
-<p><img src="/img/Break-Out-The-Cag/19.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/19.PNG" /></p>
 <p> Si vamos listando los ficheros que contienen vamos a encontrarnos con la primera flag del usuario</p>
-<p><img src="/img/Break-Out-The-Cag/20.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/20.PNG" /></p>
 <p> Si seguimos listando recursos que tenga la maquina nos vamos a encontrar con varios correos que contienen informacion y que vamos a tener que decodificar mediante Vigenére</p>
-<p><img src="/img/Break-Out-The-Cag/21.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/21.PNG" /></p>
 <p> Nos devuelve una palabra que podemos suponer que sera la contraseña del usuario Root</p>
-<p><img src="/img/Break-Out-The-Cag/22.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/22.PNG" /></p>
 <p>Nos cambiamos de usuario al usuario Root y probamos la contraseña que es correcta y ya podemos listar los recursos del usuario Root y obtener el flag de Root</p> 
-<p><img src="/img/Break-Out-The-Cag/23.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/23.PNG" /></p>
 <p> Y ya tendriamos la maquina explotada! , ha resultado un poquito rara de realizar y no muy realista</p>
-<p><img src="/img/Break-Out-The-Cag/24.PNG" /></p>
+<p><img src="/img/Break-Out-The-Cage/24.PNG" /></p>
 </article>
 
 <footer>
