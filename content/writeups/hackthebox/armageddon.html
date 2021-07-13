@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>HackTheBox - Armageddon Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Bounty Hacker Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: HackTheBox - Armageddon</td>
+</tr>
+<tr class="even">
+<td>Fecha: 13-07-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Drupal - Metasploit - Mysql - Dirty Sock</td>
+</tr>
+</tbody>
+</table>
+<h1 id="HacktheBox-Armageddon">HackTheBox - Armageddon Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.10.233</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Armageddon/1.PNG" /></p>
+<h2 id="ping">## Reconocimiento Web:</h2>
+<p> Mediante la herramienta Nmap vamos a proceder a escanear los puertos abiertos</p>
+<p><img src="/img/Armageddon/2.PNG" /></p>
+<p>Nos reporta solo 2 puertos abiertos:</p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p> Vamos a realizar un escaneo un poco mas profundo aplicando algunos scripts basicos de Nmap en busca de la version o de posibles directorios web</p>
+<p><img src="/img/Armageddon/3.PNG" /></p>
+<p> Nos reporta bastante informacion y una de la mas importante es que estamos ante un gestor de contenido como es Drupal , vamos a confirmarlo usando la herrramienta WhatWeb</p>
+<p><img src="/img/Armageddon/4.PNG" /></p>
+<p> Podemos ver que estamos ante Drupal en su version 7 , podemos buscar si tiene alguna vulnerabilidad reportada y si cuenta con alguna prueba de concepto publica , para ello vamos a usar la herramienta searchsploit</p>
+<code>searchsploit drupal 7.0</code>
+<p><img src="/img/Armageddon/8.PNG" /></p>
+<p> Podemos ver que tiene bastante vulnerabilidades reportadas</p>
+<h2 id="enumeracion-web">## Enumeracion Web:</h2>
+<p> Si accedemos a la pagina web podemos ver la tipica pagina de login de Drupal</p>
+<p><img src="/img/Armageddon/5.PNG" /></p>
+<p> Vamos a enlazar un script basico de enumeracion de directorios web en busca de posibles de directorios web potenciales</p>
+<code>sudo nmap --script=http-enum -p80 10.10.10.233</code>
+<p><img src="/img/Armageddon/6.PNG" /></p>
+<p> Aqui nos reporta bastante directorios web interesantes que vamos a ir analizando</p>
+<p> Si seguimos buscando informacion sobre Drupal 7 nos vamos a dar cuenta que existe una vulnerabilidad que se puede explotar mediante Metasploit</p>
+<h2 id="Metasploit">## Uso de Metasploit :</h2>
+<p> Mediante Msfconsole vamos a usar un exploit de drupal , llamado drupalgeddon2</p>
+<p><img src="/img/Armageddon/9.PNG" /></p>
+<p> Vamos a configurar los parametros de necesarios para la explotacion en este caso , el ip victima y el interfaz con la que tenemos comunicacion en este caso es la VPN de HackTheBox</p>
+<p><img src="/img/Armageddon/10.PNG" /></p>
+<p> Y vamos a lanzar el ataque , el cual nos devolvera una session en meterpreter con el que vamos a tener una shell interactiva</p>
+<p><img src="/img/Armageddon/11.PNG" /></p>
+<p>Vamos a diriguirnos a la siguiente ruta: /var/www/html/sites/default , aqui encontraremos un fichero llamado "settings.php" con las credenciales del gestor de la base de datos</p>
+<p><img src="/img/Armageddon/12.PNG" /></p>
+<h2 id="mysql">## MYSQL :</h2>
+<p> En el fichero anterior nos proprociona las credenciales del gestor de base de datos:</p>
+<p><img src="/img/Armageddon/13.PNG" /></p>
+<p> Mediante el comando Shell en meterpreter , vamos a ejecutar realizar un tratamiento de la tty mediante python</p>
+<code>python3 -c 'import pty; pty.spawn("/bin/bash")'</code>
+<p><img src="/img/Armageddon/14.PNG" /></p>
+<p> Ahora vamos a realizar la auntentificacion de las credenciales para ver si son correctas en el servicio de mysql</p>
+<p><img src="/img/Armageddon/15.PNG" /></p>
+<p> Vamos a poder ver las base de datos que tienen , a nosotros nos interesa Drupal , vamos a listar las tablas que contiene esa base de datos</p>
+<p><img src="/img/Armageddon/16.PNG" /></p>
+<p>Podemos ver todas las tablas , existe una llamada "users" que en principio contendra credenciales de los posibles usuarios potenciales del sistema</p>
+<p><img src="/img/Armageddon/17.PNG" /></p>
+<p> Hay vamos a ver un usuario y una contraseña hasheada que vamos a copiar y romper mediante John The Ripper</p>
+<p><img src="/img/Armageddon/18.PNG" /></p>
+<p> Tras unos segundos ya nos proporciona la contraseña para el usuario "Brucetherealadmin"</p>
+<p> Si nos acordamos del escaneo de puertos teniamos el servicio SSH abierto , por lo que vamos a intentar loguearnos mediante este usuario</p>
+<p><img src="/img/Armageddon/19.PNG" /></p>
+<p>Ya podemos visualizar el flag del usuario , ahora solo nos queda escalar privilegios para llegar a ser Root </p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios :</h2>
+<p> Mediante el comando sudo -l , vamos a buscar procesos SUID </p>
+<p><img src="/img/Armageddon/20.PNG" /></p>
+<p> Podemos ver que podemos usar como el usuario Root el proceso /usr/bin/snap install *</p>
+<p> Si investigamos existe una vulnerabilidad llamada "Dirty_sockv2" , es una vulnerabilidad descubierta en 2019 en las versiones de Ubuntu eran vulnerables a una escalada de privilegios locales debido a un error de la API de Snapd , aqui podemos ver la prueba de concepto: https://github.com/initstring/dirty_sock</p>
+<p> De la prueba de concepto vamos a tener que copiar los siguientes argumentos eliminando "/"</p>
+<p><img src="/img/Armageddon/21.PNG" /></p>
+<p> Mediante Python vamos a imprimirlo , lo vamos a codificar en base64 y lo vamos a guardar en un fichero con extension .snap</p>
+<p><img src="/img/Armageddon/22.PNG" /></p>
+<p> Ahora vamos a ejecutar ese fichero:</p>
+<code> sudo /usr/bin/snap install --devmode guarina0x0.snap</code>
+<p><img src="/img/Armageddon/23.PNG" /></p>
+<p>Ahora nos vamos a cambiar al usuario que hemos creado llamado dirty_sock y le vamos a proporcionar de contraseña dirty_sock y ya tendriamos permisos de Root</p> 
+<code> su dirty_sock</code>
+<p><img src="/img/Armageddon/24.PNG" /></p>
+<p> Y ya podremos visualizar el flag de Root</p>
+<p><img src="/img/Armageddon/25.PNG" /></p>
+<p>Y tendriamos la Maquina de Hack The Box llamada Armageddon Explotada!</p>
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
