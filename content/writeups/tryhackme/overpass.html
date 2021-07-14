@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>TryHackMe - Overpass Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Bounty Hacker Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - Overpass</td>
+</tr>
+<tr class="even">
+<td>Fecha: 13-07-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing - Bypass - Crontab </td>
+</tr>
+</tbody>
+</table>
+<h1 id="TryHackMe - Overpass">TryHackMe - Overpass Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.13.163</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Overpass/1.PNG" /></p>
+<h2 id="reconocimiento">## Reconocimiento Web:</h2>
+<p> Mediante la herramienta Nmap vamos a proceder a escanear los puertos abiertos , le realizamos un escaneo rapido mediante el parametro --min-rate que laza paquetes no mas lento que 5000 paquetes por segundos</p>
+<p><img src="/img/Overpass/2.PNG" /></p>
+<p>Nos reporta que contamos con solo 2 puertos abiertos:</p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p> Vamos a relizar un escaneo un poco mas completo en busca de versiones de los servicios y aplicando algunos scripts basicos de Nmap</p>
+<code>sudo nmap -sV -sC 10.10.13.163</code>
+<p><img src="/img/Overpass/3.PNG" /></p>
+<p>Como tenemos el puerto del Servicio Web abierto , mediante la herramienta WhatWeb vamos a ver si estamos ante algun gestor de contenido</p>
+<p><img src="/img/Overpass/4.PNG" /></p>
+<p>Nos reporta que estamos ante una pagina estatica , vamos abrirla para inspeccionarla</p>
+<p><img src="/img/Overpass/5.PNG" /></p>
+<p>Podemos ver texto sobre la explicacion de la maquina y un apartado llamado "Sobre Mi" y "Descargas" que no nos interesa demasiado , no tiene mayor relevancia</p>
+<p>Vamos a ver el codigo fuente en busca de algun comentario o alguna pista </p>
+<p><img src="/img/Overpass/6.PNG" /></p>
+<p>Podemos ver un comentario que puede ser una pista</p>
+<p> Si aplicamos fuzzing en busca de directorios web ocultos potenciales mediante la herramienta Wfuzz</p>
+<code>sudo wfuzz -c --hc=404 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.13.163/FUZZ</code>
+<p><img src="/img/Overpass/7.PNG" /></p>
+<p> Nos reporta varios directorios web potenciales:</p>
+<li>/img -> Normalmente directorio donde se almacenan las imagenes</li>
+<li>/downloads -> Directorio de descargas , donde esta los ejecutables que nos proporcionaba la pagina</li>
+<li>/aboutus -> Directorio de Informacion</li>
+<li>/admin -> Directorio Potencialmente Peligroso sobre la Administracion de la Pagina</li>
+<li>/css -> Directorio donde se almacena el codigo fuente CSS</li>
+<p> Si abrimos el directorio web /admin podemos ver un panel de login con 2 campos , podemos intentar realizar inyecciones SQL basicas para ver si es vulnerable</p>
+<p><img src="/img/Overpass/8.PNG" /></p>
+<p> Si abrimos el codigo fuente , tenemos un enlace a los archivos javascript que utiliza , si abrimos el archivo de login.js podemos ver un fallo en la programacion sobre la validacion en el campo de Cookie que se puede bypassear</p>
+<p><img src="/img/Overpass/9.PNG" /></p>
+<h2 id="bypass">## Bypass Auntentificacion :</h2>
+<p>Mediante la herramienta Curl le vamos a pasar una cookie que sea "SessionToken" y cualquier cosa , asi realizaremos el bypass de la auntetificacion de la pagina /admin</p>
+<p><img src="/img/Overpass/10.PNG" /></p>
+<p> Podemos ver que nos devuelve las cabeceras http , junto con un ID_RSA , que vamos a copiar</p>
+<p><img src="/img/Overpass/11.PNG" /></p>
+<p> Ahora vamos a proceder a auntentificarnos mediante ese ID_RSA en el servicio SSH </p>
+<p><img src="/img/Overpass/12.PNG" /></p>
+<p> Podemos ver que nos pide una contraseña , por lo que tenemos que intentar romper ese hash Id_Rsa mediante el script ssh2john <a href="https://github.com/openwall/john/blob/bleeding-jumbo/run/ssh2john.py"> SSH2JOHN</a> </p>
+<p><img src="/img/Overpass/13.PNG" /></p>
+<p>Una vez tenemos crackeado ese Hash , vamos a proceder a intentar romperlo mediante John The Ripper </p> 
+<p><img src="/img/Overpass/14.PNG" /></p>
+<p> Ya podemos ver la contraseña del Id_RSA , por lo que ya podremos auntetificarnos en el servicio SSH</p>
+<p><img src="/img/Overpass/15.PNG" /></p>
+<p>Ya podremos visualizar el flag del usuario y ahora nos toca escalar privilegios</p>
+<p><img src="/img/Overpass/16.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios :</h2>
+<p> Podemos ver una lista de tareas que hacer , que nos da pista sobre que hay tareas programadas mediante la herramienta crontab </p>
+<p><img src="/img/Overpass/17.PNG" /></p>
+<p> Podemos ver que hay una tarea automatizada que ejecuta el script buildscript.sh en una consola bash</p>
+<p>Si buscamos permisos SUID vamos a ver que el fichero /etc/hosts tiene un cierto permiso , si vemos el fichero: </p>
+<p><img src="/img/Overpass/18.PNG" /></p>
+<p> Vamos a cambiar la direccion Ip de localhost , por la direccion Ip nuestra de atacante</p>
+<p><img src="/img/Overpass/19.PNG" /></p>
+<p> Ahora vamos a proceder a ir a nuestro equipo y vamos a crear la siguiente ruta de carpetas que era la que ejecutaba la tarea crontab /downloads/src y dentro de /src vamos a crear un script llamado buildscript.sh</p>
+<p> En el vamos a integrar una reverse shell en python3 que se conecte a nuestra direccion Ip en el puerto 443</p>
+<p><img src="/img/Overpass/20.PNG" /></p>
+<p>Ahora nos vamos a compartir un servidor mediante python3 para poder desde la maquina victima realizar una descargar del fichero buildscript</p>
+<p><img src="/img/Overpass/21.PNG" /></p>
+<p>Mediante el comando wget vamos a proceder a descargarnos el script que hemos creado que nos reenviara una reverse shell con permisos de administrador </p>
+<p><img src="/img/Overpass/22.PNG" /></p>
+<p>Una vez tenemos el script , vamos abrir en nuestra maquina atacante un puerto mediante la herramienta netcat y vamos a esperar que se ejecute la tarea automatizada de crontab y nos de una shell reversa con permisos de Root</p>
+<p><img src="/img/Overpass/23.PNG" /></p>
+<p> Y ya podremos visualizar el flag de Root</p>
+<p><img src="/img/Overpass/24.PNG" /></p>
+<p> Ya tendriamos la maquina Overpass de TryHackMe Explotada!</p>
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
