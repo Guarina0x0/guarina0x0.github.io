@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>TryHackMe - MindGames Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - mindgames Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - MindGames</td>
+</tr>
+<tr class="even">
+<td>Fecha: 20-07-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - BrainFuck - Capabilities </td>
+</tr>
+</tbody>
+</table>
+<h1 id="TryHackMe - MindGames">TryHackMe - MindGames Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.182.27</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/mindgames/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/mindgames/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p>Vamos a realizar un escaneo de puertos mas intensivo en busqueda de versiones de servicios y aplicando algunos scripts basicos de enumeracion de Nmap</p>
+<p><img src="/img/mindgames/3.PNG" /></p>
+<p>Como tenemos el puerto del servicio HTTP abierto , vamos a relizar una busqueda mediante WhatWeb en busca de gestores de contenido o que nos proporcione mayor informacion</p>
+<p><img src="/img/mindgames/4.PNG" /></p>
+<h2 id="enumeracion-web">## Enumeracion Web:</h2>
+<p>Vamos abrir la pagina web y vamos a ir inspeccionandola , nos vamos a encontrar un campo donde nos permite ejecutar codigo en un lenguaje llamado BrainFuck</p>
+<p>BrainFuck es un lenguaje de programacion esoterico , vamos a necesitar buscar un codificador online para escribir en ese lenguaje y ver si nos lo interpreta</p>
+<p><img src="/img/mindgames/7.PNG" /></p>
+<p>Mediante esta pagina web nos permite escribir codigo en python y pasarlo a Brainfuck </p>
+<p>Si copiamos el codigo resultante y lo ejecutamos nos deberia devolver "hola"</p>
+<p><img src="/img/mindgames/6.PNG" /></p>
+<p>Por lo que como vemos que nos ejecuta perfectamente el codigo , vamos a realizar un intento de una shell reversa mediante python hacia nuestro equipo de atacante</p>
+<p><img src="/img/mindgames/8.PNG" /></p>
+<p>Nos ponemos a la escucha mediante el puerto 443 y nos debe devolver una shell reversa</p>
+<p><img src="/img/mindgames/9.PNG" /></p>
+<p>Una vez ya tenemos una shell , ya podriamos visualizar el flag del usuario </p>
+<p><img src="/img/mindgames/10.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
+<p>Ahora tenemos que escalar privilegios , tenemos que ir buscando permisos SUID , en este caso vamos a buscar Capabilities , es similar a la explotacion de archivos SUID</p>
+<code>getcap -r / 2>/dev/null</code>
+<p><img src="/img/mindgames/11.PNG" /></p>
+<p>Tenemos una potencial del servicio OpenSSL</p>
+<p>Vamos a crear un fichero llamado root en C , el cual nos va a permitir ejecutar una shell con permisos de Root</p>
+<p><img src="/img/mindgames/12.PNG" /></p>
+<p>Ahora vamos a proceder a compilar ese fichero</p>
+<code>sudo gcc -fPIC -w -o root.o -c root.c</code>
+<code>gcc -shared -o root.so -lcrypto root.o</code>
+<p><img src="/img/mindgames/14.PNG" /></p>
+<p>Ahora vamos a compartirnos un servidor mediante Python y vamos a descargar el fichero ejecutable en la maquina victima </p>
+<p><img src="/img/mindgames/16.PNG" /></p>
+<code>openssl engine -t `pwd` /root.so</code>
+<p>Y ya tendriamos permisos de Root y podremos visualizar el flag</p>
+<p><img src="/img/mindgames/17.PNG" /></p>
+<p>Ya tendriamos la maquina MindGames con una dificultadad Media Explotada!</p>
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
