@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>HackTheBox - Bounty Hunter Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - mindgames Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: HackTheBox - Bounty Hunter</td>
+</tr>
+<tr class="even">
+<td>Fecha: 13-09-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - XXE - Burp Suite - Enconder URL </td>
+</tr>
+</tbody>
+</table>
+<h1 id="Hack The Box - Bounty Hunter"> Hack The Box - Bounty Hacker Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.11.100</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/BountyHunter/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/BountyHunter/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p>Mediante la herramienta WhatWeb vamos a proceder a inspeccionar si estamos ante algun gestor de contenido , ya que nos encontramos con el puerto 80 abierto que nos proporciona el servicio HTTP</p>
+<p><img src="/img/BountyHunter/4.PNG" /></p>
+<p>Nos reporta poca cosa , asi que vamos a realizar un escaneo mediante la herramienta Nmap en busqueda de la version y aplicar scripts basicos para obtener mayor informacion</p>
+<p><img src="/img/BountyHunter/3.PNG" /></p>
+<h2 id="web">## Pagina Web:</h2>
+<p>Vamos a proceder abrir la pagina web y poder inspeccionarla </p>
+<p><img src="/img/BountyHunter/5.PNG" /></p>
+<p>Podemos ver el codigo fuente que no nos proporciona mayor informacion , por lo que tendremos que aplicar Fuzzing en busqueda de directorios web activos</p>
+<h2 id="Fuzzing">## Fuzzing Web:</h2>
+<p>Vamos aplicar Fuzzing mediante la herramienta Wfuzz</p>
+<p><img src="/img/BountyHunter/8.1.PNG" /></p>
+<p> Nos reporta las siguientes rutas:</p>
+<li>/resources</li>
+<li>/assets</li>
+<li>/css</li>
+<li>/js</li>
+<p>Estos directorios web el unico interesante es /resources que nos encontraremos antes una nota</p>
+<p><img src="/img/BountyHunter/9.PNG" /></p>
+<p>Como no hemos encontrado nada interesante vamos aplicar fuzzing en busqueda de extension .php</p>
+<p><img src="/img/BountyHunter/10.PNG" /></p>
+<p>Nos reporta 2 posibles ficheros php potenciales , que vamos a investigar</p>
+<p>El primero /portal que nos redirigue a un fichero php llamado log_submit.php que sirve para reportar una vulnerabilidad</p>
+<p><img src="/img/BountyHunter/6.PNG" /></p>
+<p>Si rellenamos el formulario y enviamos la solicitud podemos ver que funciona</p>
+<p><img src="/img/BountyHunter/8.PNG" /></p>
+<p>Luego tenemos otro fichero php potencial llamado /db.php , que no sale nada en principio ya que trabajara con el portal anterior para registrar las vulnerabilidades reportadas</p>
+<p><img src="/img/BountyHunter/11.PNG" /></p>
+<p>Podemos intentar realizar un curl sobre el fichero para obtener mas detalles del funcionamiento del mismo</p>
+<p><img src="/img/BountyHunter/12.PNG" /></p>
+<h2 id="Burp Suite ">## Burp Suite:</h2>
+<p>Vamos a proceder a usar la herramienta Burp Suite para obtener mas informacion de como se tramita los datos entre los dos ficheros PHP</p>
+<p><img src="/img/BountyHunter/13.PNG" /></p>
+<p>Los datos se envia codificados en un metodo llamado "URL enconding" , si enviamos los datos obtenidos al "Repeater" podemos decodificarlos y ver el contenido</p>
+<p><img src="/img/BountyHunter/14.PNG" /></p>
+<p>Podemos ver que los datos se tramitan en formato XML , aqui ya podemos estar pensando en realizar un ataque XXE</p>
+<h2 id="Ataque XXE">## Ataque XXE:</h2>
+<p>Una vulnerabilidad XXE . es una vulnerabilidad de entidad externas XML que afectan a los servicios que se basan en XML.</p>
+<p>Una vulnerabilidad XXE se produce cuando el servicio que analiza o lee y procesa , los mensajes XML enviados por el cliente.</p>
+<p> Podemos ver si es vulnerable , mediante los siguientes pasos </p>
+<p><img src="/img/BountyHunter/xxe.PNG" /></p>
+<p> Tras analizarlo y probarlo podemos ver que es vulnerable a XXE , por lo que vamos aplicar ya "Wrapper" para inyecciones XXE y obtener ficheros , nos podemos ayudar de la siguiente informacion: https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XXE%20Injection/Files/XXE%20PHP%20Wrapper.xml</p>
+<p>Necesitaremos encoder la informacion , primero vamos a intentar obtener el fichero de los usuarios del sistema</p>
+<p><img src="/img/BountyHunter/16.PNG" /></p>
+<p>Vamos a copiar el resultado hasheado y vamos a copiar en el apartado data de burp suite</p>
+<p><img src="/img/BountyHunter/17.PNG" /></p>
+<p>Vamos a copiar el resultado que nos devulve el portal de vulnerabilidades y vamos a descifrarlo ya que viene cifrado</p>
+<p><img src="/img/BountyHunter/18.PNG" /></p>
+<p>Podemos ver como nos muestra perfectamente el fichero /passwd , por lo que ahora vamos a intentar mirar que contiene el fichero db.php que se encuentra en el servidor apache</p>
+<p><img src="/img/BountyHunter/19.PNG" /></p>
+<p>Volvemos hacer el mismo "Wrapper" cambiando el fichero que ahora nos interesa para buscar usuarios y contraseñas potenciales y entrar al sistema</p>
+<p><img src="/img/BountyHunter/19.PNG" /></p>
+<p> Lo introducimos en la variable data en Burp Suite y decodeamos la informacion que nos devuelve</p>
+<p><img src="/img/BountyHunter/20.PNG" /></p>
+<p>Ya podemos ver informacion potencialmente peligrosa , que nos proporciona un usuario y una contraseña , al principio inspeccionando la pagina web habia 3 comentarios y uno de ellos era de un usuario llamado "development" por lo que vamos a probar esta contraseña con dicho usuario</p>
+<h2 id="Flag Usuario">## Flag User.txt:</h2>
+<p>Si intentamos acceder al SSH mediante el usuario "development" y la contraseña potencial que tenemos podemos entrar dentro de la maquina y obtener el flag del usuario</p>
+<p><img src="/img/BountyHunter/21.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
+<p>El usuario development no tiene permisos de Root , por lo que mediante el comando sudo -l , vamos a buscar permisos SUID , que nos permitan realizar funciones de usuario root siendo usuarios no privilegiados</p>
+<p><img src="/img/BountyHunter/23.PNG" /></p>
+<p>Nos reporta un fichero escrito en Python que es un validor de Ticket , si procedemos abrir dicho script y entender su funcionamiento</p>
+<p><img src="/img/BountyHunter/24.PNG" /></p>
+<p>Podemos ver que analiza un fichero en extension .md , que necesita una ciertas lineas necesarias para poder ejecutar la validacion del ticket</p>
+<p>Hay que crear un ticket en formato .md y que nos proporcione una shell con permisos de Root</p>
+<p><img src="/img/BountyHunter/25.PNG" /></p>
+<p>Ahora si procedemos a ejecutar el validador de ticket y le pasamos nuestro ticket malicioso vamos a obtener una shell como Root y ya podremos visualizar el flag del usuario Root</p>
+<p><img src="/img/BountyHunter/26.PNG" /></p>
+<p>Ya tendriamos la Maquina Bounty Hunter Explotada , una maquina de una dificultadad Facil!</p>
+<p><img src="/img/BountyHunter/27.PNG" /></p>
+
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
