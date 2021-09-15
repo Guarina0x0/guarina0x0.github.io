@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>HackTheBox - Horizontall Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - mindgames Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: HackTheBox - Horizontall</td>
+</tr>
+<tr class="even">
+<td>Fecha: 14-09-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing - Strapi - CVE </td>
+</tr>
+</tbody>
+</table>
+<h1 id="Hack The Box - Horizontall"> Hack The Box - Horizontall Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.11.105</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Horizontall/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/Horizontall/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p>Podemos ver que tenemos el servicio web abierto , mediante la herramienta WhatWeb vamos a ver si estamos ante algun gestor de contenido</p>
+<p><img src="/img/Horizontall/6.PNG" /></p>
+<p>Podemos ver que se esta aplicando Virtual Hosting a horizontall.htb , por lo que vamos a tener que ponerlo en nuestro /etc/hosts</p>
+<p><img src="/img/Horizontall/hosts.PNG" /></p>
+<p>Ahora una vez que hemos configurado el Virtual Hosting , vamos a realizar un escaneo mas exhaustivo con Nmap</p>
+<p><img src="/img/Horizontall/3.PNG" /></p>
+<h2 id="reconocimiento-web">## Reconocimiento Web:</h2>
+<p>Vamos abrir el dominio horizontall.htb y vamos a inspeccionar la pagina en busca de directorios web potenciales o pistas</p>
+<p><img src="/img/Horizontall/7.PNG" /></p>
+<p>Vamos a realizar Fuzzing mediante la herramienta Wfuzz , en busqueda de directorios web potenciales</p>
+<p><img src="/img/Horizontall/8.PNG" /></p>
+<p>Tras un tiempo esperando , no nos reporta nada , por lo que vamos aplicar fuzzing buscando subdominios del dominio principal , para ello vamos a usar un diccionario de SecLists </p>
+<p><img src="/img/Horizontall/9.PNG" /></p>
+<p> Tras un tiempo , nos reporta un posible subdominio potencial , vamos a guardar dicho subdominio en nuestro /etc/hosts </p>
+<p><img src="/img/Horizontall/10.PNG" /></p>
+<p>Si abrimos dicho subdominio , no nos reporta gran cosa , por lo que haremos fuzzing a el subdominio buscando directorios web</p>
+<p><img src="/img/Horizontall/11.PNG" /></p>
+<p>Nos reporta varios directorios web potenciales que iremos investigando:</p>
+<li>/reviews</li>
+<li>/users</li>
+<li>/admin</li>
+<p>Si abrimos el directorio /reviews , vamos a ver que nos reporta informacion en Json , pero poca cosa</p>
+<p><img src="/img/Horizontall/12.PNG" /></p>
+<p>Si procedemos abrir el directorio web /users , es otro Json que no nos reporta informacion</p>
+<p><img src="/img/Horizontall/13.PNG" /></p>
+<p>Ahora si procedemos abrir el directorio web /admin que en principio parece el mas potencial , nos vamos a encontrar ante un panel de inicio de sesion de la herramienta Strapi</p>
+<p><img src="/img/Horizontall/14.PNG" /></p>
+
+<p>Strapi es un CMS basado en Node.js para todas las necesidades de API y gestion de contenidos de los desarrolladores.</p>
+<p>Como no tenemos credenciales , podemos intentar buscar las credenciales por defecto , pero no funciona , tras mas investigacion podemos darnos cuenta de que cuenta con un CVE.</p>
+<p>El CVE esta basado en la version 3.0.0-beta.17.4 , para obtener la version de Strapi vamos a tener que realizar un Curl</p>
+<p><img src="/img/Horizontall/15.PNG" /></p>
+<p>Podemos ver que estamos ante la version vulnerable de Strapi , por lo que podemos descargarnos el Exploit de exploit-db <a>https://www.exploit-db.com/exploits/50239 </a></p>
+<p><img src="/img/Horizontall/16.PNG" /></p>
+<p>Este exploit nos permite un RCE (Ejecucion Remota de Comandos) , sin tener una previa auntentificacion del servicio de Strapi</p>
+<h2 id="exploit">## Exploit CVE 50239:</h2>
+<p>Podemos inspeccionar el exploit para comprender como funciona y que parametros necesitamos pasarle para su ejecucion</p>
+<p><img src="/img/Horizontall/17.PNG" /></p>
+<p>Vamos a tener que ejecutarlo con python 3 y le debemos pasar el dominio</p>
+<code>sudo python3 50239.py http://api-prod.horizontall.htb/</code>
+<p>Tras su ejecucion nos devuelve un correo admin@horizontall.htb , un usuario y una contraseña para el panel de inicio de sesion y un token JSON que va a ser muy importante</p>
+<p><img src="/img/Horizontall/18.PNG" /></p>
+<p>Ahora podemos iniciar sesion en el panel de Strapi , como Administrador y investigar si hay alguna forma de acceder al servidor </p>
+<p><img src="/img/Horizontall/19.PNG" /></p>
+<p>Podemos observar que no podemos hacer gran cosa dentro del Panel , por lo que si tenemos ejecucion remota con el exploit , podemos crear una shell reversa , enviarsela al servidor y ejecutarla y que se conecte a nuestro equipo de atacante</p>
+<p>Primero crearemos un fichero llamado "index.html" y dentro de el realizaremos un pequeño script en Bash que nos entable una Shell Reversa a nuestro equipo atacante</p>
+<p><img src="/img/Horizontall/20.PNG" /></p>
+<p>Una vez creado vamos a iniciar un servidor simple http mediante Python y vamos a realizar un curl para descargar el index.html y ejecutarlo mediante Bash</p>
+<p><img src="/img/Horizontall/21.PNG" /></p>
+<p>Mientras tanto nos debemos poner a la escucha mediante Netcat por el puerto que hemos configurado en la shell reversa y nos dara el acceso</p>
+<p><img src="/img/Horizontall/22.PNG" /></p>
+<p>Una vez que tengamos acceso a la maquina , ya podriamos visualizar el Flag del Usuario y nos quedaria solo escalar privilegios</p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
+<p>Ahora vamos a tener que buscar permisos SUID o algun tipo de proceso o ejecucion que nos permita escalar privilegios para poder ser usuario Root</p>
+<p>Si investigamos la maquina podemos ver que tenemos Laravel trabajando en el servidor , existe un exploit que nos permite realizar un port forwarding a nuestra maquina atacante y ejecutar una shell con permisos de Root</p>
+<p>Para ello vamos a realizar el port forwarding mediante el servicio SSH a nuestra maquina, empezaremos creando una llave publica y privada rsa </p>
+
+<p><img src="/img/Horizontall/23.PNG" /></p>
+<p>A esa llave que hemos creado le añadiremos un NetCat con el puerto que queremos que nos habra</p>
+<p><img src="/img/Horizontall/24.PNG" /></p>
+<p>Realizaremos el Port Forwarding mediante SSH , especificando el puerto 8000 de nuestra maquina atacante y la nuestra direccion IP local</p>
+<p><img src="/img/Horizontall/25.PNG" /></p>
+<p>Ya podemos observar que tenemos el servicio lavarel que corre en la maquina victima , corriendo en nuestra maquina atacante</p>
+<p><img src="/img/Horizontall/26.PNG" /></p>
+<p>Solo nos queda ejecutar el Exploit , que podemos encontrar en GitHub el PoC <a> https://github.com/nth347/CVE-2021-3129_exploit </a></p>
+<p><img src="/img/Horizontall/27.PNG" /></p>
+<p>Ejecutamos los comandos que nos ofrece la prueba de concepto y le pasaremos como parametro que nos ejecute el Script que nos muestre la flag del usuario Root</p>
+<p>Y ya tendriamos la maquina de Hack The Box Horizontall Explotada , con una dificultad Facil , que nos ha llevado varios dias de investigacion y probar el funcionamiento de las diferentes vulnerabilidades que existian!!</p>
+<p><img src="/img/Horizontall/30.PNG" /></p>
+
+
+
+
+
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
