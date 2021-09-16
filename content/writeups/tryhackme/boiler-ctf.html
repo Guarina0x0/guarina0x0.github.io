@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>HackTheBox - Bounty Hunter Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - mindgames Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - Boiler CTF</td>
+</tr>
+<tr class="even">
+<td>Fecha: 15-09-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Joomla - RCE  </td>
+</tr>
+</tbody>
+</table>
+<h1 id="Try Hack Me - Boiler CTF"> TryHackMe - Boiler Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.196.195</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Boiler-CTF/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/Boiler-CTF/2.PNG" /></p>
+<li>Puerto 21 FTP</li>
+<li>Puerto 80 HTTP</li>
+<p>Para mayor informacion sobre el reconocimiento de puertos , vamos a lanzar unos scripts basicos de enumeracion , que nos dara mayor informacion sobre los servicios que corren</p>
+<p><img src="/img/Boiler-CTF/3.PNG" /></p>
+<p>Podemos ver que tenemos el Servicio FTP abierto y encontramos el usuario Anonymous habilitado y encontramos un fichero robots.txt en el servicio Apache</p>
+<p>Mediante la herramienta WhatWeb vamos a ver si estamos ante algun gestor de contenido como WordPress , Joomla ...ect.</p>
+<p><img src="/img/Boiler-CTF/4.PNG" /></p>
+<h2 id="FTP">## Reconocimiento FTP :</h2>
+<p>Vamos a acceder mediante el usuario Anonymous en busca de algun archivo o informacion , podemos ver que nos encontramos un fichero txt llamado info que se encontraba oculto</p>
+<p><img src="/img/Boiler-CTF/5.PNG" /></p>
+<p>Si abrimos el fichero vamos a ver que nos encontramos ante una frase encriptada , si sabemos algo de criptografia nos vamos a dar cuenta rapido que esta encriptado ante un algoritmo de cifrado por sustitución</p>
+<p><img src="/img/Boiler-CTF/6.PNG" /></p>
+<p>Podemos descifrarlo rapido usando alguna herramienta online y ver que pista nos esta proporcionando</p>
+<p><img src="/img/Boiler-CTF/7.PNG" /></p>
+<p>Nos dice poco , pero nos dice que la Enumeracion es la clave</p>
+<h2 id="reconocimiento-web">## Reconocimiento Web :</h2>
+<p>Si abrimos el navegador nos vamos a encontrar ante la pagina por defecto de Apache , que nos reporta poca informacion.</p>
+<p><img src="/img/Boiler-CTF/8.PNG" /></p>
+<p>Pero en el reconocimiento que hizimos mas exhaustivo nos encontramos un robots.txt , vamos a ver que tipo de informacion nos proporciona sobre posible directorios web potenciales</p>
+<p><img src="/img/Boiler-CTF/9.PNG" /></p>
+<p>Si probamos los directorios parecen "Rabitt Holes" que no nos llevan a ningun lado</p>
+<p>Como en la pista anterior , nos dicen que la enumeracion es la clave voy a realizar la enumeracion por el protocolo UDP , en busca de servicios potenciales abiertos</p>
+<p><img src="/img/Boiler-CTF/10.PNG" /></p>
+<p>Podemos ver que por el protocolo UDP tenemos abierto el puerto 10000 , normalmente este puerto es usado por un servicio llamado Webmin , si entramos al puerto nos va hacer un redirect , por lo que tendremos que añadirlo a /etc/hosts ya que se esta aplicando Virtual Hosting.</p>
+<p>Pero como no tenemos credenciales potenciales , lo vamos a dejar en un segundo plano y vamos a realizar fuzzing en busqueda de directorios web</p>
+<p>El Fuzzing nos reporta 2 posibles directorios web potenciales</p>
+<li>/joomla</li>
+<li>/manual</li>
+<p>Joomla es un gestor de contenido parecido a WordPress , podemos ver que no esta muy actualizado</p>
+<p><img src="/img/Boiler-CTF/13.PNG" /></p>
+<p>Existe un directorio potencial llamado /joomla/_test que nos ofrece una cierta informacion importante , en la parte superior izquierda tenemos un texto "sar2html"</p>
+<p>Si buscamos que es sar2html nos vamos a dar cuenta que cuenta con un CVE y cuenta con prueba de concepto</p>
+<p><img src="/img/Boiler-CTF/15.PNG" /></p>
+<p>Si investigamos como funciona la vulnerabilidad nos vamos a dar cuenta que es pasandole como parametro un comando y nos representara la informacion en el margen izquierdo en los botones que tenemos</p>
+<p><img src="/img/Boiler-CTF/16.PNG" /></p>
+<p>Primero realize un ls , para ver contenia la maquina y vi que habia un fichero llamado log.txt , el cual ejecute un cat para poder ver la informacion</p>
+<p><img src="/img/Boiler-CTF/17.PNG" /></p>
+<p>Si tenemos buena vista podemos ver un usuario y una contraseña del servicio SSH , que esta funcionando en otro puerto diferente al por defecto</p>
+<p>Por lo que vamos a conectarnos al servicio SSH que esta funcionando en el puerto 55007 y vamos a ingresar el usuario y contraseña que hemos obtenido para verificarlas</p>
+<p><img src="/img/Boiler-CTF/18.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios :</h2>
+<p>Vamos a inspeccionar el usuario Basterd , si hacemos un listado nos encontramos ante script llamado backup.sh , el cual contiene las credenciales del otro usuario llamado "stoner"</p>
+<p><img src="/img/Boiler-CTF/19.PNG" /></p>
+<p>Vamos a cambiar al usuario Stoner y aqui ya podremos el flag del usuario llamado .secret</p>
+<p><img src="/img/Boiler-CTF/20.PNG" /></p>
+<p>Ahora solo nos queda escalar privilegios para poder ser Root , debemos buscar permisos SUID</p>
+<code>find / -perm /4000 -type f -exec ls -ld {} \; 2>/dev/null</code>
+<p><img src="/img/Boiler-CTF/22.PNG" /></p>
+<p>Encontramos un servicio potencial llamado /usr/bin/find , podemos explotar este binario con la ayuda de esta web <a>https://gtfobins.github.io/gtfobins/find/</a></p>
+<p><img src="/img/Boiler-CTF/23.PNG" /></p>
+<p>Y ya tendriamos la maquina Boiler CTF explotada , solo nos quedaria responder a las preguntas que nos indica TryHackMe!!</p>
+<p><img src="/img/Boiler-CTF/24.PNG" /></p>
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
