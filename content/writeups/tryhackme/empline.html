@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>TryHackMe - Emplines Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Empline WriteUp" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - Empline</td>
+</tr>
+<tr class="even">
+<td>Fecha: 21-09-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing -  MySQL - Capability </td>
+</tr>
+</tbody>
+</table>
+<h1 id="TryHackMe - Empline"> TryHackMe - Empline Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.24.77</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Empline/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/Empline/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p>Podemos observar que tenemos el puerto 80 abierto , mediante la herramienta WhatWeb vamos a inspeccionar si estamos ante algun gestor de contenido</p>
+<p><img src="/img/Empline/3.PNG" /></p>
+<p>Vamos a realizar un escaneo mas profundo aplicando scripts basicos de enumeracion , y nos descubre abierto otro puerto de MySQL</p>
+<p><img src="/img/Empline/4.PNG" /></p>
+<h2 id="reconocimiento-web">## Reconocimiento Web :</h2>
+<p>Vamos abrir el navegador y inspeccionar el codigo y buscar algun directorio web potencial , si hacemos "hovering" sobre la seccion "Employment" , vamos a ver un dominio llamado "job.empline.thm" </p>
+<p><img src="/img/Empline/5.PNG" /></p>
+<p>Vamos añadir ese dominio a nuestro /etc/hosts por si se esta aplicando virtual hosting </p>
+<p><img src="/img/Empline/8.PNG" /></p>
+<p>Como tenemos el puerto de MySQL activo , podemos abrirlo en el navegador para ver si cuenta con algun PhPmyAdmin</p>
+<p><img src="/img/Empline/6.PNG" /></p>
+<p>Si abrimos el dominio que habiamos insertado en nuestro /etc/hosts , podemos ver un panel de inicio de sesion de una plataforma llamada "Opencats"</p>
+<p><img src="/img/Empline/9.PNG" /></p>
+<p>Podemos buscar informacion sobre este servicio y podemos ver que cuenta con varias vulnerabilidades reportadas</p>
+<p><img src="/img/Empline/10.PNG" /></p>
+<p>Como no tenemos credenciales de acceso al panel de inicio , podemos realizar un fuzzing para ver directorios web que tengamos permiso sin tener que usar cuenta</p>
+<p><img src="/img/Empline/11.PNG" /></p>
+<p>Podemos ver unos cuantos directorios interesantes entre ellos los siguientes:</p>
+<li>/careers</li>
+<li>/scripts</li>
+<li>/upload</li>
+<li>/db</li>
+<li>/ci</li>
+<p>Podemos ir investigando uno por uno y nos encontraremos que el que mas potencial tiene es /careers un directorio que sirve para buscar ofertas de trabajo </p>
+<p><img src="/img/Empline/13.PNG" /></p>
+<p>Si pinchamos en la oferta que tenemos , podemos ver que nos deja subir un archivo normalmente el CV , pero aqui nosotros vamos a subir una Shell Reversa , ya que parece que no aplica tecnicas de evasion de archivos potenciales </p>
+<p><img src="/img/Empline/14.PNG" /></p>
+<p>Antes de enviar la peticion , vamos a capturar los datos que se envian al servidor mediante Burp Suite</p>
+<p><img src="/img/Empline/16.PNG" /></p>
+<p>Y vamos a cambiar el tipo de contenido como si fuera una imagen</p>
+<code>Content-Type: image/jpg</code>
+<p>Y vamos a poner los magic numbers de GIF</p>
+<code>GIF87a</code>
+<p>Mediante Burp Suite podemos observar que se va a guardar en la ruta /upload/careerportaladd , por lo que tenemos que abrir el directorio web y ejecutar la Shell Reversa mientras que estamos a la escucha en el puerto que hemos configurado</p>
+<p><img src="/img/Empline/17.PNG" /></p>
+<h2 id="acceso">## Acceso como WWW-DATA :</h2>
+<p>Ya tenemos acceso remoto a la maquina como el usuario www-data , y vamos a proceder abrir el fichero config.php para obtener las credenciales del usuario de MySql</p>
+<p><img src="/img/Empline/19.1.PNG" /></p>
+<p>Podemos ver todos los ficheros , a nosotros nos interesa el fichero de config.php que es donde se almacenan las credenciales</p>
+<p><img src="/img/Empline/19.PNG" /></p>
+<h2 id="acceso-mysql">## Acceso a MySQL :</h2>
+<p>Mediante las credenciales que tenemos vamos a proceder autentificarnos en el servicio de base de datos y proceder a ver las Bases de Datos que contiene</p>
+<p><img src="/img/Empline/20.PNG" /></p>
+<p>Podemos ver la Base de Datos llamada "opencats" , la cual contiene una tabla llamada User , con todos los campos de informacion de los usuarios registrados</p>
+<p><img src="/img/Empline/21.PNG" /></p>
+<p>Nosotros vamos hacer una query de el user_name , email y password de la tabla user</p>
+<p><img src="/img/Empline/22.PNG" /></p>
+<p>Nos reportara el nombre de los usuarios con las diferentes contraseñas encriptadas en lo que parece MD5</p>
+<p>Podemos tirar de Rainbow tables para descifrar la contraseña , para ello usaremos <a> https://crackstation.net/</a></p>
+<p><img src="/img/Empline/23.PNG" /></p>
+<p>Y nos reporta la contraseña del usuario George , por lo que vamos a intentar auntentificarnos en el servicio SSH que teniamos abierto</p>
+<p><img src="/img/Empline/24.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios :</h2>
+<p>Una vez que podemos ver el flag del usuario , nos quedaria escalar privilegios para poder ver el flag de Root , para ello vamos a ir inspeccionando la maquina para ver la forma en la que escalar privilegios</p>
+<p>Si vemos las "Capability" que son grupos de kernel que pretenden delimitar las acciones que puedes hacer como el usuario Root </p>
+<p>Las Capability se aplican sobre ficheros y procesos , utilizaremos una serie de comandos como Getcap para obtenerlas</p>
+<code>getcap -r / 2>/dev/null</code>
+<p><img src="/img/Empline/25.PNG" /></p>
+<p>Podemos observar la capability "cap_chown"</p>
+<p><img src="/img/Empline/26.PNG" /></p>
+<p>Podemos abusar de esta capability para darnos permisos de la carpeta de Root a nuestro usuario y asi poder ver el flag</p>
+<p><img src="/img/Empline/27.PNG" /></p>
+<code>/usr/local/bin/ruby -e 'require "fileutils"; FileUtils.chown "george","george","/root/"'</code>
+<p>Ya tendriamos permiso para poder acceder al directorio de Root y poder mirar el flag de Root</p>
+<p>Y tendriamos la maquina Empline explotada!!</p>
+<p><img src="/img/Empline/28.PNG" /></p>
+
+
+
+
+
+
+
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
