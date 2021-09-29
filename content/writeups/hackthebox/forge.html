@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>HackTheBox - Forge Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - mindgames Writeup" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: HackTheBox - Forge</td>
+</tr>
+<tr class="even">
+<td>Fecha: 29-09-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing - SSRF </td>
+</tr>
+</tbody>
+</table>
+<h1 id="Hack The Box - Forge"> Hack The Box - Forge Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.11.111</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Forge/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/Forge/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p>Ahora vamos aplicar scripts basicos de Nmap para descubrir la version y servicios que trabajan bajo esos puertos y vamos a poder ver que nos reporta un dominio</p>
+<p><img src="/img/Forge/3.PNG" /></p>
+<p>Puede ser que se este aplicando VirtualHosting que es la tecnica de tener varios dominios bajo una misma direccion IP , por lo que para que nos resuelva el dominio correctamente vamos a tener que guardarlo en /etc/hosts</p>
+<p><img src="/img/Forge/4.1.PNG" /></p>
+<p>Ahora si enviamos una traza ICMP , vamos a ver que nos resuelve el dominio bajo la direccion IP 10.10.11.111</p>
+<p><img src="/img/Forge/5.PNG" /></p>
+<h2 id="fuzzing">## Fuzzing :</h2>
+<p>Vamos a dirigirnos al navegador y ver que nos reporta la pagina web , vamos a entrar mediante el dominio http://www.forge.htb , y nos reporta una galeria de imagenes y poca cosa mas. </p>
+<p><img src="/img/Forge/6.PNG" /></p>
+<p>Por lo que vamos aplicar la tecnica de fuzzing para buscar directorios web potenciales que nos den mas informacion , para ello usaremos la herramienta Wfuzz</p>
+<p><img src="/img/Forge/6.1.PNG" /></p>
+<p>Nos reporta varios directorios web que parecen interesantes</p>
+<li>/uploads</li>
+<li>/static</li>
+<p>Vamos abrir el directorio web /upload y podemos ver que tenemos un panel para subir ficheros que podemos suponer que tienen que ser imagenes desde nuestro equipo o desde una URL</p>
+<p><img src="/img/Forge/7.PNG" /></p>
+<p>Podemos ver que pasa si subimos una imagen de nuestro equipo</p>
+<p><img src="/img/Forge/8.PNG" /></p>
+<p>Si la subimos nos reporta una ruta con una especie de hash que convierte la imagen </p>
+<p><img src="/img/Forge/10.PNG" /></p>
+<p>Con la ruta que nos reporta podemos ver la imagen desde el navegador , podemos pensar en subir una shell reversa que se conecte a nuestro equipo de atacante para poder acceder a la maquina , podemos cambiarle la extension por imagen.php.jpg , pero esta tecnica no funciona</p>
+<p>Por lo que , voy aplicar fuzzing en subdominios para ver si tenemos algun subdominio de forge.htb que sea potencial</p>
+<p><img src="/img/Forge/13.PNG" /></p>
+<p>Y nos vamos a encontrar con un subdominio de admin: http://www.admin.forge.htb , por lo que vamos a guardarlo en /etc/hosts</p>
+<p><img src="/img/Forge/14.PNG" /></p>
+<p>Si abrimos este subdominio , nos va a decir que solo tenemos acceso si estamos dentro de la maquina</p>
+<h2 id="ssrf">## Tecnica Ataque SSRF</h2>
+<p>Si pensamos en un ataque al directorio /upload , podemos darnos cuenta que podemos intentar usar el ataque SSRF (Server Side Request Forgery) </p>
+<p>Es una vulnerabilidad ocurre cuando una aplicacion web permite hacer consultas HTTP de lado del servidor hacia un dominio arbitrario elegido por el atacante , lo que le permite al atacante hacer una conexion con los servicios de la infraestructura interna donde se aloja la web y exfiltrar informacion sensible</p>
+<p>Para usar esta tecnica es tan facil , como pasarle una URL al panel que teniamos en /upload y que nos de la URL junto con el hash que crea</p>
+<p><img src="/img/Forge/16.PNG" /></p>
+<p>Cuando nos de la URL para ver la "imagen" desde el navegador , vamos a proceder a hacer un Curl desde la consola y asi vamos a poder ver la informacion que contiene el subdominio admin,forge.htb</p>
+<p><img src="/img/Forge/17.PNG" /></p>
+<p>Podemos ver que nos reporta 2 directorios web</p>
+<li>/announcements</li>
+<li>/upload</li>
+<p>Si volvemos hacer la misma tecnica pero ahora en el formulario para introducir la URL de la imagen , ponemos http://admin.forge.htb/announcements , vamos a poder ver el contenido de este directorio que no tenemos acceso mediante el navegador</p>
+<p><img src="/img/Forge/18.PNG" /></p>
+<p>Nos reporta la credenciales del servicio FTP , pero el servicio ftp externamente lo tenemos cerrado , por lo que mediante el ataque SSRF vamos a poder tener acceso</p>
+<code>http://ADMIN.FORGE.HTB/upload?u=ftp://user:heightofsecurity123!@FORGE.HTB</code>
+<p>Introducimos esa URL , donde le pasamos el servicio junto con el usuario y la contraseña que nos reporta , nos deberia crear la URL con el hash</p>
+<p><img src="/img/Forge/20.PNG" /></p>
+<p>Si realizamos el curl sobre la URL que nos a creado , podemos ver que el contenido del FTP del usuario user es el flag del user.txt </p>
+<p><img src="/img/Forge/21.PNG" /></p>
+<p>Podemos seguir utilizando esta tecnica para intentar coger el id_rsa del servicio SSH que si esta abierto externamente</p>
+<code>http://ADMIN.FORGE.HTB/upload?u=ftp://user:heightofsecurity123!@FORGE.HTB/.ssh/id_rsa </code>
+<p><img src="/img/Forge/22.PNG" /></p>
+<p>Y volvemos a utilizar la misma tecnica de utilizar CURL para ver el contenido y ya podemos ver el id_rsa</p>
+<p><img src="/img/Forge/23.PNG" /></p>
+<p>Por lo que vamos a entrar mediante el servicio SSH con el usuario user y con el id_rsa que nos permite no tener que introducir credenciales</p>
+<p><img src="/img/Forge/24.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios :</h2>
+<p>Para poder escalar privilegios vamos a tener que buscar permisos SUID o capabilities , si usamos el comando sudo -l , vamos a ver que tenemos un script con permisos SUID que nos va a permitir ejecutar el script como el usuario Root</p>
+<p><img src="/img/Forge/25.PNG" /></p>
+<p>Si le echamos un vistazo al script vamos a poder ver que es un script que se ejecuta en local que para poder acceder tenemos que proporcionarle la contraseña que nos muestra en texto plano que es "secretadminpassword" y este script nos permite:</p>
+<li>Ver los procesos</li>
+<li>Ver la memoria libre</li>
+<li>Ver el listado de Sockets</li>
+<p>Podemos ejecutar el script y ver los diferentes opciones que nos proporciona </p>
+<p><img src="/img/Forge/28.PNG" /></p>
+<p>Si hemos estado atentos al codigo del script podemos ver que si logramos crear algun error entonces vamos al except handler dentro del python debugger y hay es cuando vamos a ejecutar una shell como Root</p>
+<p>Por lo que vamos a volver a conectarnos al servicio SSH por segunda vez dejando el script ejecutandose y vamos a crear un error introduciendo por ejemplo cualquier letra aleatoria y mientras tanto vamos a ejecutar el script con pdb en la segunda consola de SSH que hemos abierto</p>
+<p><img src="/img/Forge/30.PNG" /></p>
+<p>Vamos a importar el SO y nos vamos a crear una shell de root y una vez la tengamos creado con pdb solo tenemos que salirnos del debugger de python y ejecutar el fichero que hemos creado y ya seremos Root</p>
+<p><img src="/img/Forge/29.PNG" /></p>
+<p>Y ya tendriamos la Maquina FORGE con un nivel de dificultad Medio explotada!!</p>
+<p><img src="/img/Forge/31.PNG" /></p>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
