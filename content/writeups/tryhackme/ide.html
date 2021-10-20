@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>TryHackMe - IDE Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Empline WriteUp" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="oscp_machines_index.html">OSCP CTF</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - IDE</td>
+</tr>
+<tr class="even">
+<td>Fecha: 21-09-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - FTP - CVE - VSFTPD </td>
+</tr>
+</tbody>
+</table>
+<h1 id="TryHackMe - IDE"> TryHackMe - IDE Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.133.157</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/IDE/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/IDE/2.1.PNG" /></p>
+<li>Puerto 21 FTP</li>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<li>Puerto 62337 Desconocido</li>
+<p>Ahora vamos aplicar una enumeracion de puertos mas exhaustiva , aplicando scripts basicos para determinar la version y servicio que corren en los puertos</p>
+<p><img src="/img/IDE/3.1.PNG" /></p>
+<p>Nos reporta que tenemos el servicio ftp abierto con un usuario anonimo , por lo que vamos listar el contenido </p>
+<p><img src="/img/IDE/5.PNG" /></p>
+<p>Si listamos todo el contenido , vemos algo que no es normal vemos directorios ocultos muy raros , por lo que opte por descargar todos esos ficheros mediante el comando wget</p>
+<p><img src="/img/IDE/6.PNG" /></p>
+<p>Le proporcionamos el usuario anonymous y sin contraseña y que descargue todo lo que contenga el servicio ftp</p>
+<p>Dentro del directorio ... , encontramos un fichero llamado - que contiene informacion</p>
+<p><img src="/img/IDE/7.PNG" /></p>
+<p>Dice que ha cambiado la contraseña y que use la de por defecto , tenemos 2 principales usuarios potenciales en el sistema "John" y "Drac"</p>
+<h2 id="reconocimiento-web">## Reconocimiento Web</h2>
+<p>Como tenemos el puerto 80 del servicio web abierto , vamos a listar su contenido , de primeras nos reporta el tipico index de Apache</p>
+<p><img src="/img/IDE/10.PNG" /></p>
+<p>Podemos realizar fuzzing pero no vamos a encontrar nada , por lo que vamos abrir el puerto 62337 y a ver que contiene</p>
+<p><img src="/img/IDE/11.PNG" /></p>
+<p>De primeras vemos un panel que nos pide credenciales de usuario , nosotros disponemos de dos usuarios potenciales pero no disponemos de contraseña</p>
+<p>Si tiramos de la herramienta WhatWeb para ver mas informacion , vamos a ver como un gestor de contenido llamado Codiad</p>
+<p><img src="/img/IDE/12.PNG" /></p>
+<p>Si buscamos algun exploit si existe para la version Codiad 2.8.4 , vamos a ver que hay 3 exploit de RCE pero primero necesitamos tener credenciales</p>
+<p><img src="/img/IDE/13.PNG" /></p>
+<p>Por lo que voy aprobar credenciales basicas , ya que en el texto que nos encontramos en el ftp decia que era como una pass facil , por lo que probando con el usuario john y probe un par de contraseñas y al final la password correcta era "password"</p>
+<p><img src="/img/IDE/14.PNG" /></p>
+<h2 id="explotacion-codiad">## Explotacion Codiad 2.8.4</h2>
+<p>Mediante searchsploit vamos a proceder a descargar el exploit</p>
+<p><img src="/img/IDE/15.PNG" /></p>
+<p>Y vamos a ejecutar el script para ver que parametros necesitamos para ejecutar el exploit</p>
+<p><img src="/img/IDE/16.PNG" /></p>
+<p>Nos pide que le proporcionemos : La URL + USUARIO (John) + Contraseña (password) + (IP ATACANTE) + (Puerto Atacante)</p>
+<p><img src="/img/IDE/17.PNG" /></p>
+<p>Ahora nos pide que ejecutemos esos dos comandos y cuando este ejecutandose , pulsemos Y</p>
+<p><img src="/img/IDE/18.PNG" /></p>
+<p>Recibimos una peticion y nos abre una shell reversa en el puerto 444 </p>
+<p><img src="/img/IDE/19.PNG" /></p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios</h2>
+<p>Ahora vamos a ir listando el sistema en busca de procesos , capabilities , ficheros SUID , para poder escalar a Root</p>
+<p><img src="/img/IDE/20.PNG" /></p>
+<p>Podemos ver varios ficheros ocultos si vamos listandolos , encontramos una contraseña del usuario drac para mysql en el bash_history</p>
+<p><img src="/img/IDE/22.PNG" /></p>
+<p>Si intentamos acceder a mysql , vamos a ver que no esta instalado en la maquina</p>
+<p><img src="/img/IDE/23.PNG" /></p>
+<p>Podemos intentar cambiar al usuario drac , proporcionandole la contraseña que hemos obtenido</p>
+<p><img src="/img/IDE/24.PNG" /></p>
+<p>Una vez que somos Drac , podemos tirar de sudo -l para buscar archivos o procesos que se ejecuten como Root y tenga el bit SUID activado</p>
+<p><img src="/img/IDE/25.PNG" /></p>
+<p>Podemos ver que el servicio VSFTPD es un tipo de servidor FTP se ejecuta con permisos SUID , primero vamos a comprobar que el servicio este activo</p>
+<p><img src="/img/IDE/26.PNG" /></p>
+<p>Una vez hemos comprobado que el servicio esta activo , vamos al archivo de configuracion del servicio que esta: /lib/systemd/system</p>
+<p><img src="/img/IDE/27.PNG" /></p>
+<p>Si hacemos un cat del fichero , vamos a poder observar la configuracion que contiene</p>
+<p><img src="/img/IDE/28.PNG" /></p>
+<p>Tiene un argumento o valor llamado "ExecStart" , donde vamos alojar el codigo malicioso para que cuando se ejecute el servicio nos cree una shell con permisos de root</p>
+<p><img src="/img/IDE/29.PNG" /></p>
+<p>Una vez inyectado el codigo malicioso , solo tenemos que reiniciar el servicio y nos creara /bin/bash</p>
+<code> /bin/bash -p</code>
+<p><img src="/img/IDE/30.PNG" /></p>
+<p>Y ya tendremos la maquina IDE recien sacada de TryHackMe explotada!</p>
+<p><img src="/img/IDE/31.PNG" /></p>
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
