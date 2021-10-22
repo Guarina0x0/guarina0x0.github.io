@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>OSCP - SEPPUKU Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Empline WriteUp" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+                    <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../../../../../../../../archive.html">Archivos</a>
+                        <a href="../../../../../../oscp_machines_index.html">OSCP CTF</a>
+                        <a href="../../../about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+                        
+                     </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: OSCP - Seppuku Solstice</td>
+</tr>
+<tr class="even">
+<td>Fecha: 21-10-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing - ID-RSA - Hydra </td>
+</tr>
+</tbody>
+</table>
+<h1 id="OSCP - Solstice"> OSCP - Seppuku Solstice Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 192.168.86.90</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Seppuku/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<code>nmap -sS -T5 -p- --open -n -Pn 192.168.86.90</code>
+<p><img src="/img/Seppuku/2.PNG" /></p>
+<li>Puerto 21 FTP</li>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<li>Puerto 139 Netbios-ssn</li>
+<li>Puerto 445 Microsoft-ds</li>
+<li>Puerto 7080 Empowerid</li>
+<li>Puerto 7601 Desconocido</li>
+<li>Puerto 8088 Radan-http</li>
+<p>Vamos aplicar un reconocimiento de puertos mas intensivo , aplicando scripts basicos de enumeracion para detectar version y servicios</p>
+<p><img src="/img/Seppuku/3.PNG" /></p>
+<p>Como tenemos dos puertos web abiertos , vamos a usar la herramienta WhatWeb para ver si utilizan algun CMS o encontrar algo interesante </p>
+<p><img src="/img/Seppuku/4.PNG" /></p>
+<p>Nos reporta que en el puerto 80 necesitamos credenciales para acceder a la pagina web , por lo que vamos a seguir enumerando</p>
+<p>Mediante Smbmap vamos a enumerar los recursos compartidos y ver los privilegios que tenemos de acceso </p>
+<p><img src="/img/Seppuku/7.PNG" /></p>
+<p>Podemos ver 2 recursos pero a ninguno de los dos tenemos acceso.</p>
+<p>Vamos aplicar script de Nmap para localizar si el Smb es vulnerable algun ataque</p>
+<code>nmap -p 139,445 --script "smb-vuln*" 192.168.86.90</code>
+<p><img src="/img/Seppuku/6.PNG" /></p>
+<p>Tras el reconocimiento de Nmap , nos dice que solo es vulnerable a un ataque de DOS , por lo que no nos interesa.</p>
+<h2 id="reconocimiento-web">## Reconocimiento Web :</h2>
+<p>Vamos a empezar con el reconocimiento web , empezaremos por el puerto 80 en el cual la pagina web nos pide credenciales para poder acceder</p>
+<p><img src="/img/Seppuku/8.PNG" /></p>
+<p>Por lo que lo vamos a dejar a un lado , y vamos a listar el contenido del puerto 8088 y vemos que tenemos una imagen de fondo y poca cosa mas</p>
+<p><img src="/img/Seppuku/9.PNG" /></p>
+<p>Mediante la herramienta Wfuzz vamos aplicar un fuzzing para listar directorios web mediante el uso de un diccionario y nos reporta dos rutas potenciales</p>
+<li>/cgi-bin</li>
+<li>/docs</li>
+<p><img src="/img/Seppuku/10.PNG" /></p>
+<p>Si entramos al directorio /cgi-bin no contiene nada , pero podriamos realizar un ataque shell shock , pero como no nos reporta gran cosa vamos aplicar fuzzing pero sumandole extensiones y aqui nos reporta un fichero llamado index.php</p>
+<p><img src="/img/Seppuku/12.PNG" /></p>
+<p>Parece una consola interactiva en la que nos pide credenciales , si buscamos exploit para este tipo de terminal web no vamos a encontrar gran cosa</p>
+<p>Por lo que volvi a realizar otra vez un escaneo con Nmap y me reporto un puerto extra que no me habia reportado antes , el puerto 7601 , que contenia la misma imagen que el puerto 8088 , pero al realizarle fuzzing nos encontrabamos con otro tipo de contenido</p>
+<p><img src="/img/Seppuku/13.PNG" /></p>
+<p>Vemos una web que nos tiene gran contenido , pero tras un tiempo de fuzzing nos reporta un directorio interesante /keys</p>
+<p><img src="/img/Seppuku/14.PNG" /></p>
+<p>Donde hay alojadas 2 claves ID_RSA , por lo que vamos a descargarlas a nuestro directorio de trabajo</p>
+<p><img src="/img/Seppuku/15.PNG" /></p>
+<p>Si abrimos el fichero , vamos a poder ver que se trata de un ID_RSA por lo que vamos asignarle permiso 600</p>
+<p><img src="/img/Seppuku/16.PNG" /></p>
+<p>Despues la herramienta Wfuzz nos reporto otro directorio llamado /secret</p>
+<p><img src="/img/Seppuku/17.PNG" /></p>
+<p>El cual contiene un diccionario de contraseñas , un usuario potencial del sistema </p>
+<p><img src="/img/Seppuku/18.PNG" /></p>
+<p>Por lo que vamos a descargar esos ficheros a nuestro directorio actual de trabajo mediante curl</p>
+<p><img src="/img/Seppuku/19.PNG" /></p>
+<p>Ahora ya podemos ver el contenido de los ficheros descargados</p>
+<p><img src="/img/Seppuku/20.PNG" /></p>
+<p>Por lo que si tenemos el servicio SSH abierto , tenemos un diccionario de contraseñas y un usuario potencial podemos efectuar un ataque de fuerza bruta al servicio SSH mediante Hydra</p>
+<p><img src="/img/Seppuku/21.PNG" /></p>
+<p>Y hay nos reporta la contraseña para el usuario "seppuku"</p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
+<p>Ya podemos visualizar el flag y desde el usuario Seppuku , no vamos a poder ver el flag del usuario Root</p>
+<p><img src="/img/Seppuku/22.PNG" /></p>
+<p>Si listamos el escritorio del usuario , vamos a encontrar un fichero oculto llamado .passwd , el cual contiene una potencial contraseña </p>
+<p><img src="/img/Seppuku/24.PNG" /></p>
+<p>Si vemos los usuarios que hay en el sistema nos fijamos que tenemos otros 2 mas , por lo que tenemos que pivotar entre los usuarios</p>
+<p><img src="/img/Seppuku/25.PNG" /></p>
+<p>Como estamos en una Retricted Bash vamos a tener que escaparla mediante python</p>
+<p><img src="/img/Seppuku/26.PNG" /></p>
+<p>Si tiramos sudo -l para ver archivos o procesos que tengan el bit SUID activado para poder ejecutar procesos como root nos reporta la siguiente ruta</p>
+<p><img src="/img/Seppuku/27.PNG" /></p>
+<p>Pero el fichero esta en el home del usuario tano , tenemos que tener en cuenta que todavia tenemos un ID_RSA , podemos probar si es el del usuario tano para pivotar en este usuario</p>
+<p><img src="/img/Seppuku/29.PNG" /></p>
+<p>Una vez hemos pivotado en el usuario tano vamos a crear la carpeta .cgi_bin y vamos añadir un fichero llamado bin donde vamos alojar una intruccion para que nos ejecute un shell</p>
+<p><img src="/img/Seppuku/31.PNG" /></p>
+<p>Ahora si volvemos al usuario samurai y ejecutamos la orden que nos daba con el sudo -l , conseguimos tener una shell como Root</p>
+<p><img src="/img/Seppuku/32.PNG" /></p>
+<p>Y ya tendriamos la maquina Seppuku explotada!</p>
+<p><img src="/img/Seppuku/33.PNG" /></p>
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
