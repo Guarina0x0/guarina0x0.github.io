@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>OSCP - Gheisha Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="OSCP - Gheisha" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+                    <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../../../../../../../../archive.html">Archivos</a>
+                        <a href="../../../../../../oscp_machines_index.html">OSCP CTF</a>
+                        <a href="../../../about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+                        
+                     </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: OSCP - Gheisha</td>
+</tr>
+<tr class="even">
+<td>Fecha: 15-11-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Fuzzing - Hydra SSH - SUID</td>
+</tr>
+</tbody>
+</table>
+<h1 id="OSCP - Gheisha"> OSCP - Gheisha Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 192.168.155.82</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Geisha/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<code>nmap -sS -T5 -p- --open -v -n -Pn 192.168.155.82</code>
+<p><img src="/img/Geisha/2.PNG" /></p>
+<li>Puerto 21 FTP</li>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<li>Puerto 7080 HTTPS</li>
+<li>Puerto 7125 HTPP</li>
+<li>Puerto 8088 HTTP</li>
+<li>Puerto 9198 HTTP</li>
+<p>Vamos aplicar un escaneo aplicando script de Nmap para detectar version que corren en los servicios y para que nos apliquen scripts basicos de enumeracion</p>
+<p><img src="/img/Geisha/3.PNG" /></p>
+<p>No es muy normal encontrar 5 servicios web , pero vamos a enumerarlos rapidamente mediante la herramienta WhatWeb</p>
+<p><img src="/img/Geisha/4.PNG" /></p>
+<p>Podemos ver diferentes servicios web como Nginx - Litespeed - Apache</p>
+<h2 id="reconocimiento web">## Reconocimiento Web:</h2>
+<p>Vamos a ir listando todas las paginas web , empezamos por el puerto por defecto el 80</p>
+<p><img src="/img/Geisha/5.PNG" /></p>
+<p>Encontramos una imagen y poco mas , ahora vamos a ver el puerto 7080 que es https y contiene la misma imagen</p>
+<p><img src="/img/Geisha/6.PNG" /></p>
+<p>Vamos a ver la web en el puerto 7125  , que tambien contiene la misma imagen</p>
+<p><img src="/img/Geisha/7.PNG" /></p>
+<p>Ahora en el puertyo 8088 que contiene la misma imagen que las otras</p>
+<p><img src="/img/Geisha/8.PNG" /></p>
+<p>Y el puerto 9198 contiene la mismas imagen que las demas</p>
+<p>Por lo unico que nos queda es empezar a realizar a todas estas 5 paginas web la tecnica de fuzzing para buscar directorios web potenciales mediante la herramienta wfuzz</p>
+<p><img src="/img/Geisha/10.PNG" /></p>
+<p>En el servidor 7125 nos reporta un passwd que contiene todos los usuarios del sistema</p>
+<p><img src="/img/Geisha/11.PNG" /></p>
+<p>Podemos ver que hay un usuario llamado "geisha" con permiso a una terminal /bin/bash , y tenemos el servicio SSH abierto por lo que con la herramienta hydra vamos aplicar fuerza bruta en busca de una contraseña para el usuario "geisha"</p>
+<p><img src="/img/Geisha/12.PNG" /></p>
+<p>Y la contraseña ya la tenemos , por lo que vamos a entrar mediante el servicio SSH</p>
+<p><img src="/img/Geisha/13.PNG" /></p>
+<h2 id="escalada privilegios">## Escalada de Privilegios:</h2>
+<p>Estamos mediante el usuario geisha , necesitamos escalar privilegios para convertirnos en Root , para ello podemos buscar ficheros SUID que ejecuten procesos como Root</p>
+<p>Podemos encontrar un proceso potencial /usr/bin/base32</p>
+<p><img src="/img/Geisha/14.PNG" /></p>
+<p>Si nos diriguimos a https://gtfobins.github.io/gtfobins/base32/ , podemos ver como aprovecharnos del permiso SUID</p>
+<p><img src="/img/Geisha/20.PNG" /></p>
+<p>Nos permite leer un fichero con permiso de Root , por lo que a nosotros nos interesa leer el flag del usuario Root</p>
+<p><img src="/img/Geisha/15.PNG" /></p>
+<p>Ya tendriamos la maquina Geisha del laboratorio OSCP explotada!</p>
+<p><img src="/img/Geisha/16.PNG" /></p>
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
