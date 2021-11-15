@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>OSCP - Photographer Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="OSCP - Photographer" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+                    <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../../../../../../../../archive.html">Archivos</a>
+                        <a href="../../../../../../oscp_machines_index.html">OSCP CTF</a>
+                        <a href="../../../about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+                        
+                     </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: OSCP - Photographer</td>
+</tr>
+<tr class="even">
+<td>Fecha: 15-11-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - SMB - CMS - Wordlists - SUID </td>
+</tr>
+</tbody>
+</table>
+<h1 id="OSCP - Photographer"> OSCP - Photographer Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 192.168.218.76</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Photographer/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<code>nmap -sS -T5 -p- --open -v -n -Pn 192.168.218.76</code>
+<p><img src="/img/Photographer/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<li>Puerto 139 Netbios-SSN</li>
+<li>Puerto 445 Microsoft-DS</li>
+<p>Vamos aplicar un escaneo aplicando script de Nmap para detectar version que corren en los servicios y para que nos apliquen scripts basicos de enumeracion</p>
+<p><img src="/img/Photographer/3.PNG" /></p>
+<h2 id="enumeracion-smb">## Enumeracion SMB:</h2>
+<p>Disponemos del puertro 139 y 445 abierto , por lo que vamos a enumerar el servicio SMB</p>
+<p>Con smbmap , vamos a listar el contenido y que permisos tenemos y vamos a poder apreciar 2 archivos interesantes</p>
+<p><img src="/img/Photographer/4.PNG" /></p>
+<p>Mediante la herramienta smbclient , vamos a proceder a descargar esos ficheros</p>
+<p><img src="/img/Photographer/12.PNG" /></p>
+<p>Si vemos el contenido de mailsent.txt , vamos a ver 2 correos potenciales y una frase que nos dice que no olvide la contraseña y le pone babygirl que podemos pensar que es una posible contraseña que necesitemos , por lo que nos vamos a guardar los 2 correos y la potencial contraseña</p>
+<h2 id="enumeracion-web">## Enumeracion Web:</h2>
+<p>Disponemos del servicio web corriendo en el puerto 80 y en el puerto 8000 , por lo que mediante la herramienta WhatWeb vamos a inspeccionar si estamos ante algun gestor de contenido</p>
+<p><img src="/img/Photographer/6.PNG" /></p>
+<p>Podemos ver el contenido de la pagina web en el puerto 80</p>
+<p><img src="/img/Photographer/7.PNG" /></p>
+<p>Podemos ver el contenido de la pagina web en el puerto 8000</p>
+<p><img src="/img/Photographer/8.PNG" /></p>
+<p>Si usamos el plugin Wappalyzer , nos va a reportar que en el puerto 8000 estamos ante un gestor de contenido llamado "Koken"  en la version 0.22.24</p>
+<p><img src="/img/Photographer/9.PNG" /></p>
+<p>Cuando estamos ante un CMS , podemos usar la herramienta searchsploit que se conecta con la API de exploitdb y nos facilita si hay alguna vulnerabilidad reportada y que cuente con prueba de concepto</p>
+<p><img src="/img/Photographer/10.PNG" /></p>
+<p>Podemos ver que para la version que tenemos hay una vulnerabilidad de "Arbitry File Upload" , es decir podemos subir una shell reverse segun la prueba de concepto en formato php asociandole la extension jpeg y mediante burp suite quitar el jpeg a la hora de realizar la subida</p>
+<p>Mediante la herramienta wfuzz vamos a realizar un fuzzing en busca de directorios web potenciales , para acceder a un posible panel de administracion</p>
+<p><img src="/img/Photographer/10.1.PNG" /></p>
+<p>Podemos ver que estamos ante un directorio web llamado admin </p>
+<p><img src="/img/Photographer/11.PNG" /></p>
+<p>El cual nos pide un correo y una contraseña para acceder , si recordamos en el servicio smb teniamos 2 correos y una potencial contraseña , por lo que mediante la herramienta Crunch voy a crear un wordlists con la palabra "babygirl"</p>
+<p><img src="/img/Photographer/13.PNG" /></p>
+<p>Mediante la herramienta Burp Suite y su apartado de "Intruder" , vamos a seleccionar el target</p>
+<p><img src="/img/Photographer/14.PNG" /></p>
+<p>Y vamos a seleccionar en este caso como "Payload" la contraseña </p>
+<p><img src="/img/Photographer/15.PNG" /></p>
+<p>Y vamos a cargar el diccionario personalizado que hemos creado mediante crunch</p>
+<p><img src="/img/Photographer/16.PNG" /></p>
+<p>Y tras unos segundos ya tenemos la contraseña para acceder al panel de administracion del CMS de Koken</p>
+<p><img src="/img/Photographer/17.PNG" /></p>
+<p>Ahora vamos acceder al panel de administracion y vamos a realizar la explotacion</p>
+<p><img src="/img/Photographer/18.PNG" /></p>
+<h2 id="explotacion">## Explotacion Koken CMS:</h2>
+<p>El exploit nos decia que crearamos una shell reversa con la extesion php.jpeg y la subieramos capturando la peticion mediante Burp Suite y quitandole en la subida la exntesion jpeg antes de subirlo al servidor asi bypasseamos la seguridad</p>
+<p><img src="/img/Photographer/20.PNG" /></p>
+<p>Ya tenemos cargado nuestro archivo malicioso , ahora mediante el proxy de Burp Suite vamos a capturar la peticion</p>
+<p><img src="/img/Photographer/21.PNG" /></p>
+<p>Vamos a eliminar la extension .jpeg y solo vamos a dejar reverse.php y vamos a enviar la peticion</p>
+<p>Ahora solo nos queda ponernos a la escucha mediante el puerto que hemos configurado y ejecutar nuestro shell desde el dashboard</p>
+<p><img src="/img/Photographer/24.PNG" /></p>
+<p>Ya tenemos una shell como www-data , ahora nos queda escalar privilegios</p>
+<h2 id="escalada-privilegios">## Escalada de Privilegios:</h2>
+<p>Podemos ya visualizar el flag del usuario </p>
+<p><img src="/img/Photographer/26.PNG" /></p>
+<p>Ahora mediante el script LinPeas , vamos a enumerar el sistema en busca de ficheros potenciales , permisos SUID <a href="https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS"> LinPEAS</a></p>
+<p><img src="/img/Photographer/27.PNG" /></p>
+<p>En la parte de Ficheros Interesantes encontramos un permiso SUID con el que nos vamos a poder convertir en Root /usr/bin/php7.2</p>
+<p><img src="/img/Photographer/28.PNG" /></p>
+<p>Ahora solo nos queda irnos a https://gtfobins.github.io/ y buscar el permiso de PHP</p>
+<p><img src="/img/Photographer/30.PNG" /></p>
+<p>Y ya seriamos Root y tendriamos la maquina explotada</p>
+<p><img src="/img/Photographer/31.PNG" /></p>
+<p>Una de las maquinas que tenemos en el laboratorio de la certificacion OSCP de un nivel facil</p>
+<p><img src="/img/Photographer/32.PNG" /></p>
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
