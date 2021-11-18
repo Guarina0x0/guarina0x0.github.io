@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>OSCP - Monitoring Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="OSCP - Monitoring" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+                    <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../../../../../../../../archive.html">Archivos</a>
+                        <a href="../../../../../../oscp_machines_index.html">OSCP CTF</a>
+                        <a href="../../../about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+                        
+                     </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: OSCP - Monitoring</td>
+</tr>
+<tr class="even">
+<td>Fecha: 18-11-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - Nagios XI - Exploit - MetaSploit</td>
+</tr>
+</tbody>
+</table>
+<h1 id="OSCP - Monitoring"> OSCP - Monitoring Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 192.168.58.136</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Monitoring/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<code>nmap -sS -T5 -p- --open -v -n -Pn 192.168.58.136</code>
+<p><img src="/img/Monitoring/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 25 SMTP</li>
+<li>Puerto 80 HTTP</li>
+<li>Puerto 389 LDAP</li>
+<li>Puerto 443 HTPPS</li>
+<li>Puerto 5667 TCPWRAPPED</li>
+<p>Vamos aplicar un escaneo aplicando script de Nmap para detectar version que corren en los servicios y para que nos apliquen scripts basicos de enumeracion</p>
+<p><img src="/img/Monitoring/3.PNG" /></p>
+<p>Mediante NC vamos a enumerar el servicio de SMTP , pero nos reporta poca cosa y no encontramos nada interesante</p>
+<p><img src="/img/Monitoring/4.PNG" /></p>
+<p>Como tenemos 2 puertos web abierto , vamos a enumerar la informacion basica mediante la herramienta WhatWeb en busca de algun CMS</p>
+<p><img src="/img/Monitoring/5.PNG" /></p>
+<p>Como tambien tenemos el puerto LDAP abierto vamos a enumerar informacion mediante la herramienta "ldapsearch"</p>
+<p><img src="/img/Monitoring/7.PNG" /></p>
+<p>Y tampoco nos reporta gran informacion que nos pueda dar pistas de como resolver la maquina , por lo que ya solo nos queda centrarnos en los puertos web</p>
+<h2 id="enumeracion">## Enumeracion Web:</h2>
+<p>En el puerto 80 , vamos a encontrar un tipo de CMS llamado "Nagios XI"</p>
+<p><img src="/img/Monitoring/8.PNG" /></p>
+<p>Y en el puerto 443 HTTPS tenemos el mismo servicio</p>
+<p><img src="/img/Monitoring/9.PNG" /></p>
+<p>Si usamos la herramienta searchsploit que se conecta mediante la API de exploit-db en busqueda de exploits posibles , encontramos bastantes exploits que afectan a esta version</p>
+<p><img src="/img/Monitoring/10.PNG" /></p>
+<p>Buscando credenciales por defecto encuentro que por defecto que el usuario y contraseña son:</p>
+<li>Usuario:nagiosadmin</li>
+<li>Password:admin</li>
+<p><img src="/img/Monitoring/11.PNG" /></p>
+<p>Una vez dentro del sistema Nagios XI , tenemos dos maneras de realizar un RCE , mediante un script en Python o mediante Metasploit</p>
+<p><img src="/img/Monitoring/12.PNG" /></p>
+<h2 id="rce-python">## RCE mediante Python:</h2>
+<p>En exploit db tenemos una prueba de concepto realizada en python que nos proporciona una shell una vez tenemos las credenciales de Nagios XI</p>
+<p> <a href="https://www.exploit-db.com/exploits/49422">Exploit en Python</a></p>
+<p><img src="/img/Monitoring/13.PNG" /></p>
+<p>Configuramos los parametros que necesita el Script y nos ponemos a la escucha mediante el puerto configurado y ya tendremos una shell remota</p>
+<p><img src="/img/Monitoring/14.PNG" /></p>
+<h2 id="rce-metasploit">## RCE mediante Metasploit:</h2>
+<p>Para realizar la explotacion mediante Metasploit , vamos a necesitar tambien tener credenciales validas y usar el exploit:</p>
+<code>exploit linux/http/nagios_xi_authenticated_rce</code>
+<p><img src="/img/Monitoring/16.PNG" /></p>
+<p>Ya solo tenemos que importar una TTY interactiva que lo haremos mediante Python y seremos Root y ya podremos visualizar las flag</p>
+<p><img src="/img/Monitoring/17.PNG" /></p>
+<p>Y ya tendriamos la maquina Monitoring del laboratorio de OSCP explotada!</p>
+<p><img src="/img/Monitoring/18.PNG" /></p>
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
