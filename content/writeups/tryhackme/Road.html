@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="../../../favicon.png">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link
+  href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Kanit:wght@600&family=Roboto&family=Electrolize&display=swap&family=Fira+Mono&family=Cousine&display=swapdisplay=swap&family=IBM+Plex+Mono&display=swap&family=Courier+Prime:wght@700&display=swap"
+  rel="stylesheet"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script src="https://kit.fontawesome.com/65ad30df58.js" crossorigin="anonymous"></script>
+  <script src="/dist/mark.min.js" charset="UTF-8"></script>
+<title>TryHackMe - Road Writeup &mdash; Guarina0x0</title>
+<meta property="og:title" content="TryHackMe - Road WriteUp" />
+      <meta property="og:description" content="topics" />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="github" />
+     
+
+</head>
+
+
+<pre style="font-family:'Courier Prime';color:#f66;text-align:center;font-weight:1000">
+    _____ _    _         _____  _____ _   _          _____   _____  
+    / ____| |  | |  /\   |  __ \|_   _| \ | |   /\   / _ \ \ / / _ \ 
+   | |  __| |  | | /  \  | |__) | | | |  \| |  /  \ | | | \ V / | | |
+   | | |_ | |  | |/ /\ \ |  _  /  | | | . ` | / /\ \| | | |> <| | | |
+   | |__| | |__| / ____ \| | \ \ _| |_| |\  |/ ____ \ |_| / . \ |_| |
+    \_____|\____/_/    \_\_|  \_\_____|_| \_/_/    \_\___/_/ \_\___/ 
+                                                                     
+                    ./Guarina0x0</pre>
+  <nav>
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../..archive.html">Archivos</a>
+                        <a href="../../../oscp_machines_index.html">OSCP CTF</a>
+                        <a href="../../..about.html">Whoami</a>
+                        <a href="https://github.com/Guarina0x0">GitHub</a>
+                        <a href="https://tryhackme.com/p/Guarina000">TryHackMe</a>
+                        <a href="https://www.hackthebox.eu/profile/408446">HackTheBox</a>
+  </nav>
+
+<article>
+<table>
+<tbody>
+<tr class="odd">
+<td>Titulo: TryHackMe - Road</td>
+</tr>
+<tr class="even">
+<td>Fecha: 29-11-2021</td>
+</tr>
+<tr class="odd">
+<td>Descripcion: Enumeracion - HTTP - Burp Suite -  MongoDB </td>
+</tr>
+</tbody>
+</table>
+<h1 id="TryHackMe - Road"> TryHackMe - Road Writeup</h1>
+<h2 id="ping">## Ping:</h2>
+<pre class="shell:#"><code>ping -c1 10.10.235.69</code></pre>
+<p>Mediante el comando ping vamos a trazar una ruta ICMP para ver si la maquina esta activa y ante que tipo de sistema operativo estamos</p>
+<p>Podemos ver que la respuesta del ttl es 63 , el TTL en maquinas Linux es 64 y en maquinas Windows 128 , en este caso es 63 porque pasa por un nodo intermediario.</p>
+<p><img src="/img/Road/1.PNG" /></p>
+<h2 id="enumeracion">## Enumeracion :</h2>
+<p>Ahora vamos a proceder a ver que servicios tiene esta maquina abiertos para ello vamos a realizar una enumeracion de puertos:</p>
+<p>  Mediante el parametro --min-rate 5000 va a emitir paquetes no mas lento que 5000 paquetes por segundo </p>
+<p><img src="/img/Road/2.PNG" /></p>
+<li>Puerto 22 SSH</li>
+<li>Puerto 80 HTTP</li>
+<p>Ahora vamos aplicar una enumeracion de puertos mas exhaustiva , aplicando scripts basicos para determinar la version y servicio que corren en los puertos activos.</p>
+<p><img src="/img/Road/3.PNG" /></p>
+<p>Mediante la herramienta WhatWeb vamos a inspeccionar un poco mas el servicio HTTP en busca de algun CMS o alguna redireccion</p>
+<p><img src="/img/Road/4.PNG" /></p>
+<p>No vemos gran cosa , por lo que vamos abrir la pagina web y proceder a inspeccionarla</p>
+<p><img src="/img/Road/5.PNG" /></p>
+<h2 id="enumeracion-web">## Enumeracion Web:</h2>
+<p>Como no encontramos nada interesante vamos a tirar de la tecnica Fuzzing , para buscar directorios web aplicando fuerza bruta mediante la herramienta Wfuzz</p>
+<p><img src="/img/Road/7.PNG" /></p>
+<p>Nos va a reportar un directorio llamado /v2 , el cual contiene un panel de autentificacion , actualmente no disponemos de credenciales validas, pero podemos registrarnos</p>
+<p><img src="/img/Road/6.PNG" /></p>
+<p>Por lo que vamos a registrarnos en el sistema con unas credenciales inventadas</p>
+<p><img src="/img/Road/8.PNG" /></p>
+<p>En los primeros intentos la maquina al ser reciente contaba con un error en la parte de backend cuando se conectaba a la base de datos para registrar el usuario</p>
+<p><img src="/img/Road/9.PNG" /></p>
+<p>Tras esperarme un dia ya funcionaba el servicio y tenemos acceso al panel mediante las credenciales registradas anteriormente</p>
+<p><img src="/img/Road/10.PNG" /></p>
+<p>Tras un rato investigando el panel , nos encontramos ante un apartado de Perfil , donde encontramos el correo del administrador del sistema</p>
+<p><img src="/img/Road/11.PNG" /></p>
+<p>Podemos pensar en realizar un secuestro del correo , tenemos un apartado para cambiar la contraseña del usuario registrado teniendo la contraseña anterior , podemos intentar poner mi usuario y mis credenciales y capturar la peticion mediante Burp Suite y cambiar mi usuario por el de administrador</p>
+<p>Asi podremos cambiar la contraseña del usuario Administrador y tendremos acceso a la parte de subir ficheros</p>
+<p>Por lo que vamos a realizar el ataque</p>
+<p><img src="/img/Road/12.PNG" /></p>
+<p>Activamos nuestro proxy para nuestro Burp Suite actue de intermediario entre el Cliente y el Servidor</p>
+<p><img src="/img/Road/13.PNG" /></p>
+<p>Podemos ver que tenemos el campo del correo nuestro , el que vamos a cambiar por el correo del administrador</p>
+<p><img src="/img/Road/14.PNG" /></p>
+<p>Ahora ya solo nos queda enviar la peticion y ingresar con las credenciales que hemos cambiado al usuario Administrador</p>
+<p><img src="/img/Road/15.PNG" /></p>
+<p>Ahora vamos a crear una shell reversa en php y la vamos a proceder a subir mediante el campo que tenemos en el apartado Perfil</p>
+<p><img src="/img/Road/16.PNG" /></p>
+<p>Si capturamos esa peticion de subida mediante Burp Suite vamos a ver que se sube al directorio web /v2/profileimages </p>
+<p><img src="/img/Road/17.PNG" /></p>
+<p>Tiene deshabilitado la opcion de listado de contenido , por lo que tenemos que poner el fichero en cuestion en este caso reverse.php y ponernos a la escucha mediante NetCat por el puerto configurado en la shell reversa</p>
+<p><img src="/img/Road/18.PNG" /></p>
+<h2 id="Escalada de Privilegios">## Escalada de Privilegios:</h2>
+<p>Actualmente tenemos una shell como el usuario www-data , y tenemos que conseguir una shell como el usuario Root para obtener el flag</p>
+<p>Si nos vamos al directorio del usuario vamos a poder listar el flag de user.txt</p>
+<p><img src="/img/Road/19.PNG" /></p>
+<p>Mediante la enumeracion del sistema en busqueda de algun proceso que nos ayude a escalar privilegios , nos encontramos con el proceso de ejecucion de MongoDB</p>
+<p><img src="/img/Road/20.PNG" /></p>
+<p>Si entramos dentro del cliente de MongoDB , vamos a ver que tipo de contenido tiene y nos reporta 4 tablas interesantes que iremos enumerando la informacion que contienen</p>
+<p><img src="/img/Road/21.PNG" /></p>
+<p>Y en la tabla User contiene un campo con credenciales del usuario "Developer" usuario del sistema</p>
+<p><img src="/img/Road/22.PNG" /></p>
+<p>Realizamos un pivoting de Usuario mediante el servicio SSH que teniamos abierto , y ahora ya como el usuario Developer tenemos la ejecucion de un proceso como Root que se puede explotar llamado LD_Reload</p>
+<p><img src="/img/Road/232.PNG" /></p>
+<p> <a href="https://www.hackingarticles.in/linux-privilege-escalation-using-ld_preload/">LD_Reload Exploit</a></p>
+<p>Crearemos una shell en C:</p>
+<code>#include <stdio.h>
+    #include <sys/types.h>
+    #include <stdlib.h>
+    void _init() {
+    unsetenv("LD_PRELOAD");
+    setgid(0);
+    setuid(0);
+    system("/bin/sh");
+    }</code>
+<p><img src="/img/Road/24.PNG" /></p>
+<p>Ahora procedemos a compilar el fichero y ejecutarlo y ya tendremos una shell como Root</p>
+<code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code>
+<code>sudo LD_PRELOAD=/tmp/shell.so find</code>
+<p><img src="/img/Road/25.PNG" /></p>
+<p>Y tendriamos terminada la maquina Road , de TryhackMe con una dificultad de Media!</p>
+<p><img src="/img/Road/27.PNG" /></p>
+
+
+</article>
+
+<footer>
+    <hr>
+    <p> Generado por:<a href="https://github.com/Guarina0x0"></a> Guarina0x0 <br /> 
+    <i class="far fa-copyright"></i> 2021 </p>
+  </footer>
+</body>
+</html>
