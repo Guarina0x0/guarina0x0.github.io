@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://guarina0x0.github.io/sitemap.xml

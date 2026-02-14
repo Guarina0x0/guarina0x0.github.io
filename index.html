@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Guarina0x0 | Pentesting & Red Team</title>
+    <meta name="description" content="Portal interdimensional de Pentesting, Red Team, Vulnerabilidades y Certificaciones de Seguridad Ofensiva">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/">
+    <meta property="og:url" content="https://guarina0x0.github.io/">
+    <link rel="stylesheet" href="styles.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Guarina0x0 | Pentesting & Red Team">
+    <meta property="og:description" content="Portal interdimensional de Pentesting, Red Team, Vulnerabilidades y Certificaciones de Seguridad Ofensiva">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Guarina0x0 | Pentesting & Red Team">
+    <meta name="twitter:description" content="Portal interdimensional de Pentesting, Red Team, Vulnerabilidades y Certificaciones de Seguridad Ofensiva">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Guarina0x0 - Portal de Pentesting y Red Team">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="pentesting, red team, ciberseguridad, hacking etico, CRTE, CRTO, CWP, CARTP, cheatsheets, seguridad ofensiva, Active Directory, Cobalt Strike, Wi-Fi hacking, Azure AD">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Guarina0x0",
+        "description": "Portal interdimensional de Pentesting, Red Team, Vulnerabilidades y Certificaciones de Seguridad Ofensiva",
+        "url": "https://guarina0x0.github.io",
+        "author": {"@type": "Person", "name": "Guarina0x0"}
+    }
+    </script>
+    <link rel="stylesheet" href="index.css">
+    <!-- Theme init (FOUC prevention) -->
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+
+    <!-- Starfield background -->
+    <div class="starfield">
+        <canvas id="starCanvas"></canvas>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="/" class="nav-brand">
+            <div class="nav-logo">
+                <span>G</span>
+            </div>
+            <span class="nav-title">GUARINA0x0</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#categorias">Categor&iacute;as</a></li>
+            <li><a href="cheatsheets.html">Cheatsheets</a></li>
+            <li><a href="#timeline">Certs</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="search-trigger" id="searchTrigger" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <kbd>Ctrl+K</kbd>
+        </button>
+        <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="main-content">
+        <!-- Portal Animation -->
+        <div class="portal-container">
+            <div class="portal-ring"></div>
+            <div class="portal-ring"></div>
+            <div class="portal-ring"></div>
+            <div class="portal-ring"></div>
+            <div class="portal-core"></div>
+            <!-- Particles generated via JS -->
+        </div>
+
+        <span class="hero-dimension">// Dimensi&oacute;n C-137 :: Seguridad Ofensiva</span>
+
+        <h1 class="hero-title">
+            <span class="text-portal glitch" data-text="GUARINA0x0">GUARINA0x0</span><br>
+            <span class="text-white" style="font-size: 0.45em; font-weight: 400; letter-spacing: 4px;">PENTESTING &bull; RED TEAM &bull; HACKING</span>
+        </h1>
+
+        <div class="hero-certs">
+            <a class="cert-badge" href="https://www.credential.net/71c40f42-aabb-49c4-80f1-3f17b0155248#acc.h5SLtkHQ" target="_blank" rel="noopener noreferrer">CRTE</a>
+            <a class="cert-badge" href="https://www.credential.net/043feaa3-5005-4f2f-ae85-75d0bacc57f8#acc.C6SI9s1x" target="_blank" rel="noopener noreferrer">CWP</a>
+            <a class="cert-badge" href="https://www.credential.net/f4d8f49f-d851-4cde-8167-62067255b04a#acc.m2td8i0C" target="_blank" rel="noopener noreferrer">CARTP</a>
+            <a class="cert-badge" href="https://badges.parchment.eu/public/assertions/Fd1yqdbjQi-gjl1uouhjQA" target="_blank" rel="noopener noreferrer">CRTO</a>
+            <a class="cert-badge" href="https://www.credential.net/6aa5eeab-b942-4241-a119-3f1ae971dab0#acc.RnH7icPt" target="_blank" rel="noopener noreferrer">CRTP</a>
+            <a class="cert-badge" href="https://verified.elearnsecurity.com/certificates/1b79f5ae-b4f9-466b-b295-d5036d3b75b2" target="_blank" rel="noopener noreferrer">eCPPTv2</a>
+            <a class="cert-badge" href="https://verified.elearnsecurity.com/certificates/4d193434-560d-40de-845e-412c276da0e0" target="_blank" rel="noopener noreferrer">eWPT</a>
+        </div>
+
+        <div class="hero-terminal" id="heroTerminal">
+            <div class="hero-terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="hero-terminal-title">guarina0x0@C-137:~</span>
+            </div>
+            <div class="hero-terminal-body" id="heroTerminalBody"></div>
+            <div class="hero-terminal-input-line" id="heroTerminalInputLine" style="display:none;">
+                <span class="term-prompt">$</span>
+                <input type="text" class="hero-terminal-input" id="heroTerminalInput" spellcheck="false" autocomplete="off">
+                <span class="typewriter-cursor"></span>
+            </div>
+        </div>
+
+        <div class="hero-cta">
+            <a href="#categorias" class="btn btn-primary">Explorar Portal</a>
+            <a href="#about" class="btn btn-outline">Qui&eacute;n Soy</a>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Search -->
+    <div class="search-container" id="categorias">
+        <div class="search-box">
+            <span class="search-icon">&#9906;</span>
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar en el multiverso... (ej: OWASP, Active Directory, OSCP)" aria-label="Buscar en el catalogo de dimensiones">
+            <span class="search-count"><span id="resultCount">6</span> dimensiones</span>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-tag">// Acceso al Multiverso</span>
+            <h2 class="section-title">Cat&aacute;logo de <span class="accent">Dimensiones</span></h2>
+            <p class="section-desc">Cada dimensi&oacute;n contiene conocimiento especializado en seguridad ofensiva. Elige tu destino y comienza la exploraci&oacute;n.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid">
+
+            <!-- Pentesting -->
+            <a href="javascript:void(0)" class="category-card reveal reveal-delay-1" data-tags="pentesting owasp web network infrastructure api mobile">
+                <div class="card-header">
+                    <div class="card-icon pentesting">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">Pentesting</h3>
+                        <span class="card-count">Dimensi&oacute;n P-001</span>
+                    </div>
+                </div>
+                <p class="card-description">Metodolog&iacute;as de pruebas de penetraci&oacute;n en aplicaciones web, redes, infraestructura, APIs y m&oacute;viles. Desde reconocimiento hasta post-explotaci&oacute;n.</p>
+                <div class="card-tags">
+                    <span class="tag">OWASP</span>
+                    <span class="tag">Web</span>
+                    <span class="tag">Network</span>
+                    <span class="tag">API</span>
+                    <span class="tag">Mobile</span>
+                </div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+
+            <!-- Red Team -->
+            <a href="javascript:void(0)" class="category-card reveal reveal-delay-2" data-tags="red team adversary simulation apt tactics evasion c2">
+                <div class="card-header">
+                    <div class="card-icon redteam">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">Red Team</h3>
+                        <span class="card-count">Dimensi&oacute;n R-137</span>
+                    </div>
+                </div>
+                <p class="card-description">Simulaci&oacute;n de adversarios, t&aacute;cticas APT, evasi&oacute;n de defensas, Command & Control, movimiento lateral y t&eacute;cnicas avanzadas de ataque.</p>
+                <div class="card-tags">
+                    <span class="tag">Adversary Sim</span>
+                    <span class="tag">APT</span>
+                    <span class="tag">Evasion</span>
+                    <span class="tag">C2</span>
+                </div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+
+            <!-- Vulnerabilidades -->
+            <a href="javascript:void(0)" class="category-card reveal reveal-delay-3" data-tags="vulnerabilidades cve exploits 0day buffer overflow sqli xss rce">
+                <div class="card-header">
+                    <div class="card-icon vulns">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">Vulnerabilidades</h3>
+                        <span class="card-count">Dimensi&oacute;n V-404</span>
+                    </div>
+                </div>
+                <p class="card-description">An&aacute;lisis de CVEs, desarrollo de exploits, investigaci&oacute;n de 0-days, buffer overflows, inyecciones SQL, XSS, RCE y cadenas de explotaci&oacute;n.</p>
+                <div class="card-tags">
+                    <span class="tag">CVE</span>
+                    <span class="tag">Exploits</span>
+                    <span class="tag">0-Day</span>
+                    <span class="tag">RCE</span>
+                    <span class="tag">SQLi</span>
+                </div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+
+            <!-- Certificaciones -->
+            <a href="cheatsheets.html" class="category-card reveal reveal-delay-4" data-tags="certificaciones crte cwp crtp crto ewpt ecpptv2 cartp red team certs">
+                <div class="card-header">
+                    <div class="card-icon certs">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">Certificaciones</h3>
+                        <span class="card-count">Dimensi&oacute;n C-500</span>
+                    </div>
+                </div>
+                <p class="card-description">Gu&iacute;as de preparaci&oacute;n, experiencias y recursos para certificaciones ofensivas: CRTE, CWP, CARTP, CRTO, CRTP, eCPPTv2, eWPT y m&aacute;s.</p>
+                <div class="card-tags">
+                    <span class="tag">CRTE</span>
+                    <span class="tag">CWP</span>
+                    <span class="tag">CARTP</span>
+                    <span class="tag">CRTO</span>
+                    <span class="tag">CRTP</span>
+                    <span class="tag">eCPPTv2</span>
+                    <span class="tag">eWPT</span>
+                </div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+
+            <!-- Herramientas -->
+            <a href="javascript:void(0)" class="category-card reveal reveal-delay-5" data-tags="herramientas tools nmap burp metasploit cobalt strike bloodhound">
+                <div class="card-header">
+                    <div class="card-icon tools">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">Herramientas</h3>
+                        <span class="card-count">Dimensi&oacute;n T-999</span>
+                    </div>
+                </div>
+                <p class="card-description">Arsenal de herramientas ofensivas: escaneadores, frameworks de explotaci&oacute;n, herramientas de enumeraci&oacute;n, post-explotaci&oacute;n y automatizaci&oacute;n.</p>
+                <div class="card-tags">
+                    <span class="tag">Nmap</span>
+                    <span class="tag">Burp Suite</span>
+                    <span class="tag">Metasploit</span>
+                    <span class="tag">BloodHound</span>
+                </div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+
+            <!-- Write-ups / CTF -->
+            <a href="javascript:void(0)" class="category-card reveal reveal-delay-6" data-tags="writeups ctf hackthebox tryhackme challenges walkthroughs">
+                <div class="card-header">
+                    <div class="card-icon writeups">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">Write-ups & CTF</h3>
+                        <span class="card-count">Dimensi&oacute;n W-042</span>
+                    </div>
+                </div>
+                <p class="card-description">Resoluciones detalladas de CTFs, m&aacute;quinas de HackTheBox, TryHackMe y otros desaf&iacute;os de seguridad con explicaciones paso a paso.</p>
+                <div class="card-tags">
+                    <span class="tag">HackTheBox</span>
+                    <span class="tag">TryHackMe</span>
+                    <span class="tag">CTF</span>
+                    <span class="tag">Walkthroughs</span>
+                </div>
+                <span class="card-arrow">&rarr;</span>
+            </a>
+
+        </div>
+
+        <div class="no-results" id="noResults">
+            <span class="portal-emoji">&#127758;</span>
+            <p>No se encontraron dimensiones para esa b&uacute;squeda.<br>Intenta con otro t&eacute;rmino, Morty.</p>
+        </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <div class="stats-strip">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <div class="stat-number" data-count="7">0</div>
+                <div class="stat-label">Art&iacute;culos</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-1">
+                <div class="stat-number" data-count="4">0</div>
+                <div class="stat-label">Dimensiones</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-2">
+                <div class="stat-number" data-count="7">0</div>
+                <div class="stat-label">Herramientas</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-3">
+                <div class="stat-number" data-count="7">0</div>
+                <div class="stat-label">Certificaciones</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rick Quote Banner -->
+    <div class="rick-quote reveal">
+        <div class="rick-quote-inner">
+            <span class="rick-quote-icon">&#129514;</span>
+            <p class="rick-quote-text" id="rickQuote">"Cargando transmisi&oacute;n interdimensional..."</p>
+        </div>
+    </div>
+
+    <!-- Timeline de Certificaciones -->
+    <section class="timeline-section" id="timeline">
+        <div class="section-header reveal">
+            <span class="section-tag">// Dimensiones Descubiertas</span>
+            <h2 class="section-title">Timeline de <span class="accent">Certificaciones</span></h2>
+            <p class="section-desc">Cada certificaci&oacute;n es una nueva dimensi&oacute;n conquistada. Un portal abierto hacia m&aacute;s conocimiento ofensivo.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">CRTE</div>
+                    <div class="timeline-full">Certified Red Team Expert</div>
+                    <div class="timeline-dimension">// Altered Security &bull; Advanced AD Attacks</div>
+                    <a class="timeline-credential" href="https://www.credential.net/71c40f42-aabb-49c4-80f1-3f17b0155248#acc.h5SLtkHQ" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-1">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">CWP</div>
+                    <div class="timeline-full">Certified Wireless Professional</div>
+                    <div class="timeline-dimension">// Wi-Fi Security &bull; Wireless Attacks</div>
+                    <a class="timeline-credential" href="https://www.credential.net/043feaa3-5005-4f2f-ae85-75d0bacc57f8#acc.C6SI9s1x" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-2">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">CARTP</div>
+                    <div class="timeline-full">Certified Azure Red Team Professional</div>
+                    <div class="timeline-dimension">// Altered Security &bull; Azure Cloud Attacks</div>
+                    <a class="timeline-credential" href="https://www.credential.net/f4d8f49f-d851-4cde-8167-62067255b04a#acc.m2td8i0C" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-3">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">CRTO</div>
+                    <div class="timeline-full">Certified Red Team Operator</div>
+                    <div class="timeline-dimension">// Zero-Point Security &bull; Cobalt Strike</div>
+                    <a class="timeline-credential" href="https://badges.parchment.eu/public/assertions/Fd1yqdbjQi-gjl1uouhjQA" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-4">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">CRTP</div>
+                    <div class="timeline-full">Certified Red Team Professional</div>
+                    <div class="timeline-dimension">// Altered Security &bull; Active Directory</div>
+                    <a class="timeline-credential" href="https://www.credential.net/6aa5eeab-b942-4241-a119-3f1ae971dab0#acc.RnH7icPt" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-5">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">eCPPTv2</div>
+                    <div class="timeline-full">Certified Professional Penetration Tester</div>
+                    <div class="timeline-dimension">// eLearnSecurity / INE &bull; Network Pentesting</div>
+                    <a class="timeline-credential" href="https://verified.elearnsecurity.com/certificates/1b79f5ae-b4f9-466b-b295-d5036d3b75b2" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-6">
+                <div class="timeline-node"></div>
+                <div class="timeline-portal"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Dimensi&oacute;n desbloqueada</div>
+                    <div class="timeline-cert">eWPT</div>
+                    <div class="timeline-full">Web Application Penetration Tester</div>
+                    <div class="timeline-dimension">// eLearnSecurity / INE &bull; Web Hacking</div>
+                    <a class="timeline-credential" href="https://verified.elearnsecurity.com/certificates/4d193434-560d-40de-845e-412c276da0e0" target="_blank" rel="noopener noreferrer">Ver credencial &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiencia Laboral -->
+    <section class="experience-section" id="experience">
+        <div class="section-header reveal">
+            <span class="section-tag">// /var/log/career.log</span>
+            <h2 class="section-title">Experiencia <span class="accent">Profesional</span></h2>
+            <p class="section-desc">Trayectoria en el mundo de la ciberseguridad ofensiva. Cada empresa, una nueva dimensi&oacute;n de conocimiento.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="experience-grid">
+            <div class="experience-card current reveal">
+                <div class="experience-status">
+                    <span class="status-dot pulse"></span>
+                    <span class="status-text">Actualmente</span>
+                </div>
+                <div class="experience-header">
+                    <h3 class="experience-company">Accenture</h3>
+                    <span class="experience-date">Abril 2025 &mdash; Presente</span>
+                </div>
+                <div class="experience-role">Security Consultant</div>
+                <ul class="experience-tasks">
+                    <li>Auditor&iacute;as de seguridad en aplicaciones Web y APIs REST/SOAP siguiendo metodolog&iacute;a OWASP</li>
+                    <li>Pentesting de aplicaciones m&oacute;viles en plataformas iOS y Android</li>
+                    <li>Pentesting externo e interno de infraestructura corporativa</li>
+                    <li>Ejercicios de Purple Team: simulaci&oacute;n de adversarios y validaci&oacute;n de detecciones con equipos Blue Team</li>
+                    <li>Auditor&iacute;as de seguridad en redes Wi-Fi corporativas</li>
+                </ul>
+                <div class="experience-tags">
+                    <span class="exp-tag">Web</span>
+                    <span class="exp-tag">API</span>
+                    <span class="exp-tag">Mobile</span>
+                    <span class="exp-tag">Pentest</span>
+                    <span class="exp-tag">Purple Team</span>
+                    <span class="exp-tag">Wi-Fi</span>
+                </div>
+            </div>
+
+            <div class="experience-card reveal reveal-delay-2">
+                <div class="experience-header">
+                    <h3 class="experience-company">NTT DATA</h3>
+                    <span class="experience-date">Marzo 2022 &mdash; Abril 2025</span>
+                </div>
+                <div class="experience-role">Pentester</div>
+                <ul class="experience-tasks">
+                    <li>Auditor&iacute;as de seguridad en aplicaciones Web bajo metodolog&iacute;a OWASP</li>
+                    <li>An&aacute;lisis de seguridad en APIs REST y servicios expuestos</li>
+                    <li>Pentesting de aplicaciones m&oacute;viles en entornos Android e iOS</li>
+                    <li>Pentesting externo: reconocimiento, explotaci&oacute;n y escalada en per&iacute;metros corporativos</li>
+                    <li>Pentesting de infraestructura interna: Active Directory, segmentaci&oacute;n de red y post-explotaci&oacute;n</li>
+                </ul>
+                <div class="experience-tags">
+                    <span class="exp-tag">Web</span>
+                    <span class="exp-tag">API</span>
+                    <span class="exp-tag">Mobile</span>
+                    <span class="exp-tag">Pentest Externo</span>
+                    <span class="exp-tag">Infraestructura</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terminal / About -->
+    <section class="terminal-section" id="about">
+        <div class="section-header reveal">
+            <span class="section-tag">// whoami</span>
+            <h2 class="section-title">Sobre el <span class="accent">Operador</span></h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="terminal reveal">
+            <div class="terminal-header">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+                <span class="terminal-title">guarina0x0@dimension-c137:~</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">whoami</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Guarina0x0 :: Security Consultant &amp; Red Team Operator</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Cosecha del 98 &#127818; Desde la tierra del aceite y los olivos (Ja&eacute;n)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output" style="color: var(--text-dim); font-style: italic;">Maestro de nada, aprendiz de todo.</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">cat /var/log/origin.log</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[2016-2018] T&eacute;cnico en Sistemas Microinform&aacute;ticos y Redes &mdash; I.E.S Los Cerros, &Uacute;beda</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[2018-2020] T&eacute;cnico Superior en Administraci&oacute;n de Sistemas &mdash; I.E.S Los Cerros, &Uacute;beda</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[2020-2021] Especializaci&oacute;n en Ciberseguridad &mdash; I.E.S Zaid&iacute;n Vergeles, Granada</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[2020-2021] INCIBE Academia Hacker &mdash; Donde todo empez&oacute; de verdad</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">cat /etc/backstory</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Suspend&iacute; inform&aacute;tica en 4&ordm; de la ESO. Mi profesor me llam&oacute; &quot;lammer&quot;.</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Ese suspenso fue el mejor exploit que me han lanzado: me oblig&oacute; a demostrarme</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">a m&iacute; mismo que el &uacute;nico l&iacute;mite real es el que t&uacute; aceptas.</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output" style="color: var(--morty-yellow); font-style: italic;">&quot;Ning&uacute;n hombre te puede revelar nada que no yazca ya dormido</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output" style="color: var(--morty-yellow); font-style: italic;">en el amanecer de tu propio conocimiento.&quot; &mdash; Khalil Gibran</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Un maestro siembra, nunca sentencia. Quien juzga el potencial de un alumno</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">solo demuestra los l&iacute;mites de su propia visi&oacute;n.</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">cat /etc/philosophy</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output" style="color: var(--morty-yellow); font-style: italic;">&quot;El obst&aacute;culo en el camino se convierte en el camino.&quot; &mdash; Marco Aurelio</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Estoicismo como sistema operativo. Cada fallo es un vector de aprendizaje,</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">cada obst&aacute;culo una oportunidad de escalada de privilegios personal.</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">cat /etc/mission</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Compartir conocimiento de seguridad ofensiva con la comunidad.</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Documentar t&eacute;cnicas, vulnerabilidades y herramientas.</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Ayudar a otros profesionales en su camino hacia las certificaciones.</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">ls -la /certs/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  CRTE    (Certified Red Team Expert)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  CWP     (Certified Wireless Professional)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  CARTP   (Certified Azure Red Team Professional)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  CRTO    (Certified Red Team Operator)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  CRTP    (Certified Red Team Professional)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  eCPPTv2 (Certified Professional Penetration Tester)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">-rw-r--r--  eWPT    (Web Application Penetration Tester)</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-command">ls -la /skills/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">drwxr-xr-x  pentesting/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">drwxr-xr-x  red-team-ops/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">drwxr-xr-x  vulnerability-research/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">drwxr-xr-x  exploit-development/</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">drwxr-xr-x  active-directory/</span>
+                </div>
+                <br>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="terminal-comment"># De lammer a Red Team Operator. La mejor shell es la que ejecutas contra ti mismo.</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&#36; </span>
+                    <span class="cursor-blink"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="/" class="footer-brand">GUARINA0x0</a>
+            <span class="footer-sep">&bull;</span>
+            <span>Portal</span>
+            <span class="footer-sep">&bull;</span>
+            <span>&copy; 2026</span>
+            <span class="footer-sep">&bull;</span>
+            <div class="footer-social">
+                <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+        <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+    </footer>
+
+    <!-- Search Modal -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-modal">
+            <div class="search-input-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="search-input" id="globalSearchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos en cheatsheets">
+                <span class="search-result-count" id="globalSearchCount"></span>
+                <span class="search-close-hint">ESC</span>
+            </div>
+            <div class="search-filters" id="globalSearchFilters">
+                <div class="filter-row">
+                    <button class="filter-chip active" data-sheet="all">All</button>
+                    <button class="filter-chip" data-sheet="CRTE">CRTE</button>
+                    <button class="filter-chip" data-sheet="CRTO">CRTO</button>
+                    <button class="filter-chip" data-sheet="CWP">CWP</button>
+                    <button class="filter-chip" data-sheet="CARTP">CARTP</button>
+                </div>
+                <div class="filter-row">
+                    <button class="filter-chip lang active" data-lang="all">All Langs</button>
+                    <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
+                    <button class="filter-chip lang" data-lang="Bash">Bash</button>
+                    <button class="filter-chip lang" data-lang="CMD">CMD</button>
+                    <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
+                </div>
+            </div>
+            <div class="search-results" id="globalSearchResults">
+                <div class="search-empty">Type to search commands across all cheatsheets...</div>
+            </div>
+            <div class="search-footer">
+                <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+                <span><kbd>&crarr;</kbd> Open</span>
+                <span><kbd>esc</kbd> Close</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="search-index.js"></script>
+    <script src="main.js"></script>
+    <script src="index.js"></script>
+
+</body>
+</html>

