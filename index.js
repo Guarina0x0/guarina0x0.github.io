@@ -28,7 +28,7 @@
 
 /* Categories Search Filter */
 (function() {
-    var input = document.getElementById('searchInput');
+    var input = document.getElementById('categorySearchInput');
     var grid = document.getElementById('categoriesGrid');
     if (!input || !grid) return;
     var cards = grid.querySelectorAll('.category-card');
