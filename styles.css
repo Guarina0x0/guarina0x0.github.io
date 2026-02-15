@@ -881,12 +881,13 @@ html[data-theme="light"] .code-body .placeholder { background: rgba(255, 130, 16
    ============================================ */
 .breadcrumbs {
     margin-top: 80px;
-    padding: 0.8rem 3rem;
+    padding: 1.2rem 3rem 0.8rem;
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.75rem;
     color: var(--text-dim);
     position: relative;
     z-index: 1;
+    border-bottom: 1px solid var(--border-glow);
 }
 .breadcrumbs a {
     color: var(--text-secondary);
