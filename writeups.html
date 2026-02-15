@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#050510">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Cheatsheets Arsenal | Guarina0x0</title>
-    <meta name="description" content="Arsenal de Cheatsheets de Seguridad Ofensiva: CRTE, CRTO, CWP, CARTP. Comandos, t&eacute;cnicas y referencias r&aacute;pidas para certificaciones de Red Team.">
+    <title>Write-ups &amp; CTF | Guarina0x0</title>
+    <meta name="description" content="Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desaf&iacute;os de seguridad ofensiva. Sin spoilers, solo valoraci&oacute;n y aprendizaje.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="canonical" href="https://guarina0x0.github.io/cheatsheets.html">
-    <meta property="og:url" content="https://guarina0x0.github.io/cheatsheets.html">
+    <link rel="canonical" href="https://guarina0x0.github.io/writeups.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/writeups.html">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Cheatsheets Arsenal | Guarina0x0">
-    <meta property="og:description" content="Arsenal de Cheatsheets de Seguridad Ofensiva: CRTE, CRTO, CWP, CARTP. Comandos, tecnicas y referencias rapidas para certificaciones de Red Team.">
+    <meta property="og:title" content="Write-ups &amp; CTF | Guarina0x0">
+    <meta property="og:description" content="Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desafios de seguridad ofensiva.">
     <meta property="og:site_name" content="Guarina0x0">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cheatsheets Arsenal | Guarina0x0">
-    <meta name="twitter:description" content="Arsenal de Cheatsheets de Seguridad Ofensiva: CRTE, CRTO, CWP, CARTP. Comandos, tecnicas y referencias rapidas para certificaciones de Red Team.">
+    <meta name="twitter:title" content="Write-ups &amp; CTF | Guarina0x0">
+    <meta name="twitter:description" content="Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desafios de seguridad ofensiva.">
     <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -29,9 +29,9 @@
     <meta name="twitter:creator" content="@Guarina0x0">
     <meta property="og:locale" content="es_ES">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:alt" content="Guarina0x0 - Arsenal de Cheatsheets de Seguridad Ofensiva">
+    <meta property="og:image:alt" content="Guarina0x0 - Write-ups y CTF de Seguridad Ofensiva">
     <meta name="author" content="Guarina0x0">
-    <meta name="keywords" content="cheatsheets, seguridad ofensiva, red team, CRTE, CRTO, CWP, CARTP, pentesting, ciberseguridad, Active Directory, Cobalt Strike, Wi-Fi, Azure AD">
+    <meta name="keywords" content="writeups, write-ups, CTF, HackTheBox, ProLab, Blizzard, Hades, pentesting, red team, seguridad ofensiva, reviews">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -39,9 +39,9 @@
     {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": "Cheatsheets Arsenal",
-        "description": "Arsenal de Cheatsheets de Seguridad Ofensiva: CRTE, CRTO, CWP, CARTP.",
-        "url": "https://guarina0x0.github.io/cheatsheets.html",
+        "name": "Write-ups & CTF",
+        "description": "Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desafios de seguridad ofensiva.",
+        "url": "https://guarina0x0.github.io/writeups.html",
         "author": {"@type": "Person", "name": "Guarina0x0"},
         "isPartOf": {
             "@type": "WebSite",
@@ -52,7 +52,7 @@
     </script>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Page-specific overrides for cheatsheets hub */
+        /* Page-specific overrides for writeups hub */
         .nav-logo {
             border-radius: 0;
             border: 2px solid var(--portal-green);
@@ -91,8 +91,89 @@
         }
         .featured-category.color-purple { color: var(--dimension-purple); }
         .featured-category.color-blue { color: var(--rick-blue); }
+
+        /* Reading time badge */
+        .featured-reading-time {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.8rem;
+        }
+        .featured-reading-time svg {
+            opacity: 0.6;
+        }
+
+        /* Filter chips */
+        .writeup-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .writeup-filter-chip {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .writeup-filter-chip:hover {
+            border-color: var(--portal-green);
+            color: var(--portal-green);
+        }
+        .writeup-filter-chip.active {
+            background: var(--portal-green);
+            color: var(--void-black);
+            border-color: var(--portal-green);
+            font-weight: 700;
+        }
+
+        /* Card animations */
+        .featured-card {
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+        .featured-card:hover {
+            transform: translateY(-6px);
+        }
+        .featured-card .featured-banner {
+            transition: opacity 0.35s ease;
+        }
+        .featured-card:hover .featured-banner {
+            opacity: 0.8;
+        }
+
+        /* Hidden by filter */
+        .featured-card.filter-hidden {
+            display: none;
+        }
+
+        /* No results message */
+        .writeup-no-results {
+            text-align: center;
+            padding: 3rem;
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            display: none;
+        }
+        .writeup-no-results.visible {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .section { padding: 4rem 1.5rem; }
+            .writeup-filters { gap: 0.5rem; }
+            .writeup-filter-chip { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
         }
     </style>
     <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
@@ -111,8 +192,8 @@
     <ul class="nav-links" id="navLinks">
         <li><a href="/">Portal</a></li>
         <li><a href="/#categorias">Categor&iacute;as</a></li>
-        <li><a href="cheatsheets.html" class="active">Cheatsheets</a></li>
-        <li><a href="writeups.html">Write-ups</a></li>
+        <li><a href="cheatsheets.html">Cheatsheets</a></li>
+        <li><a href="writeups.html" class="active">Write-ups</a></li>
         <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -133,65 +214,57 @@
 
 <!-- Hero -->
 <section class="page-hero" id="main-content">
-    <div class="page-hero-tag">// Dimensi&oacute;n C-500 :: Cheatsheets Arsenal</div>
-    <h1><span class="accent">Cheatsheets</span></h1>
-    <p class="page-hero-desc">Arsenal de comandos, t&eacute;cnicas y referencias r&aacute;pidas recopiladas durante la preparaci&oacute;n y examen de certificaciones ofensivas. Cada cheatsheet es un portal a otra dimensi&oacute;n.</p>
+    <div class="page-hero-tag">// Dimensi&oacute;n W-042 :: Write-ups &amp; CTF</div>
+    <h1><span class="accent">Write-ups</span> &amp; CTF</h1>
+    <p class="page-hero-desc">Reviews, experiencias y valoraciones de ProLabs de HackTheBox y otros desaf&iacute;os de seguridad ofensiva. Sin spoilers &mdash; solo aprendizaje y opini&oacute;n honesta.</p>
 </section>
 
-<!-- Cheatsheets Grid -->
+<!-- Write-ups Grid -->
 <section class="section">
+    <!-- Filters -->
+    <div class="writeup-filters" role="group" aria-label="Filtrar write-ups por categor&iacute;a">
+        <button class="writeup-filter-chip active" data-filter="all">Todos</button>
+        <button class="writeup-filter-chip" data-filter="cloud">Cloud</button>
+        <button class="writeup-filter-chip" data-filter="ad">Active Directory</button>
+        <button class="writeup-filter-chip" data-filter="web">Web</button>
+    </div>
+
     <div class="featured-grid">
 
-        <a href="crte-cheatsheet.html" class="featured-card reveal reveal-delay-1">
+        <a href="blizzard-review.html" class="featured-card blue reveal reveal-delay-1" data-category="cloud">
             <div class="featured-banner"></div>
             <div class="featured-content">
                 <div class="featured-meta">
-                    <span class="featured-category">CRTE / CRTP</span>
-                    <span class="featured-badge">22 secciones</span>
+                    <span class="featured-category color-blue">HTB PROLAB</span>
+                    <span class="featured-badge">BlackSky</span>
                 </div>
-                <h3 class="featured-title">Active Directory Full Attack Path</h3>
-                <p class="featured-excerpt">Enumeraci&oacute;n, Kerberos, Delegation, DCSync, Trust Abuse, AD CS, MSSQL y m&aacute;s. V&aacute;lido para CRTE y CRTP.</p>
+                <h3 class="featured-title">Blizzard - Cloud Pentesting en GCP</h3>
+                <p class="featured-excerpt">Review del ProLab Blizzard: 11 flags sobre GCP, Kubernetes, IAM, container escape y cloud security end-to-end.</p>
+                <div class="featured-reading-time">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    8 min de lectura
+                </div>
             </div>
         </a>
 
-        <a href="cwp-cheatsheet.html" class="featured-card blue reveal reveal-delay-2">
+        <a href="hades-review.html" class="featured-card purple reveal reveal-delay-2" data-category="ad">
             <div class="featured-banner"></div>
             <div class="featured-content">
                 <div class="featured-meta">
-                    <span class="featured-category color-blue">CWP</span>
-                    <span class="featured-badge">16 secciones</span>
+                    <span class="featured-category color-purple">HTB PROLAB</span>
+                    <span class="featured-badge">RTO Level 1</span>
                 </div>
-                <h3 class="featured-title">Wi-Fi Hacking &amp; Wireless Attacks</h3>
-                <p class="featured-excerpt">Aircrack-ng, WEP, WPA/WPA2-PSK, WPA3-SAE, Evil Twin, Enterprise MGT, Relay Attacks y EAP-TLS.</p>
+                <h3 class="featured-title">Hades - Active Directory Pentesting</h3>
+                <p class="featured-excerpt">Review del ProLab Hades: 6 flags con pivoting, Kerberos abuse, DPAPI, RBCD, ADIDNS poisoning y domain compromise.</p>
+                <div class="featured-reading-time">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    9 min de lectura
+                </div>
             </div>
         </a>
-
-        <a href="cartp-cheatsheet.html" class="featured-card purple reveal reveal-delay-3">
-            <div class="featured-banner"></div>
-            <div class="featured-content">
-                <div class="featured-meta">
-                    <span class="featured-category color-purple">CARTP</span>
-                    <span class="featured-badge">18 secciones</span>
-                </div>
-                <h3 class="featured-title">Azure AD Red Team Attack Techniques</h3>
-                <p class="featured-excerpt">Azure AD Enumeration, Tokens &amp; APIs, Phishing, Privilege Escalation, AD Connect Abuse, PRT Attacks y m&aacute;s.</p>
-            </div>
-        </a>
-
-        <a href="crto-cheatsheet.html" class="featured-card purple reveal reveal-delay-4">
-            <div class="featured-banner"></div>
-            <div class="featured-content">
-                <div class="featured-meta">
-                    <span class="featured-category color-purple">CRTO</span>
-                    <span class="featured-badge">22 secciones</span>
-                </div>
-                <h3 class="featured-title">Red Team Operations con Cobalt Strike</h3>
-                <p class="featured-excerpt">C2 Setup, Credential Theft, Lateral Movement, Pivoting, Domain Dominance y Defence Evasion.</p>
-            </div>
-        </a>
-
 
     </div>
+    <div class="writeup-no-results" id="writeupNoResults">No hay write-ups en esta categor&iacute;a todav&iacute;a... &iexcl;pr&oacute;ximamente!</div>
 </section>
 
 <!-- Footer -->
@@ -199,7 +272,7 @@
     <div class="footer-inner">
         <a href="/" class="footer-brand">GUARINA0x0</a>
         <span class="footer-sep">&bull;</span>
-        <span>Cheatsheets Arsenal</span>
+        <span>Write-ups &amp; CTF</span>
         <span class="footer-sep">&bull;</span>
         <span>&copy; 2026</span>
         <span class="footer-sep">&bull;</span>
@@ -256,6 +329,37 @@
 
 <script src="search-index.js"></script>
 <script src="main.js"></script>
+<script>
+/* Write-up category filters */
+(function() {
+    var chips = document.querySelectorAll('.writeup-filter-chip');
+    var cards = document.querySelectorAll('.featured-card[data-category]');
+    var noResults = document.getElementById('writeupNoResults');
+
+    chips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+            chips.forEach(function(c) { c.classList.remove('active'); });
+            this.classList.add('active');
+
+            var filter = this.dataset.filter;
+            var visibleCount = 0;
+
+            cards.forEach(function(card) {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.classList.remove('filter-hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('filter-hidden');
+                }
+            });
+
+            if (noResults) {
+                noResults.classList.toggle('visible', visibleCount === 0);
+            }
+        });
+    });
+})();
+</script>
 
 </body>
 </html>

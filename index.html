@@ -70,6 +70,7 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="#categorias">Categor&iacute;as</a></li>
             <li><a href="cheatsheets.html">Cheatsheets</a></li>
+            <li><a href="writeups.html">Write-ups</a></li>
             <li><a href="#timeline">Certs</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#about">About</a></li>
@@ -79,6 +80,7 @@
             <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
+        <button class="bg-toggle" id="bgToggle" aria-label="Toggle background effect" onclick="window.__toggleBgMode && window.__toggleBgMode()">01</button>
         <button class="search-trigger" id="searchTrigger" aria-label="Search">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <kbd>Ctrl+K</kbd>
@@ -276,7 +278,7 @@
             </a>
 
             <!-- Write-ups / CTF -->
-            <a href="javascript:void(0)" class="category-card reveal reveal-delay-6" data-tags="writeups ctf hackthebox tryhackme challenges walkthroughs">
+            <a href="writeups.html" class="category-card reveal reveal-delay-6" data-tags="writeups ctf hackthebox tryhackme challenges walkthroughs">
                 <div class="card-header">
                     <div class="card-icon writeups">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -308,7 +310,7 @@
     <div class="stats-strip">
         <div class="stats-grid">
             <div class="stat-item reveal">
-                <div class="stat-number" data-count="7">0</div>
+                <div class="stat-number" data-count="9">0</div>
                 <div class="stat-label">Art&iacute;culos</div>
             </div>
             <div class="stat-item reveal reveal-delay-1">
@@ -540,32 +542,6 @@
                 <br>
                 <div class="terminal-line">
                     <span class="terminal-prompt">&#36; </span>
-                    <span class="terminal-command">cat /etc/backstory</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">Suspend&iacute; inform&aacute;tica en 4&ordm; de la ESO. Mi profesor me llam&oacute; &quot;lammer&quot;.</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">Ese suspenso fue el mejor exploit que me han lanzado: me oblig&oacute; a demostrarme</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">a m&iacute; mismo que el &uacute;nico l&iacute;mite real es el que t&uacute; aceptas.</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output" style="color: var(--morty-yellow); font-style: italic;">&quot;Ning&uacute;n hombre te puede revelar nada que no yazca ya dormido</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output" style="color: var(--morty-yellow); font-style: italic;">en el amanecer de tu propio conocimiento.&quot; &mdash; Khalil Gibran</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">Un maestro siembra, nunca sentencia. Quien juzga el potencial de un alumno</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">solo demuestra los l&iacute;mites de su propia visi&oacute;n.</span>
-                </div>
-                <br>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">&#36; </span>
                     <span class="terminal-command">cat /etc/philosophy</span>
                 </div>
                 <div class="terminal-line">
@@ -638,10 +614,6 @@
                     <span class="terminal-output">drwxr-xr-x  active-directory/</span>
                 </div>
                 <br>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">&#36; </span>
-                    <span class="terminal-comment"># De lammer a Red Team Operator. La mejor shell es la que ejecutas contra ti mismo.</span>
-                </div>
                 <div class="terminal-line">
                     <span class="terminal-prompt">&#36; </span>
                     <span class="cursor-blink"></span>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050510">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Hades ProLab Review - HackTheBox | Guarina0x0</title>
+    <meta name="description" content="Review y experiencia personal del ProLab Hades de HackTheBox. Active Directory pentesting, lateral movement, privilege escalation y pivoting sin spoilers.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/hades-review.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/hades-review.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hades ProLab Review - HackTheBox | Guarina0x0">
+    <meta property="og:description" content="Review y experiencia personal del ProLab Hades de HackTheBox. Active Directory pentesting, lateral movement, privilege escalation y pivoting sin spoilers.">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:title" content="Hades ProLab Review - HackTheBox | Guarina0x0">
+    <meta name="twitter:description" content="Review y experiencia personal del ProLab Hades de HackTheBox. Active Directory pentesting, lateral movement, privilege escalation y pivoting sin spoilers.">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Hades ProLab Review - HackTheBox Active Directory Pentesting">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="Hades, ProLab, HackTheBox, Active Directory, pentesting, lateral movement, privilege escalation, Kerberos, RBCD, DPAPI, pivoting, review, experiencia">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hades ProLab Review - HackTheBox",
+        "description": "Review y experiencia personal del ProLab Hades de HackTheBox. Active Directory pentesting, lateral movement, privilege escalation y pivoting sin spoilers.",
+        "author": {"@type": "Person", "name": "Guarina0x0", "url": "https://guarina0x0.github.io"},
+        "publisher": {"@type": "Person", "name": "Guarina0x0"},
+        "url": "https://guarina0x0.github.io/hades-review.html",
+        "datePublished": "2026-02-15",
+        "dateModified": "2026-02-15",
+        "inLanguage": "es",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Guarina0x0",
+            "url": "https://guarina0x0.github.io"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Write-ups & CTF", "item": "https://guarina0x0.github.io/writeups.html"},
+            {"@type": "ListItem", "position": 3, "name": "Hades ProLab"}
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div class="reading-progress" id="readingProgress"></div>
+
+<div class="grid-overlay"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <div class="nav-logo"><span>G</span></div>
+        <span class="nav-title">GUARINA0x0</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/">Portal</a></li>
+        <li><a href="/#categorias">Categor&iacute;as</a></li>
+        <li><a href="cheatsheets.html">Cheatsheets</a></li>
+        <li><a href="writeups.html">Write-ups</a></li>
+        <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <button class="bg-toggle" id="bgToggle" aria-label="Toggle background effect" onclick="window.__toggleBgMode && window.__toggleBgMode()">01</button>
+    <button class="search-trigger" id="searchTrigger" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <kbd>Ctrl+K</kbd>
+    </button>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Portal</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="writeups.html">Write-ups &amp; CTF</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">Hades ProLab</span>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+    <div class="page-hero-tag">// Dimensi&oacute;n H-666 :: HackTheBox Red Team Operator Level 1</div>
+    <h1><span class="accent">Hades</span> ProLab Review</h1>
+    <p class="page-hero-desc">Mi experiencia completando el ProLab Hades de HackTheBox. Active Directory pentesting cl&aacute;sico con pivoting, Kerberos abuse, DPAPI y movimiento lateral &mdash; sin spoilers, solo valoraci&oacute;n honesta.</p>
+    <div class="page-hero-reading-time">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        9 min de lectura
+    </div>
+    <div class="page-hero-badges">
+        <span class="badge">Active Directory</span>
+        <span class="badge">Kerberos</span>
+        <span class="badge">Lateral Movement</span>
+        <span class="badge">Pivoting</span>
+        <span class="badge">DPAPI</span>
+        <span class="badge">HackTheBox</span>
+    </div>
+</section>
+
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar" role="complementary" aria-label="Navigation sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="sidebar-nav">
+        <li><a href="#que-es"><span class="num">01</span> &iquest;Qu&eacute; es Hades?</a></li>
+        <li><a href="#entorno"><span class="num">02</span> Entorno y Alcance</a></li>
+        <li><a href="#conocimientos"><span class="num">03</span> Conocimientos Previos</a></li>
+        <li><a href="#aprendizaje"><span class="num">04</span> &iquest;Qu&eacute; se Aprende?</a></li>
+        <li><a href="#dificultad"><span class="num">05</span> Dificultad</a></li>
+        <li><a href="#experiencia"><span class="num">06</span> Mi Experiencia</a></li>
+        <li><a href="#pros-contras"><span class="num">07</span> Lo Bueno y Lo Mejorable</a></li>
+        <li><a href="#para-quien"><span class="num">08</span> &iquest;Para Qui&eacute;n es?</a></li>
+        <li><a href="#veredicto"><span class="num">09</span> Veredicto Final</a></li>
+    </ul>
+</aside>
+
+<!-- Main Content -->
+<main class="content" id="main-content" role="main">
+
+<!-- Info Box -->
+<div class="review-info-box reveal">
+    <div class="review-info-grid">
+        <div class="review-info-item">
+            <span class="review-info-label">Plataforma</span>
+            <span class="review-info-value">HackTheBox</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Tipo</span>
+            <span class="review-info-value">ProLab (RTO Level 1)</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Enfoque</span>
+            <span class="review-info-value">Active Directory</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Flags</span>
+            <span class="review-info-value">6</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">M&aacute;quinas</span>
+            <span class="review-info-value">4 (Linux + 3 Windows)</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Dificultad</span>
+            <span class="review-info-value accent">Intermedia</span>
+        </div>
+    </div>
+</div>
+
+<!-- 01 QUE ES HADES -->
+<div class="section-block reveal" id="que-es">
+    <div class="section-number">// 01</div>
+    <h2>&iquest;Qu&eacute; es <span class="accent">Hades</span>?</h2>
+
+    <p>Hades es un ProLab de HackTheBox clasificado como <strong>Red Team Operator Level 1</strong>. Simula la infraestructura de <strong>Gigantic Hosting</strong>, un proveedor de alojamiento web y certificados SSL que ha contratado un pentesting para evaluar su seguridad.</p>
+
+    <p>A diferencia de labs m&aacute;s especializados como Blizzard (cloud) o RastaLabs (gran escala AD), Hades va al grano con un entorno corporativo peque&ntilde;o pero denso: un punto de entrada web, m&uacute;ltiples redes internas y un dominio Active Directory con varias m&aacute;quinas Windows que explotar.</p>
+
+    <p>El lab contiene <strong>6 flags</strong> distribuidas a lo largo de las m&aacute;quinas del entorno. Cada flag marca un hito significativo: desde el acceso inicial hasta el compromiso total del Domain Controller. Es un escenario end-to-end que te obliga a encadenar t&eacute;cnicas de forma realista.</p>
+</div>
+
+<!-- 02 ENTORNO Y ALCANCE -->
+<div class="section-block reveal" id="entorno">
+    <div class="section-number">// 02</div>
+    <h2>Entorno y <span class="accent">Alcance</span></h2>
+
+    <p>Sin entrar en spoilers, el escenario de Hades te presenta una topolog&iacute;a de red realista con m&uacute;ltiples segmentos. El punto de entrada es un servicio web expuesto, y a partir de ah&iacute; necesitas ir descubriendo y accediendo a las redes internas.</p>
+
+    <p>Lo que te vas a encontrar:</p>
+    <ul class="review-list">
+        <li>Un servidor web expuesto a Internet con servicios vulnerables</li>
+        <li>Redes internas segmentadas que requieren pivoting para acceder</li>
+        <li>Un dominio Active Directory con m&uacute;ltiples servidores Windows (DC, servidor web, servidor de desarrollo)</li>
+        <li>Entornos Docker como capa intermedia entre las redes</li>
+        <li>Servicios como SMB, Kerberos, LDAP, WinRM y captura de tr&aacute;fico disponibles</li>
+    </ul>
+
+    <p>La conexi&oacute;n se hace por VPN y desde el primer momento necesitas pivotar. No hay acceso directo a la red interna AD &mdash; tienes que ganarte cada salto entre redes. Esto le da un realismo que muchos CTFs no tienen.</p>
+</div>
+
+<!-- 03 CONOCIMIENTOS PREVIOS -->
+<div class="section-block reveal" id="conocimientos">
+    <div class="section-number">// 03</div>
+    <h2>Conocimientos <span class="accent">Previos</span></h2>
+
+    <p>Hades est&aacute; etiquetado como Level 1 pero no te dejes enga&ntilde;ar &mdash; requiere una base t&eacute;cnica s&oacute;lida en varias &aacute;reas:</p>
+
+    <div class="review-list-detailed">
+        <h3>Imprescindibles</h3>
+        <ul class="review-list">
+            <li><strong>Active Directory:</strong> Entender dominios, usuarios, grupos, ACLs, delegaci&oacute;n y relaciones de confianza. Saber usar herramientas como BloodHound, PowerView y el AD Module.</li>
+            <li><strong>Kerberos:</strong> AS-REP Roasting, Silver Tickets, S4U (S4U2self/S4U2proxy) y RBCD. Si no sabes qu&eacute; es un TGT/TGS, necesitas estudiar antes.</li>
+            <li><strong>Pivoting:</strong> Manejar herramientas como chisel, ligolo-ng o meterpreter autoroute para moverte entre redes segmentadas.</li>
+            <li><strong>Linux b&aacute;sico:</strong> El punto de entrada es Linux, necesitas soltura con shell, reverse shells y servicios web.</li>
+        </ul>
+
+        <h3>Recomendables</h3>
+        <ul class="review-list">
+            <li><strong>Web exploitation:</strong> Identificar y explotar command injection y otras vulns web cl&aacute;sicas.</li>
+            <li><strong>Password cracking:</strong> Experiencia con john y hashcat para distintos formatos (NTLMv1, NTLMv2, Kerberos, NT hashes).</li>
+            <li><strong>DPAPI:</strong> Conceptos b&aacute;sicos de protecci&oacute;n de credenciales en Windows, master keys y credential blobs.</li>
+            <li><strong>Impacket:</strong> Familiaridad con la suite (smbclient, secretsdump, ticketer, psexec, etc.).</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 04 QUE SE APRENDE -->
+<div class="section-block reveal" id="aprendizaje">
+    <div class="section-number">// 04</div>
+    <h2>&iquest;Qu&eacute; se <span class="accent">Aprende</span>?</h2>
+
+    <p>Hades es un campo de entrenamiento excelente para t&eacute;cnicas de AD pentesting que se usan en el mundo real. Los skills que desarrollas son directamente aplicables a auditor&iacute;as reales:</p>
+
+    <ul class="review-list">
+        <li><strong>Command Injection:</strong> Identificar y explotar inyecci&oacute;n de comandos en aplicaciones web para obtener acceso inicial.</li>
+        <li><strong>Network Pivoting:</strong> Moverte entre m&uacute;ltiples segmentos de red usando tunneling y port forwarding.</li>
+        <li><strong>Kerberos Attacks:</strong> AS-REP Roasting, Silver Tickets, S4U abuse y Resource-Based Constrained Delegation (RBCD).</li>
+        <li><strong>NTLMv1 Relay &amp; Cracking:</strong> Forzar autenticaci&oacute;n NTLMv1 con PrinterBug y crackear los hashes resultantes.</li>
+        <li><strong>DPAPI Abuse:</strong> Extraer credenciales protegidas por DPAPI desde Volume Shadow Copies, incluyendo master keys y credential blobs.</li>
+        <li><strong>ADIDNS Poisoning:</strong> Envenenar registros DNS integrados en Active Directory para capturar credenciales.</li>
+        <li><strong>Network Sniffing:</strong> Capturar tr&aacute;fico de red en m&aacute;quinas comprometidas para extraer informaci&oacute;n.</li>
+        <li><strong>BloodHound Analysis:</strong> Usar BloodHound para mapear rutas de ataque en un dominio real.</li>
+    </ul>
+
+    <div class="review-quote">
+        <p>Lo que hace especial a Hades es que cada flag requiere una t&eacute;cnica o cadena de t&eacute;cnicas diferente. No es repetitivo &mdash; cada paso del camino te ense&ntilde;a algo nuevo sobre c&oacute;mo se comprometen entornos AD reales.</p>
+    </div>
+</div>
+
+<!-- 05 DIFICULTAD -->
+<div class="section-block reveal" id="dificultad">
+    <div class="section-number">// 05</div>
+    <h2><span class="accent">Dificultad</span></h2>
+
+    <p>Hades tiene una dificultad <strong>intermedia</strong>. Est&aacute; clasificado como Red Team Operator Level 1, y la clasificaci&oacute;n es bastante acertada. Si tienes experiencia con m&aacute;quinas AD de HackTheBox o has cursado alg&uacute;n CRTP/CRTO, la mayor&iacute;a de t&eacute;cnicas te resultar&aacute;n familiares.</p>
+
+    <p>La dificultad real no est&aacute; tanto en las t&eacute;cnicas individuales como en el <strong>pivoting</strong> y la <strong>enumeraci&oacute;n entre redes</strong>. Saber que necesitas hacer RBCD es una cosa, pero llegar al punto donde puedes ejecutarlo requiere haber pivotado correctamente, tener las credenciales adecuadas y entender la topolog&iacute;a.</p>
+
+    <p>Las partes que m&aacute;s pueden atascar son las que requieren t&eacute;cnicas menos comunes: el abuso de DPAPI con Volume Shadow Copies y el envenenamiento de ADIDNS. Si nunca has tocado DPAPI, esa fase puede consumir bastante tiempo de investigaci&oacute;n.</p>
+
+    <div class="review-rating">
+        <div class="review-rating-header">Dificultad General</div>
+        <div class="review-rating-bar">
+            <div class="review-rating-fill" style="width: 55%"></div>
+        </div>
+        <div class="review-rating-labels">
+            <span>F&aacute;cil</span>
+            <span>Intermedia</span>
+            <span>Brutal</span>
+        </div>
+    </div>
+</div>
+
+<!-- 06 MI EXPERIENCIA -->
+<div class="section-block reveal" id="experiencia">
+    <div class="section-number">// 06</div>
+    <h2>Mi <span class="accent">Experiencia</span></h2>
+
+    <p>Hice Hades como parte de mi entrenamiento continuo en AD pentesting. Ven&iacute;a de hacer el CRTE y el CRTO, as&iacute; que ten&iacute;a bastante fresco todo lo relacionado con Kerberos, delegaci&oacute;n y movimiento lateral. Aun as&iacute;, el lab me sorprendi&oacute; con algunas t&eacute;cnicas que no hab&iacute;a practicado en profundidad.</p>
+
+    <p>El acceso inicial fue r&aacute;pido &mdash; la vulnerabilidad web es cl&aacute;sica y si tienes experiencia en pentesting web la identificas enseguida. Lo que me llev&oacute; m&aacute;s tiempo fue montar correctamente el pivoting. Prob&eacute; varias herramientas (chisel, ligolo-ng, meterpreter) hasta encontrar la configuraci&oacute;n estable que me permit&iacute;a trabajar c&oacute;modo.</p>
+
+    <p>El momento m&aacute;s interesante fue la fase de <strong>DPAPI</strong>. Sab&iacute;a la teor&iacute;a de c&oacute;mo funcionan las master keys y los credential blobs, pero nunca lo hab&iacute;a explotado manualmente desde una Volume Shadow Copy. Tener que extraer los ficheros, descifrar la master key con la contrase&ntilde;a del usuario y finalmente obtener las credenciales protegidas fue un proceso muy did&aacute;ctico.</p>
+
+    <p>La parte de <strong>ADIDNS poisoning</strong> tambi&eacute;n fue reveladora. Es una t&eacute;cnica que no se ve mucho en labs pero que tiene un impacto real enorme en entornos corporativos. Poder envenenar registros DNS dentro del propio AD para redirigir tr&aacute;fico y capturar hashes es algo que queda grabado despu&eacute;s de hacerlo.</p>
+
+    <div class="review-quote">
+        <p>El &ldquo;click&rdquo; de Hades es cuando entiendes que todo est&aacute; conectado: las credenciales que sacas de DPAPI te dan acceso a nuevas m&aacute;quinas, y esas m&aacute;quinas te dan herramientas para envenenar DNS y capturar m&aacute;s hashes. Es una cadena cl&aacute;sica de pentesting AD.</p>
+    </div>
+
+    <p>Herramientas que us&eacute; constantemente: <code>nmap</code> y <code>kerbrute</code> para enumeraci&oacute;n, <code>impacket</code> (ticketer, secretsdump, psexec, smbclient) como suite core, <code>Rubeus</code> y <code>mimikatz</code> para ataques Kerberos y DPAPI, <code>BloodHound</code> para mapeo de rutas, <code>ligolo-ng</code> para pivoting estable, <code>responder</code> para captura de hashes, y <code>evil-winrm</code> para acceso remoto.</p>
+</div>
+
+<!-- 07 PROS Y CONTRAS -->
+<div class="section-block reveal" id="pros-contras">
+    <div class="section-number">// 07</div>
+    <h2>Lo Bueno y Lo <span class="accent">Mejorable</span></h2>
+
+    <div class="review-pros-cons">
+        <div class="review-pros">
+            <h3>Lo Bueno</h3>
+            <ul class="review-list">
+                <li>Topolog&iacute;a realista con m&uacute;ltiples redes segmentadas</li>
+                <li>Variedad de t&eacute;cnicas: web, Kerberos, DPAPI, RBCD, ADIDNS, sniffing</li>
+                <li>Curva de dificultad progresiva y bien calibrada</li>
+                <li>Cada flag ense&ntilde;a una t&eacute;cnica diferente &mdash; no es repetitivo</li>
+                <li>Excelente como primer ProLab para AD pentesting</li>
+                <li>El pivoting te obliga a ser met&oacute;dico con la infraestructura</li>
+                <li>T&eacute;cnicas directamente aplicables a auditor&iacute;as reales</li>
+            </ul>
+        </div>
+        <div class="review-cons">
+            <h3>Lo Mejorable</h3>
+            <ul class="review-list">
+                <li>El entorno es peque&ntilde;o (4 m&aacute;quinas) &mdash; se queda corto para quien busca escala</li>
+                <li>Algunas fases dependen de herramientas espec&iacute;ficas que pueden fallar por versiones</li>
+                <li>La VPN y el pivoting pueden dar problemas de estabilidad</li>
+                <li>No hay apenas pistas si te atascas &mdash; o lo sabes o toca investigar</li>
+                <li>El Docker intermedio puede confundir al principio sobre la topolog&iacute;a real</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 08 PARA QUIEN ES -->
+<div class="section-block reveal" id="para-quien">
+    <div class="section-number">// 08</div>
+    <h2>&iquest;Para Qui&eacute;n <span class="accent">es</span>?</h2>
+
+    <p>Hades es el ProLab ideal para un perfil muy concreto:</p>
+
+    <ul class="review-list">
+        <li><strong>Pentesters junior-mid</strong> que quieran dar el salto de m&aacute;quinas individuales a entornos AD completos con pivoting.</li>
+        <li><strong>Estudiantes de CRTP/CRTO</strong> que quieran practicar las t&eacute;cnicas del curso en un entorno m&aacute;s realista.</li>
+        <li><strong>Red Teamers</strong> que necesiten repasar t&eacute;cnicas cl&aacute;sicas de AD en un entorno controlado.</li>
+        <li><strong>Profesionales de SOC/Blue Team</strong> que quieran entender las t&eacute;cnicas ofensivas contra AD desde la perspectiva del atacante.</li>
+    </ul>
+
+    <p><strong>No lo recomiendo si:</strong> nunca has tocado Active Directory, no sabes qu&eacute; es Kerberos o no tienes experiencia b&aacute;sica con herramientas como Impacket y BloodHound. Mejor empieza con m&aacute;quinas individuales de HTB como Forest, Sauna o Monteverde.</p>
+
+    <div class="note">Si vienes del CRTE como yo, Hades te va a parecer m&aacute;s accesible pero con giros interesantes (DPAPI, ADIDNS) que complementan muy bien lo aprendido en la certificaci&oacute;n. Es un buen complemento pr&aacute;ctico.</div>
+</div>
+
+<!-- 09 VEREDICTO FINAL -->
+<div class="section-block reveal" id="veredicto">
+    <div class="section-number">// 09</div>
+    <h2>Veredicto <span class="accent">Final</span></h2>
+
+    <p>Hades es un ProLab s&oacute;lido que cumple exactamente lo que promete: un entorno AD realista donde practicar t&eacute;cnicas ofensivas end-to-end. No es el m&aacute;s grande ni el m&aacute;s complejo de HackTheBox, pero la calidad de las t&eacute;cnicas y la progresi&oacute;n est&aacute;n muy bien dise&ntilde;adas.</p>
+
+    <p>Lo que m&aacute;s valoro es la variedad: en 6 flags cubres command injection, pivoting, Kerberos abuse, DPAPI, RBCD, ADIDNS poisoning y domain compromise. Es un compendio excelente de t&eacute;cnicas que todo pentester de AD deber&iacute;a dominar.</p>
+
+    <p>Si est&aacute;s buscando tu primer ProLab o quieres un entorno pr&aacute;ctico para consolidar conocimientos de AD pentesting, Hades es una elecci&oacute;n muy acertada.</p>
+
+    <div class="review-rating">
+        <div class="review-rating-header">Puntuaci&oacute;n Global</div>
+        <div class="review-rating-stars">
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+            <span class="star">&#9733;</span>
+        </div>
+        <div class="review-rating-score">4 / 5</div>
+    </div>
+
+    <div class="review-quote">
+        <p>Hades no reinventa la rueda, pero la rueda que te da est&aacute; muy bien construida. Si necesitas practicar AD pentesting con pivoting real, es de lo mejor que vas a encontrar en HackTheBox.</p>
+    </div>
+
+    <div class="review-cert-proof">
+        <h3>Certificado de <span class="accent">Completado</span></h3>
+        <img src="https://media.licdn.com/dms/image/v2/D562DAQE_quqAOSGwxQ/profile-treasury-document-cover-images_1280/B56ZgiEiHFG0Aw-/0/1752918275080?e=1771758000&v=beta&t=zRqpP8-yF8hTTFIjFKvX5crZx7mdGCGwQUrvFQmrPI4" alt="Certificado de completado del ProLab Hades - HackTheBox" loading="lazy">
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<a href="#" class="back-top" id="backTop">&uarr;</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <span class="footer-sep">&bull;</span>
+        <span>Hades ProLab Review</span>
+        <span class="footer-sep">&bull;</span>
+        <span>&copy; 2026</span>
+        <span class="footer-sep">&bull;</span>
+        <div class="footer-social">
+            <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+        </div>
+    </div>
+    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+</footer>
+
+<!-- Search Modal -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-modal">
+        <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
+            <span class="search-result-count" id="searchCount"></span>
+            <span class="search-close-hint">ESC</span>
+        </div>
+        <div class="search-filters" id="searchFilters">
+            <div class="filter-row">
+                <button class="filter-chip active" data-sheet="all">All</button>
+                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
+                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
+                <button class="filter-chip" data-sheet="CWP">CWP</button>
+                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
+            </div>
+            <div class="filter-row">
+                <button class="filter-chip lang active" data-lang="all">All Langs</button>
+                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
+                <button class="filter-chip lang" data-lang="Bash">Bash</button>
+                <button class="filter-chip lang" data-lang="CMD">CMD</button>
+                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">Type to search commands across all cheatsheets...</div>
+        </div>
+        <div class="search-footer">
+            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+            <span><kbd>&crarr;</kbd> Open</span>
+            <span><kbd>esc</kbd> Close</span>
+        </div>
+    </div>
+</div>
+
+<script src="search-index.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>

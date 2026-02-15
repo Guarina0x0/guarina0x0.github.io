@@ -1289,3 +1289,35 @@ a.cert-badge { text-decoration: none; cursor: pointer; }
 
     .hero-terminal { max-width: 100%; border-radius: 8px; }
 }
+
+/* ============================================
+   PARALLAX EFFECT (Hero)
+   ============================================ */
+.hero {
+    perspective: 1000px;
+}
+
+.portal-container {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.hero-title,
+.hero-dimension,
+.hero-subtitle,
+.hero-certs,
+.hero-cta {
+    will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portal-container,
+    .hero-title,
+    .hero-dimension,
+    .hero-subtitle,
+    .hero-certs,
+    .hero-cta {
+        will-change: auto !important;
+        transform: none !important;
+    }
+}

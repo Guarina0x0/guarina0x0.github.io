@@ -214,7 +214,7 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 1.8rem;
     list-style: none;
     align-items: center;
 }
@@ -591,6 +591,20 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
     max-width: 700px;
     margin: 0 auto 2rem;
     line-height: 1.8;
+}
+
+.page-hero-reading-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 1.2rem;
+}
+.page-hero-reading-time svg {
+    opacity: 0.6;
 }
 
 .page-hero-badges {
@@ -1164,6 +1178,8 @@ body.page-exit {
     .sidebar { display: none; }
     .content { padding: 2rem 1.5rem; }
     .nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .nav-links a { font-size: 0.75rem; letter-spacing: 0.5px; }
     .page-hero { padding: 8rem 1.5rem 3rem; }
     .categories-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1216,4 +1232,326 @@ body.page-exit {
     .stat-number {
         font-size: 1.6rem;
     }
+}
+
+/* ============================================
+   REVIEW PAGE STYLES
+   ============================================ */
+
+/* Review Info Box (ficha tecnica) */
+.review-info-box {
+    background: var(--panel-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 3rem;
+    border-left: 3px solid var(--portal-green);
+}
+.review-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem 2rem;
+}
+.review-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.review-info-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.review-info-value {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+.review-info-value.accent {
+    color: var(--portal-green);
+    font-weight: 600;
+}
+
+/* Review Rating Bar */
+.review-rating {
+    background: var(--panel-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+}
+.review-rating-header {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+.review-rating-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--space-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+}
+.review-rating-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--portal-green), var(--toxic-green), var(--rick-blue));
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--portal-green-dim);
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.review-rating-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+}
+
+/* Review Rating Stars */
+.review-rating-stars {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+.review-rating-stars .star {
+    font-size: 1.8rem;
+    color: var(--border-subtle);
+    line-height: 1;
+}
+.review-rating-stars .star.filled {
+    color: var(--portal-green);
+    text-shadow: 0 0 10px var(--portal-green-dim);
+}
+.review-rating-stars .star.half {
+    color: var(--portal-green);
+    opacity: 0.5;
+    text-shadow: 0 0 10px var(--portal-green-dim);
+}
+.review-rating-score {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--portal-green);
+    text-shadow: 0 0 15px var(--portal-green-dim);
+}
+
+/* Review Pros & Cons */
+.review-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+.review-pros, .review-cons {
+    background: var(--panel-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 1.5rem;
+}
+.review-pros {
+    border-top: 3px solid var(--portal-green);
+}
+.review-cons {
+    border-top: 3px solid var(--morty-yellow);
+}
+.review-pros h3 {
+    color: var(--portal-green) !important;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+}
+.review-cons h3 {
+    color: var(--morty-yellow) !important;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Review Quote */
+.review-quote {
+    padding: 1.2rem 1.5rem;
+    border-left: 3px solid var(--dimension-purple);
+    background: rgba(139, 92, 246, 0.05);
+    margin: 1.5rem 0;
+    border-radius: 0 6px 6px 0;
+}
+.review-quote p {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.8;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Review Lists */
+.review-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+.review-list li {
+    position: relative;
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+.review-list li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--portal-green);
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+}
+.review-list li strong {
+    color: var(--text-primary);
+}
+.review-list li code {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--rick-blue);
+    background: var(--panel-dark);
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border-subtle);
+}
+.review-list-detailed h3 {
+    margin-top: 1.5rem !important;
+}
+
+/* Review cert proof image */
+.review-cert-proof {
+    margin-top: 3rem;
+    text-align: center;
+}
+.review-cert-proof h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+.review-cert-proof img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--portal-green-dim);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.review-cert-proof img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--portal-green-dim);
+}
+
+@media (max-width: 768px) {
+    .review-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .review-pros-cons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .review-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   PAGE TRANSITION (fade to black)
+   ============================================ */
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--void-black);
+    animation: pageFadeOut 0.35s ease both;
+    pointer-events: none;
+}
+@keyframes pageFadeOut {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ============================================
+   CUSTOM PORTAL CURSOR (CSS-only)
+   ============================================ */
+/* Green crosshair dot - default */
+html:not([data-theme="light"]) {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='4' fill='%2339ff14'/%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%2339ff14' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E") 12 12, auto;
+}
+/* Lighter version for light mode */
+html[data-theme="light"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='4' fill='%230a9e00'/%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%230a9e00' stroke-width='1' opacity='0.5'/%3E%3C/svg%3E") 12 12, auto;
+}
+/* Pointer cursor for interactive elements */
+html:not([data-theme="light"]) a,
+html:not([data-theme="light"]) button,
+html:not([data-theme="light"]) [role="button"],
+html:not([data-theme="light"]) .category-card,
+html:not([data-theme="light"]) .featured-card,
+html:not([data-theme="light"]) .cert-badge {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='14' cy='14' r='5' fill='%2300ff88'/%3E%3Ccircle cx='14' cy='14' r='10' fill='none' stroke='%2300ff88' stroke-width='1.5' opacity='0.6'/%3E%3Ccircle cx='14' cy='14' r='13' fill='none' stroke='%2339ff14' stroke-width='0.5' opacity='0.3'/%3E%3C/svg%3E") 14 14, pointer;
+}
+html[data-theme="light"] a,
+html[data-theme="light"] button,
+html[data-theme="light"] [role="button"],
+html[data-theme="light"] .category-card,
+html[data-theme="light"] .featured-card,
+html[data-theme="light"] .cert-badge {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='14' cy='14' r='5' fill='%2300875a'/%3E%3Ccircle cx='14' cy='14' r='10' fill='none' stroke='%2300875a' stroke-width='1.5' opacity='0.6'/%3E%3Ccircle cx='14' cy='14' r='13' fill='none' stroke='%230a9e00' stroke-width='0.5' opacity='0.3'/%3E%3C/svg%3E") 14 14, pointer;
+}
+/* Text inputs keep native text cursor */
+input, textarea, select, [contenteditable] {
+    cursor: text !important;
+}
+
+/* ============================================
+   MATRIX RAIN TOGGLE
+   ============================================ */
+.bg-toggle {
+    background: none;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+.bg-toggle:hover {
+    border-color: var(--portal-green);
+    color: var(--portal-green);
+}
+.bg-toggle.matrix-active {
+    border-color: var(--portal-green);
+    color: var(--portal-green);
+    background: var(--portal-green)11;
+    box-shadow: 0 0 8px var(--portal-green-dim);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .page-transition-overlay { animation-duration: 0.01s !important; }
 }

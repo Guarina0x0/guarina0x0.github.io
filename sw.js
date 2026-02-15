@@ -1,12 +1,15 @@
-const CACHE_NAME = 'guarina0x0-v2';
+const CACHE_NAME = 'guarina0x0-v7';
 const ASSETS = [
     '/',
     '/index.html',
     '/cheatsheets.html',
+    '/writeups.html',
     '/crte-cheatsheet.html',
     '/crto-cheatsheet.html',
     '/cwp-cheatsheet.html',
     '/cartp-cheatsheet.html',
+    '/blizzard-review.html',
+    '/hades-review.html',
     '/styles.css',
     '/index.css',
     '/main.js',

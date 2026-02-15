@@ -247,3 +247,68 @@
     var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
     quoteEl.innerHTML = randomQuote.text + '<br><small style="color: var(--text-dim); font-style: normal; font-size: 0.75rem;">' + randomQuote.author + '</small>';
 })();
+
+/* ============================================
+   PARALLAX EFFECT (Hero)
+   ============================================ */
+(function() {
+    var hero = document.querySelector('.hero');
+    var portal = document.querySelector('.portal-container');
+    if (!hero || !portal) return;
+
+    /* Skip on mobile / reduced motion */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.innerWidth < 768) return;
+
+    var heroTitle = hero.querySelector('.hero-title');
+    var heroDimension = hero.querySelector('.hero-dimension');
+    var heroSubtitle = hero.querySelector('.hero-subtitle');
+    var heroCerts = hero.querySelector('.hero-certs');
+    var heroCta = hero.querySelector('.hero-cta');
+    var heroTerminal = hero.querySelector('.hero-terminal');
+
+    /* Scroll parallax: elements move at different speeds */
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function() {
+            var scrollY = window.scrollY;
+            var heroHeight = hero.offsetHeight;
+
+            if (scrollY < heroHeight) {
+                var progress = scrollY / heroHeight;
+                portal.style.transform = 'translateY(' + (scrollY * 0.3) + 'px) scale(' + (1 - progress * 0.15) + ')';
+                if (heroTitle) heroTitle.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
+                if (heroDimension) heroDimension.style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
+                if (heroSubtitle) heroSubtitle.style.transform = 'translateY(' + (scrollY * 0.08) + 'px)';
+                if (heroCerts) heroCerts.style.transform = 'translateY(' + (scrollY * 0.05) + 'px)';
+                if (heroCta) heroCta.style.transform = 'translateY(' + (scrollY * 0.04) + 'px)';
+                if (heroTerminal) heroTerminal.style.transform = 'translateY(' + (scrollY * 0.02) + 'px)';
+            }
+            ticking = false;
+        });
+    });
+
+    /* Mouse-move parallax: portal tilts toward cursor */
+    hero.addEventListener('mousemove', function(e) {
+        var rect = hero.getBoundingClientRect();
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var mouseX = e.clientX - rect.left;
+        var mouseY = e.clientY - rect.top;
+
+        var rotateX = ((mouseY - centerY) / centerY) * -8;
+        var rotateY = ((mouseX - centerX) / centerX) * 8;
+        var scrollOffset = window.scrollY * 0.3;
+
+        portal.style.transform = 'translateY(' + scrollOffset + 'px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+    });
+
+    hero.addEventListener('mouseleave', function() {
+        var scrollOffset = window.scrollY * 0.3;
+        portal.style.transform = 'translateY(' + scrollOffset + 'px) rotateX(0deg) rotateY(0deg)';
+        portal.style.transition = 'transform 0.5s ease';
+        setTimeout(function() { portal.style.transition = ''; }, 500);
+    });
+})();

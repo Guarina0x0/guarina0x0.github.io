@@ -66,87 +66,27 @@ if ('serviceWorker' in navigator) {
     });
 })();
 
-/* Page transitions */
+/* Page Transitions (fade to black) */
 (function() {
+    var transitioning = false;
+
     document.querySelectorAll('a[href]').forEach(function(a) {
         var href = a.getAttribute('href');
         if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('javascript:')) {
             a.addEventListener('click', function(e) {
+                if (transitioning) return;
+                transitioning = true;
                 e.preventDefault();
-                document.body.classList.add('page-exit');
-                setTimeout(function() { window.location.href = href; }, 250);
+                var overlay = document.createElement('div');
+                overlay.className = 'page-transition-overlay';
+                document.body.appendChild(overlay);
+                setTimeout(function() { window.location.href = href; }, 350);
             });
         }
     });
 })();
 
-/* Starfield canvas - with visibility optimization */
-(function() {
-    var canvas = document.getElementById('starCanvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var stars = [];
-    var STAR_COUNT = 200;
-    var animationId = null;
-
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    function createStars() {
-        stars = [];
-        for (var i = 0; i < STAR_COUNT; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5 + 0.3,
-                alpha: Math.random() * 0.8 + 0.2,
-                speed: Math.random() * 0.3 + 0.05,
-                pulse: Math.random() * Math.PI * 2
-            });
-        }
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var time = Date.now() * 0.001;
-
-        stars.forEach(function(star) {
-            var flicker = Math.sin(time * star.speed * 2 + star.pulse) * 0.3 + 0.7;
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(57, 255, 20, ' + (star.alpha * flicker * 0.4) + ')';
-            ctx.fill();
-
-            if (star.radius > 1) {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius * 2, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(139, 92, 246, ' + (star.alpha * flicker * 0.1) + ')';
-                ctx.fill();
-            }
-        });
-
-        animationId = requestAnimationFrame(draw);
-    }
-
-    /* Pause animation when tab is hidden */
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-        } else {
-            if (!animationId) draw();
-        }
-    });
-
-    window.addEventListener('resize', function() { resize(); createStars(); });
-    resize();
-    createStars();
-    draw();
-})();
+/* (Starfield/Matrix canvas is handled by the toggle module at the bottom) */
 
 /* Enhanced Global Search (Ctrl+K modal) */
 (function() {
@@ -371,4 +311,163 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('scroll', function() {
         btn.classList.toggle('visible', window.scrollY > 400);
     });
+})();
+
+/* ============================================
+   MATRIX RAIN / STARFIELD TOGGLE
+   ============================================ */
+(function() {
+    var canvas = document.getElementById('starCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var currentMode = localStorage.getItem('bgMode') || 'stars';
+    var animationId = null;
+
+    /* --- Starfield renderer --- */
+    var stars = [];
+    var STAR_COUNT = 200;
+
+    function createStars() {
+        stars = [];
+        for (var i = 0; i < STAR_COUNT; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5 + 0.3,
+                alpha: Math.random() * 0.8 + 0.2,
+                speed: Math.random() * 0.3 + 0.05,
+                pulse: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var time = Date.now() * 0.001;
+        stars.forEach(function(star) {
+            var flicker = Math.sin(time * star.speed * 2 + star.pulse) * 0.3 + 0.7;
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(57, 255, 20, ' + (star.alpha * flicker * 0.4) + ')';
+            ctx.fill();
+            if (star.radius > 1) {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius * 2, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(139, 92, 246, ' + (star.alpha * flicker * 0.1) + ')';
+                ctx.fill();
+            }
+        });
+        animationId = requestAnimationFrame(drawStars);
+    }
+
+    /* --- Matrix rain renderer --- */
+    var columns = [];
+    var FONT_SIZE = 14;
+    var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]=/\\*+-;:'.split('');
+
+    function initMatrix() {
+        var colCount = Math.ceil(canvas.width / FONT_SIZE);
+        columns = [];
+        for (var i = 0; i < colCount; i++) {
+            columns.push({
+                y: Math.random() * canvas.height / FONT_SIZE | 0,
+                speed: 0.5 + Math.random() * 1.5,
+                acc: 0
+            });
+        }
+    }
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(5, 5, 16, 0.06)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = FONT_SIZE + 'px "Share Tech Mono", monospace';
+
+        for (var i = 0; i < columns.length; i++) {
+            var col = columns[i];
+            var char = chars[Math.random() * chars.length | 0];
+            var x = i * FONT_SIZE;
+            var y = col.y * FONT_SIZE;
+
+            /* Head character: bright green/white */
+            ctx.fillStyle = 'rgba(57, 255, 20, 0.95)';
+            ctx.fillText(char, x, y);
+
+            /* Glow on head */
+            ctx.shadowColor = '#39ff14';
+            ctx.shadowBlur = 8;
+            ctx.fillText(char, x, y);
+            ctx.shadowBlur = 0;
+
+            /* Previous chars fade */
+            if (Math.random() > 0.97) {
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
+                ctx.fillText(chars[Math.random() * chars.length | 0], x, y - FONT_SIZE * 2);
+            }
+
+            col.acc += col.speed;
+            if (col.acc >= 1) {
+                col.acc = 0;
+                col.y++;
+                if (col.y * FONT_SIZE > canvas.height && Math.random() > 0.975) {
+                    col.y = 0;
+                    col.speed = 0.5 + Math.random() * 1.5;
+                }
+            }
+        }
+
+        animationId = requestAnimationFrame(drawMatrix);
+    }
+
+    /* --- Resize handler --- */
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        if (currentMode === 'stars') createStars();
+        else initMatrix();
+    }
+
+    /* --- Mode switching --- */
+    function stopAnimation() {
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+    }
+
+    function startMode(mode) {
+        stopAnimation();
+        currentMode = mode;
+        localStorage.setItem('bgMode', mode);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        var toggleBtn = document.getElementById('bgToggle');
+        if (toggleBtn) toggleBtn.classList.toggle('matrix-active', mode === 'matrix');
+
+        if (mode === 'matrix') {
+            initMatrix();
+            drawMatrix();
+        } else {
+            createStars();
+            drawStars();
+        }
+    }
+
+    /* --- Visibility optimization --- */
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            stopAnimation();
+        } else {
+            if (currentMode === 'matrix') drawMatrix();
+            else drawStars();
+        }
+    });
+
+    window.addEventListener('resize', resize);
+    resize();
+    startMode(currentMode);
+
+    /* Expose toggle for button */
+    window.__toggleBgMode = function() {
+        startMode(currentMode === 'stars' ? 'matrix' : 'stars');
+    };
 })();
