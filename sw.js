@@ -1,4 +1,4 @@
-const CACHE_NAME = 'guarina0x0-v7';
+const CACHE_NAME = 'guarina0x0-v8';
 const ASSETS = [
     '/',
     '/index.html',
