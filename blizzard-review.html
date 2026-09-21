@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050510">
+    <meta name="theme-color" content="#08080b">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Blizzard ProLab Review - HackTheBox | Guarina0x0</title>
     <meta name="description" content="Review y experiencia personal del ProLab Blizzard (BlackSky) de HackTheBox. Cloud pentesting en GCP, Kubernetes e IAM sin spoilers.">
@@ -34,7 +34,9 @@
     <meta name="keywords" content="Blizzard, ProLab, HackTheBox, BlackSky, GCP, Kubernetes, IAM, cloud pentesting, cloud security, review, experiencia">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -59,8 +61,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
-            {"@type": "ListItem", "position": 2, "name": "Write-ups & CTF", "item": "https://guarina0x0.github.io/writeups.html"},
+            {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Reseñas", "item": "https://guarina0x0.github.io/writeups.html"},
             {"@type": "ListItem", "position": 3, "name": "Blizzard ProLab"}
         ]
     }
@@ -72,31 +74,24 @@
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
 <div class="reading-progress" id="readingProgress"></div>
 
-<div class="grid-overlay"></div>
-
 <!-- Nav -->
 <nav class="nav" id="nav">
     <a href="/" class="nav-brand">
         <div class="nav-logo"><span>G</span></div>
-        <span class="nav-title">GUARINA0x0</span>
+        <span class="nav-title">Guarina0x0</span>
     </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="/">Portal</a></li>
-        <li><a href="/#categorias">Categor&iacute;as</a></li>
-        <li><a href="cheatsheets.html">Cheatsheets</a></li>
-        <li><a href="writeups.html">Write-ups</a></li>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/#about">Sobre m&iacute;</a></li>
+        <li><a href="/#projects">Proyectos</a></li>
+        <li><a href="writeups.html">Rese&ntilde;as</a></li>
         <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
         <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
     </button>
-    <button class="bg-toggle" id="bgToggle" aria-label="Toggle background effect" onclick="window.__toggleBgMode && window.__toggleBgMode()">01</button>
-    <button class="search-trigger" id="searchTrigger" aria-label="Search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <kbd>Ctrl+K</kbd>
-    </button>
-    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Abrir menú" tabindex="0">
         <span></span>
         <span></span>
         <span></span>
@@ -105,16 +100,16 @@
 
 <!-- Breadcrumbs -->
 <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Portal</a>
+    <a href="/">Inicio</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="writeups.html">Write-ups &amp; CTF</a>
+    <a href="writeups.html">Rese&ntilde;as</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">Blizzard ProLab</span>
 </nav>
 
 <!-- Hero -->
 <section class="page-hero">
-    <div class="page-hero-tag">// Dimensi&oacute;n B-137 :: HackTheBox BlackSky ProLab</div>
+    <div class="page-hero-tag">// HackTheBox BlackSky ProLab</div>
     <h1><span class="accent">Blizzard</span> ProLab Review</h1>
     <p class="page-hero-desc">Mi experiencia completando el ProLab Blizzard de HackTheBox. Cloud pentesting real sobre GCP, Kubernetes e IAM &mdash; sin spoilers, solo valoraci&oacute;n honesta.</p>
     <div class="page-hero-reading-time">
@@ -288,9 +283,9 @@
     <div class="section-number">// 06</div>
     <h2>Mi <span class="accent">Experiencia</span></h2>
 
-    <p>Compr&eacute; acceso a Blizzard porque quer&iacute;a profundizar en cloud pentesting m&aacute;s all&aacute; de la teor&iacute;a. Ya ten&iacute;a experiencia con Azure a trav&eacute;s del CARTP, pero GCP era territorio nuevo para m&iacute;. Y la verdad, fue una de las mejores decisiones de formaci&oacute;n que he tomado.</p>
+    <p>Compr&eacute; acceso a Blizzard porque quer&iacute;a profundizar en cloud pentesting m&aacute;s all&aacute; de la teor&iacute;a. Ya ten&iacute;a algo de experiencia con Azure a trav&eacute;s del CARTP, pero GCP era territorio nuevo para m&iacute;. Mereci&oacute; la pena.</p>
 
-    <p>Las primeras flags las saqu&eacute; relativamente r&aacute;pido &mdash; enumeraci&oacute;n, explotaci&oacute;n web b&aacute;sica y abuso de metadata son cosas que ya ten&iacute;a interiorizadas. Donde empec&eacute; a sudar fue en las fases de <strong>IAM delegation chains</strong> y <strong>Kubernetes RBAC exploitation</strong>. Ah&iacute; tuve que parar, documentarme y volver con ideas frescas.</p>
+    <p>Las primeras flags &mdash; enumeraci&oacute;n, explotaci&oacute;n web b&aacute;sica y abuso de metadata &mdash; son conceptos que ya ten&iacute;a trabajados. El atasco lleg&oacute; en las fases de <strong>IAM delegation chains</strong> y <strong>Kubernetes RBAC exploitation</strong>: tuve que parar, documentarme y volver con ideas frescas.</p>
 
     <p>Lo que m&aacute;s me cost&oacute; fue una fase intermedia donde necesitaba encadenar impersonaci&oacute;n de Service Accounts a trav&eacute;s de m&uacute;ltiples niveles. No es que la t&eacute;cnica fuera desconocida, sino que identificar <em>qu&eacute;</em> cuenta pod&iacute;a impersonar a <em>cu&aacute;l</em> requer&iacute;a una enumeraci&oacute;n muy met&oacute;dica.</p>
 
@@ -358,9 +353,9 @@
     <div class="section-number">// 09</div>
     <h2>Veredicto <span class="accent">Final</span></h2>
 
-    <p>Blizzard es, sin duda, uno de los mejores recursos pr&aacute;cticos que existen para aprender cloud pentesting sobre GCP. El realismo del entorno, la progresi&oacute;n de dificultad y la variedad de t&eacute;cnicas lo convierten en una experiencia formativa de primer nivel.</p>
+    <p>Blizzard es uno de los recursos pr&aacute;cticos m&aacute;s completos que he encontrado para aprender cloud pentesting sobre GCP. El realismo del entorno, la progresi&oacute;n de dificultad y la variedad de t&eacute;cnicas est&aacute;n muy bien calibrados.</p>
 
-    <p>Si tu objetivo es auditar infraestructura cloud en el mundo real &mdash; ya sea como pentester, red teamer o consultor de seguridad &mdash; este lab te va a dar exactamente la pr&aacute;ctica que necesitas. No es barato, no es f&aacute;cil, pero el retorno en conocimiento y confianza es enorme.</p>
+    <p>Si tu objetivo es auditar infraestructura cloud &mdash; ya sea como pentester o consultor de seguridad &mdash; este lab cubre escenarios que no es f&aacute;cil encontrar en otro sitio. No es barato ni es f&aacute;cil, pero el aprendizaje es real y aplicable.</p>
 
     <div class="review-rating">
         <div class="review-rating-header">Puntuaci&oacute;n Global</div>
@@ -375,12 +370,15 @@
     </div>
 
     <div class="review-quote">
-        <p>Si me preguntas si merece la pena: s&iacute;, absolutamente. Blizzard me dio la confianza para enfrentarme a auditor&iacute;as cloud reales sabiendo que ya hab&iacute;a visto (y explotado) esos escenarios en un entorno controlado.</p>
+        <p>Si merece la pena: s&iacute;. Practicar estos escenarios en un entorno controlado antes de verlos en una auditor&iacute;a real tiene mucho valor. Esa es la principal raz&oacute;n por la que lo recomiendo.</p>
     </div>
 
     <div class="review-cert-proof">
-        <h3>Certificado de <span class="accent">Completado</span></h3>
-        <img src="https://media.licdn.com/dms/image/v2/D4D2DAQHN-Izy2JD3jQ/profile-treasury-document-images_1920/B4DZikOXJAGQAw-/1/1755101888726?e=1772064000&v=beta&t=t08Euv6uF0KxVg7yFXuyCxXDm8k-Zwn0T63LG6nGNDM" alt="Certificado de completado del ProLab Blizzard BlackSky - HackTheBox" loading="lazy">
+        <h3>Lab <span class="accent">Completado</span></h3>
+        <div class="cert-completion-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            ProLab Blizzard completado
+        </div>
     </div>
 </div>
 
@@ -393,7 +391,7 @@
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-inner">
-        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <a href="/" class="footer-brand">Guarina0x0</a>
         <span class="footer-sep">&bull;</span>
         <span>Blizzard ProLab Review</span>
         <span class="footer-sep">&bull;</span>
@@ -411,46 +409,9 @@
             </a>
         </div>
     </div>
-    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+    <p class="footer-dimension">Guarina0x0 &middot; guarina0x0.github.io</p>
 </footer>
 
-<!-- Search Modal -->
-<div class="search-overlay" id="searchOverlay">
-    <div class="search-modal">
-        <div class="search-input-wrap">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
-            <span class="search-result-count" id="searchCount"></span>
-            <span class="search-close-hint">ESC</span>
-        </div>
-        <div class="search-filters" id="searchFilters">
-            <div class="filter-row">
-                <button class="filter-chip active" data-sheet="all">All</button>
-                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
-                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
-                <button class="filter-chip" data-sheet="CWP">CWP</button>
-                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
-            </div>
-            <div class="filter-row">
-                <button class="filter-chip lang active" data-lang="all">All Langs</button>
-                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
-                <button class="filter-chip lang" data-lang="Bash">Bash</button>
-                <button class="filter-chip lang" data-lang="CMD">CMD</button>
-                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
-            </div>
-        </div>
-        <div class="search-results" id="searchResults">
-            <div class="search-empty">Type to search commands across all cheatsheets...</div>
-        </div>
-        <div class="search-footer">
-            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
-            <span><kbd>&crarr;</kbd> Open</span>
-            <span><kbd>esc</kbd> Close</span>
-        </div>
-    </div>
-</div>
-
-<script src="search-index.js"></script>
 <script src="main.js"></script>
 
 </body>

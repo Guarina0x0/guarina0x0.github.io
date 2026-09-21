@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050510">
+    <meta name="theme-color" content="#08080b">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Write-ups &amp; CTF | Guarina0x0</title>
-    <meta name="description" content="Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desaf&iacute;os de seguridad ofensiva. Sin spoilers, solo valoraci&oacute;n y aprendizaje.">
+    <title>Rese&ntilde;as | Guarina0x0</title>
+    <meta name="description" content="Opiniones y valoraciones de certificaciones de seguridad ofensiva y ProLabs de HackTheBox. Sin spoilers de examen &mdash; solo aprendizaje y opini&oacute;n honesta.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -15,12 +15,12 @@
     <link rel="canonical" href="https://guarina0x0.github.io/writeups.html">
     <meta property="og:url" content="https://guarina0x0.github.io/writeups.html">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Write-ups &amp; CTF | Guarina0x0">
-    <meta property="og:description" content="Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desafios de seguridad ofensiva.">
+    <meta property="og:title" content="Rese&ntilde;as | Guarina0x0">
+    <meta property="og:description" content="Opiniones y valoraciones de certificaciones de seguridad ofensiva y ProLabs de HackTheBox. Sin spoilers de examen.">
     <meta property="og:site_name" content="Guarina0x0">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Write-ups &amp; CTF | Guarina0x0">
-    <meta name="twitter:description" content="Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desafios de seguridad ofensiva.">
+    <meta name="twitter:title" content="Rese&ntilde;as | Guarina0x0">
+    <meta name="twitter:description" content="Opiniones y valoraciones de certificaciones de seguridad ofensiva y ProLabs de HackTheBox. Sin spoilers de examen.">
     <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -29,18 +29,20 @@
     <meta name="twitter:creator" content="@Guarina0x0">
     <meta property="og:locale" content="es_ES">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:alt" content="Guarina0x0 - Write-ups y CTF de Seguridad Ofensiva">
+    <meta property="og:image:alt" content="Guarina0x0 - Rese&ntilde;as de certificaciones y ProLabs">
     <meta name="author" content="Guarina0x0">
-    <meta name="keywords" content="writeups, write-ups, CTF, HackTheBox, ProLab, Blizzard, Hades, pentesting, red team, seguridad ofensiva, reviews">
+    <meta name="keywords" content="certificaciones, red team, CRTO, HackTheBox, ProLab, Blizzard, Hades, pentesting, seguridad ofensiva, opiniones, reseñas">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": "Write-ups & CTF",
-        "description": "Write-ups, reviews y experiencias de ProLabs de HackTheBox, CTFs y desafios de seguridad ofensiva.",
+        "name": "Reseñas",
+        "description": "Opiniones y valoraciones de certificaciones de seguridad ofensiva y ProLabs de HackTheBox.",
         "url": "https://guarina0x0.github.io/writeups.html",
         "author": {"@type": "Person", "name": "Guarina0x0"},
         "isPartOf": {
@@ -52,194 +54,77 @@
     </script>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Page-specific overrides for writeups hub */
-        .nav-logo {
-            border-radius: 0;
-            border: 2px solid var(--portal-green);
-            background: none;
-            animation: none;
-            font-size: 1.1rem;
-        }
-        .nav-logo::after { display: none; }
-        .nav-links a.active { color: var(--portal-green); }
-        .page-hero { padding: 10rem 3rem 5rem; }
-        .page-hero-tag { color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem; }
-        .page-hero h1 { font-size: 2.5rem; letter-spacing: 3px; }
-        .page-hero-desc { font-family: 'Exo 2', sans-serif; font-size: 1rem; margin: 1.5rem auto 0; }
-        .accent { color: var(--portal-green); }
-        .section { padding: 6rem 3rem; }
-        .featured-grid { max-width: 1200px; }
-        .featured-badge {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--void-black);
-            background: var(--portal-green);
-            padding: 0.15rem 0.5rem;
-            letter-spacing: 1px;
-        }
-        .featured-card.purple .featured-badge { background: var(--dimension-purple); }
-        .featured-card.blue .featured-badge { background: var(--rick-blue); }
-        .featured-card.purple:hover .featured-title { color: var(--dimension-purple); }
-        .featured-card.blue:hover .featured-title { color: var(--rick-blue); }
-        .featured-card.purple:hover {
-            border-color: var(--dimension-purple)44;
-            box-shadow: 0 15px 40px -15px rgba(139, 92, 246, 0.3);
-        }
-        .featured-card.blue:hover {
-            border-color: var(--rick-blue)44;
-            box-shadow: 0 15px 40px -15px rgba(0, 212, 255, 0.3);
-        }
-        .featured-category.color-purple { color: var(--dimension-purple); }
-        .featured-category.color-blue { color: var(--rick-blue); }
-
-        /* Reading time badge */
-        .featured-reading-time {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            margin-top: 0.8rem;
-        }
-        .featured-reading-time svg {
-            opacity: 0.6;
-        }
-
-        /* Filter chips */
-        .writeup-filters {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-        }
-        .writeup-filter-chip {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 0.5rem 1.2rem;
-            border: 1px solid var(--border-subtle);
-            border-radius: 4px;
-            background: transparent;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .writeup-filter-chip:hover {
-            border-color: var(--portal-green);
-            color: var(--portal-green);
-        }
-        .writeup-filter-chip.active {
-            background: var(--portal-green);
-            color: var(--void-black);
-            border-color: var(--portal-green);
-            font-weight: 700;
-        }
-
-        /* Card animations */
-        .featured-card {
-            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-        }
-        .featured-card:hover {
-            transform: translateY(-6px);
-        }
-        .featured-card .featured-banner {
-            transition: opacity 0.35s ease;
-        }
-        .featured-card:hover .featured-banner {
-            opacity: 0.8;
-        }
-
-        /* Hidden by filter */
-        .featured-card.filter-hidden {
-            display: none;
-        }
-
-        /* No results message */
-        .writeup-no-results {
-            text-align: center;
-            padding: 3rem;
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            display: none;
-        }
-        .writeup-no-results.visible {
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .section { padding: 4rem 1.5rem; }
-            .writeup-filters { gap: 0.5rem; }
-            .writeup-filter-chip { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
-        }
+        .page-hero{padding-bottom:1rem}
+        .section{padding-top:1rem}
     </style>
     <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
-
-<div class="grid-overlay"></div>
-
 <!-- Nav -->
 <nav class="nav" id="nav">
     <a href="/" class="nav-brand">
         <div class="nav-logo"><span>G</span></div>
-        <span class="nav-title">GUARINA0x0</span>
+        <span class="nav-title">Guarina0x0</span>
     </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="/">Portal</a></li>
-        <li><a href="/#categorias">Categor&iacute;as</a></li>
-        <li><a href="cheatsheets.html">Cheatsheets</a></li>
-        <li><a href="writeups.html" class="active">Write-ups</a></li>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/#about">Sobre m&iacute;</a></li>
+        <li><a href="/#projects">Proyectos</a></li>
+        <li><a href="writeups.html" class="active">Rese&ntilde;as</a></li>
         <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
         <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
     </button>
-    <button class="bg-toggle" id="bgToggle" aria-label="Toggle background effect" onclick="window.__toggleBgMode && window.__toggleBgMode()">01</button>
-    <button class="search-trigger" id="searchTrigger" aria-label="Search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <kbd>Ctrl+K</kbd>
-    </button>
-    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Abrir men&uacute;" tabindex="0">
+        <span></span><span></span><span></span>
     </div>
 </nav>
 
 <!-- Hero -->
 <section class="page-hero" id="main-content">
-    <div class="page-hero-tag">// Dimensi&oacute;n W-042 :: Write-ups &amp; CTF</div>
-    <h1><span class="accent">Write-ups</span> &amp; CTF</h1>
-    <p class="page-hero-desc">Reviews, experiencias y valoraciones de ProLabs de HackTheBox y otros desaf&iacute;os de seguridad ofensiva. Sin spoilers &mdash; solo aprendizaje y opini&oacute;n honesta.</p>
+    <div class="page-hero-tag">// Rese&ntilde;as</div>
+    <h1><span class="accent">Rese&ntilde;as</span></h1>
+    <p class="page-hero-desc">Opiniones y valoraciones de certificaciones de seguridad ofensiva y ProLabs. Sin spoilers de examen &mdash; solo opini&oacute;n honesta sobre dificultad, calidad y si merece la pena.</p>
 </section>
 
-<!-- Write-ups Grid -->
+<!-- Grid -->
 <section class="section">
-    <!-- Filters -->
-    <div class="writeup-filters" role="group" aria-label="Filtrar write-ups por categor&iacute;a">
-        <button class="writeup-filter-chip active" data-filter="all">Todos</button>
-        <button class="writeup-filter-chip" data-filter="cloud">Cloud</button>
-        <button class="writeup-filter-chip" data-filter="ad">Active Directory</button>
-        <button class="writeup-filter-chip" data-filter="web">Web</button>
+    <div class="writeup-filters" role="group" aria-label="Filtrar por categor&iacute;a">
+        <button class="writeup-filter-chip active" data-filter="all">Todas</button>
+        <button class="writeup-filter-chip" data-filter="cert">Certificaciones</button>
+        <button class="writeup-filter-chip" data-filter="prolab">ProLabs</button>
     </div>
 
     <div class="featured-grid">
 
-        <a href="blizzard-review.html" class="featured-card blue reveal reveal-delay-1" data-category="cloud">
+        <a href="crto-review.html" class="featured-card reveal reveal-delay-1" data-category="cert">
+            <div class="featured-banner"></div>
+            <div class="featured-content">
+                <div class="featured-meta">
+                    <span class="featured-category">CERTIFICACI&Oacute;N</span>
+                    <span class="featured-badge">Zero-Point Security</span>
+                </div>
+                <h3 class="featured-title">CRTO &mdash; &iquest;Merece la pena?</h3>
+                <p class="featured-excerpt">Opini&oacute;n honesta del Certified Red Team Operator: dificultad del examen, calidad del curso, qu&eacute; se aprende y para qui&eacute;n es recomendable.</p>
+                <div class="featured-reading-time">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    7 min de lectura
+                </div>
+            </div>
+        </a>
+
+        <a href="blizzard-review.html" class="featured-card blue reveal reveal-delay-2" data-category="prolab">
             <div class="featured-banner"></div>
             <div class="featured-content">
                 <div class="featured-meta">
                     <span class="featured-category color-blue">HTB PROLAB</span>
                     <span class="featured-badge">BlackSky</span>
                 </div>
-                <h3 class="featured-title">Blizzard - Cloud Pentesting en GCP</h3>
-                <p class="featured-excerpt">Review del ProLab Blizzard: 11 flags sobre GCP, Kubernetes, IAM, container escape y cloud security end-to-end.</p>
+                <h3 class="featured-title">Blizzard &mdash; Cloud Pentesting en GCP</h3>
+                <p class="featured-excerpt">Review del ProLab Blizzard: 11 flags sobre GCP, Kubernetes, IAM, container escape y pivoting en infraestructura cloud real.</p>
                 <div class="featured-reading-time">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     8 min de lectura
@@ -247,14 +132,14 @@
             </div>
         </a>
 
-        <a href="hades-review.html" class="featured-card purple reveal reveal-delay-2" data-category="ad">
+        <a href="hades-review.html" class="featured-card purple reveal reveal-delay-3" data-category="prolab">
             <div class="featured-banner"></div>
             <div class="featured-content">
                 <div class="featured-meta">
                     <span class="featured-category color-purple">HTB PROLAB</span>
                     <span class="featured-badge">RTO Level 1</span>
                 </div>
-                <h3 class="featured-title">Hades - Active Directory Pentesting</h3>
+                <h3 class="featured-title">Hades &mdash; Active Directory Pentesting</h3>
                 <p class="featured-excerpt">Review del ProLab Hades: 6 flags con pivoting, Kerberos abuse, DPAPI, RBCD, ADIDNS poisoning y domain compromise.</p>
                 <div class="featured-reading-time">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -264,15 +149,15 @@
         </a>
 
     </div>
-    <div class="writeup-no-results" id="writeupNoResults">No hay write-ups en esta categor&iacute;a todav&iacute;a... &iexcl;pr&oacute;ximamente!</div>
+    <div class="writeup-no-results" id="writeupNoResults">No hay rese&ntilde;as en esta categor&iacute;a todav&iacute;a.</div>
 </section>
 
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-inner">
-        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <a href="/" class="footer-brand">Guarina0x0</a>
         <span class="footer-sep">&bull;</span>
-        <span>Write-ups &amp; CTF</span>
+        <span>Rese&ntilde;as</span>
         <span class="footer-sep">&bull;</span>
         <span>&copy; 2026</span>
         <span class="footer-sep">&bull;</span>
@@ -288,78 +173,32 @@
             </a>
         </div>
     </div>
-    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+    <p class="footer-dimension">Guarina0x0 &middot; guarina0x0.github.io</p>
 </footer>
 
-<!-- Search Modal -->
-<div class="search-overlay" id="searchOverlay">
-    <div class="search-modal">
-        <div class="search-input-wrap">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
-            <span class="search-result-count" id="searchCount"></span>
-            <span class="search-close-hint">ESC</span>
-        </div>
-        <div class="search-filters" id="searchFilters">
-            <div class="filter-row">
-                <button class="filter-chip active" data-sheet="all">All</button>
-                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
-                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
-                <button class="filter-chip" data-sheet="CWP">CWP</button>
-                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
-            </div>
-            <div class="filter-row">
-                <button class="filter-chip lang active" data-lang="all">All Langs</button>
-                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
-                <button class="filter-chip lang" data-lang="Bash">Bash</button>
-                <button class="filter-chip lang" data-lang="CMD">CMD</button>
-                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
-            </div>
-        </div>
-        <div class="search-results" id="searchResults">
-            <div class="search-empty">Type to search commands across all cheatsheets...</div>
-        </div>
-        <div class="search-footer">
-            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
-            <span><kbd>&crarr;</kbd> Open</span>
-            <span><kbd>esc</kbd> Close</span>
-        </div>
-    </div>
-</div>
-
-<script src="search-index.js"></script>
 <script src="main.js"></script>
 <script>
-/* Write-up category filters */
 (function() {
     var chips = document.querySelectorAll('.writeup-filter-chip');
     var cards = document.querySelectorAll('.featured-card[data-category]');
     var noResults = document.getElementById('writeupNoResults');
-
     chips.forEach(function(chip) {
         chip.addEventListener('click', function() {
             chips.forEach(function(c) { c.classList.remove('active'); });
             this.classList.add('active');
-
             var filter = this.dataset.filter;
-            var visibleCount = 0;
-
+            var visible = 0;
             cards.forEach(function(card) {
                 if (filter === 'all' || card.dataset.category === filter) {
-                    card.classList.remove('filter-hidden');
-                    visibleCount++;
+                    card.classList.remove('filter-hidden'); visible++;
                 } else {
                     card.classList.add('filter-hidden');
                 }
             });
-
-            if (noResults) {
-                noResults.classList.toggle('visible', visibleCount === 0);
-            }
+            if (noResults) noResults.classList.toggle('visible', visible === 0);
         });
     });
 })();
 </script>
-
 </body>
 </html>

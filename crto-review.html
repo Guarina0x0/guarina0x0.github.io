@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#08080b">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>CRTO Review - Certified Red Team Operator | Guarina0x0</title>
+    <meta name="description" content="Mi experiencia con el CRTO de Zero-Point Security. Cobalt Strike, OPSEC scoring en el examen y por qué merece la pena el precio.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://guarina0x0.github.io/crto-review.html">
+    <meta property="og:url" content="https://guarina0x0.github.io/crto-review.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CRTO Review - Certified Red Team Operator | Guarina0x0">
+    <meta property="og:description" content="Mi experiencia con el CRTO de Zero-Point Security. Cobalt Strike, OPSEC scoring en el examen y por qué merece la pena el precio.">
+    <meta property="og:site_name" content="Guarina0x0">
+    <meta name="twitter:title" content="CRTO Review - Certified Red Team Operator | Guarina0x0">
+    <meta name="twitter:description" content="Mi experiencia con el CRTO de Zero-Point Security. Cobalt Strike, OPSEC scoring en el examen y por qué merece la pena el precio.">
+    <meta property="og:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://guarina0x0.github.io/og-image.png">
+    <meta name="twitter:site" content="@Guarina0x0">
+    <meta name="twitter:creator" content="@Guarina0x0">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="CRTO Review - Certified Red Team Operator Zero-Point Security">
+    <meta name="author" content="Guarina0x0">
+    <meta name="keywords" content="CRTO, Certified Red Team Operator, Zero-Point Security, Cobalt Strike, OPSEC, red team, certificacion, review, experiencia, pentesting">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CRTO Review - Certified Red Team Operator",
+        "description": "Mi experiencia con el CRTO de Zero-Point Security. Cobalt Strike, OPSEC scoring en el examen y por qué merece la pena el precio.",
+        "author": {"@type": "Person", "name": "Guarina0x0", "url": "https://guarina0x0.github.io"},
+        "publisher": {"@type": "Person", "name": "Guarina0x0"},
+        "url": "https://guarina0x0.github.io/crto-review.html",
+        "datePublished": "2026-07-11",
+        "dateModified": "2026-07-11",
+        "inLanguage": "es",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Guarina0x0",
+            "url": "https://guarina0x0.github.io"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Reseñas", "item": "https://guarina0x0.github.io/writeups.html"},
+            {"@type": "ListItem", "position": 3, "name": "CRTO Review"}
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div class="reading-progress" id="readingProgress"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <div class="nav-logo"><span>G</span></div>
+        <span class="nav-title">Guarina0x0</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/#about">Sobre m&iacute;</a></li>
+        <li><a href="/#projects">Proyectos</a></li>
+        <li><a href="writeups.html">Rese&ntilde;as</a></li>
+        <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Abrir men&uacute;" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="writeups.html">Rese&ntilde;as</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">CRTO Review</span>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+    <div class="page-hero-tag">// Zero-Point Security</div>
+    <h1><span class="accent">CRTO</span> &mdash; &iquest;Merece la pena?</h1>
+    <p class="page-hero-desc">Mi experiencia con el Certified Red Team Operator de Zero-Point Security. Cobalt Strike como C2, OPSEC desde el primer d&iacute;a y un examen que no perdona los atajos.</p>
+    <div class="page-hero-reading-time">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        7 min de lectura
+    </div>
+    <div class="page-hero-badges">
+        <span class="badge">Cobalt Strike</span>
+        <span class="badge">OPSEC</span>
+        <span class="badge">Malleable C2</span>
+        <span class="badge">Zero-Point Security</span>
+    </div>
+</section>
+
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar" role="complementary" aria-label="Navigation sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="sidebar-nav">
+        <li><a href="#que-es"><span class="num">01</span> &iquest;Qu&eacute; es el CRTO?</a></li>
+        <li><a href="#curso"><span class="num">02</span> El Curso</a></li>
+        <li><a href="#examen"><span class="num">03</span> El Examen</a></li>
+        <li><a href="#dificultad"><span class="num">04</span> Dificultad</a></li>
+        <li><a href="#para-quien"><span class="num">05</span> &iquest;Para Qui&eacute;n es?</a></li>
+        <li><a href="#veredicto"><span class="num">06</span> Veredicto Final</a></li>
+    </ul>
+</aside>
+
+<!-- Main Content -->
+<main class="content" id="main-content" role="main">
+
+<!-- Info Box -->
+<div class="review-info-box reveal">
+    <div class="review-info-grid">
+        <div class="review-info-item">
+            <span class="review-info-label">Proveedor</span>
+            <span class="review-info-value">Zero-Point Security</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Tipo</span>
+            <span class="review-info-value">Certificaci&oacute;n</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Enfoque</span>
+            <span class="review-info-value">Red Team Ops &amp; OPSEC</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Examen</span>
+            <span class="review-info-value">48h pr&aacute;ctico</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Intentos</span>
+            <span class="review-info-value">Ilimitados</span>
+        </div>
+        <div class="review-info-item">
+            <span class="review-info-label">Dificultad</span>
+            <span class="review-info-value accent">Intermedia-Alta</span>
+        </div>
+    </div>
+</div>
+
+<!-- 01 QUE ES EL CRTO -->
+<div class="section-block reveal" id="que-es">
+    <div class="section-number">// 01</div>
+    <h2>&iquest;Qu&eacute; es el <span class="accent">CRTO</span>?</h2>
+
+    <p>El <strong>Certified Red Team Operator</strong> es la certificaci&oacute;n de <a href="https://www.zeropointsecurity.co.uk/" target="_blank" rel="noopener noreferrer">Zero-Point Security</a>, creada por Daniel Duggan (RastaMouse). Es una de las pocas certificaciones del mercado que trabaja con <strong>Cobalt Strike</strong> como C2 principal, lo que ya la diferencia bastante del resto.</p>
+
+    <p>El curso que la acompa&ntilde;a &mdash; Red Team Ops &mdash; cubre t&eacute;cnicas ofensivas sobre entornos Windows corporativos haciendo &eacute;nfasis constante en OPSEC: c&oacute;mo ejecutar cada ataque dejando el menor rastro posible y evitando los controles de seguridad habituales.</p>
+
+    <p>No es una certificaci&oacute;n generalista. Va directa a un nicho concreto: operar con un C2 comercial de forma profesional, con criterio sobre c&oacute;mo y cu&aacute;ndo usar cada t&eacute;cnica.</p>
+</div>
+
+<!-- 02 EL CURSO -->
+<div class="section-block reveal" id="curso">
+    <div class="section-number">// 02</div>
+    <h2>El <span class="accent">Curso</span></h2>
+
+    <p>El material est&aacute; bien estructurado y es muy pr&aacute;ctico desde el principio. Tienes acceso a un laboratorio con un entorno Windows real donde practicar todo lo que se va explicando. No hay relleno te&oacute;rico innecesario &mdash; cada secci&oacute;n tiene su lab asociado.</p>
+
+    <p>Los temas que se cubren van desde el uso b&aacute;sico de Cobalt Strike hasta cosas m&aacute;s avanzadas como la configuraci&oacute;n de <strong>Malleable C2 profiles</strong> para modificar las comunicaciones del beacon y evadir detecciones. Tambi&eacute;n se trabajan t&eacute;cnicas de post-explotaci&oacute;n, movimiento lateral y escalada de privilegios en AD, siempre desde una perspectiva OPSEC-aware.</p>
+
+    <div class="review-quote">
+        <p>Lo que diferencia este curso de otros de AD es que no te pregunta solo &ldquo;&iquest;c&oacute;mo lo haces?&rdquo;, sino &ldquo;&iquest;c&oacute;mo lo haces sin que te pillen?&rdquo;. Ese cambio de mentalidad es el valor real del CRTO.</p>
+    </div>
+</div>
+
+<!-- 03 EL EXAMEN -->
+<div class="section-block reveal" id="examen">
+    <div class="section-number">// 03</div>
+    <h2>El <span class="accent">Examen</span></h2>
+
+    <p>El examen dura <strong>48 horas</strong> y es completamente pr&aacute;ctico. Tienes que comprometer un entorno de Active Directory usando Cobalt Strike. Hasta aqu&iacute; nada nuevo. Lo que lo hace especial es su sistema de puntuaci&oacute;n.</p>
+
+    <p>La puntuaci&oacute;n est&aacute; basada en <strong>OPSEC</strong>. No basta con llegar a los objetivos &mdash; c&oacute;mo llegas a ellos importa tanto como llegar. Cada acci&oacute;n que realizas tiene una penalizaci&oacute;n OPSEC asociada si no se hace correctamente. Puedes completar el path del examen y suspender igualmente si has pasado por encima de los controles de seguridad de forma ruidosa.</p>
+
+    <p>Esto obliga a pensar cada movimiento antes de ejecutarlo: qu&eacute; artefactos deja, qu&eacute; logs genera, si hay una forma m&aacute;s limpia de conseguir el mismo resultado. Es lo m&aacute;s parecido que he visto en una certificaci&oacute;n a c&oacute;mo deber&iacute;as operar en un compromiso real.</p>
+
+    <p>El &uacute;ltimo paso del examen es el m&aacute;s exigente, tanto t&eacute;cnicamente como desde el punto de vista OPSEC. Es donde m&aacute;s tiempo invert&iacute; y donde m&aacute;s aprend&iacute;.</p>
+
+    <div class="note">Los intentos de examen son <strong>ilimitados</strong>. Si suspendes puedes volver a intentarlo sin coste adicional. Esto quita presi&oacute;n y te permite aprender del fallo sin que te cueste dinero.</div>
+</div>
+
+<!-- 04 DIFICULTAD -->
+<div class="section-block reveal" id="dificultad">
+    <div class="section-number">// 04</div>
+    <h2><span class="accent">Dificultad</span></h2>
+
+    <p>La dificultad del examen est&aacute; por encima del CRTO anterior &mdash; tanto en lo t&eacute;cnico como en el componente OPSEC. Si en el primero pod&iacute;as ser un poco descuidado y aun as&iacute; aprobar, aqu&iacute; eso no funciona.</p>
+
+    <p>El curso te prepara bien para el examen si le dedicas el tiempo necesario al laboratorio. No es de esas certificaciones donde haces el curso en modo lectura y luego te presentas al examen. El lab hay que exprimirlo.</p>
+
+    <div class="review-rating">
+        <div class="review-rating-header">Dificultad del Examen</div>
+        <div class="review-rating-bar">
+            <div class="review-rating-fill" style="width: 72%"></div>
+        </div>
+        <div class="review-rating-labels">
+            <span>F&aacute;cil</span>
+            <span>Intermedia-Alta</span>
+            <span>Brutal</span>
+        </div>
+    </div>
+</div>
+
+<!-- 05 PARA QUIEN ES -->
+<div class="section-block reveal" id="para-quien">
+    <div class="section-number">// 05</div>
+    <h2>&iquest;Para Qui&eacute;n <span class="accent">es</span>?</h2>
+
+    <p>El CRTO es para quien quiera aprender a usar <strong>Cobalt Strike como C2</strong> y adquirir unos conocimientos s&oacute;lidos sobre OPSEC en entornos Windows. No hace falta ser un experto en AD para empezar, pero s&iacute; tener una base: entender c&oacute;mo funciona Active Directory, tener experiencia con herramientas ofensivas b&aacute;sicas y no llegar completamente de cero al mundo del red teaming.</p>
+
+    <ul class="review-list">
+        <li>Pentesters que quieran dar el salto a operar con un C2 comercial</li>
+        <li>Perfiles que ya tienen el CRTP u otra cert de AD y quieren profundizar en OPSEC</li>
+        <li>Cualquiera que quiera entender c&oacute;mo operar de forma sigilosa en un entorno corporativo Windows</li>
+    </ul>
+
+    <p><strong>No lo recomiendo si</strong> no tienes ninguna base en Active Directory o entornos Windows. Hay mejores puntos de entrada antes de llegar al CRTO.</p>
+</div>
+
+<!-- 06 VEREDICTO FINAL -->
+<div class="section-block reveal" id="veredicto">
+    <div class="section-number">// 06</div>
+    <h2>Veredicto <span class="accent">Final</span></h2>
+
+    <p>Una de las mejores certificaciones del mercado en su nicho. El enfoque OPSEC del examen es lo que m&aacute;s valoro &mdash; te obliga a trabajar bien desde el principio, no a hacer las cosas a lo bruto y rezar para que no te detecten. Ese h&aacute;bito, una vez adquirido, cambia la forma en que abordas cualquier compromiso.</p>
+
+    <p>El precio es razonable para lo que ofrece, y los intentos ilimitados de examen lo hacen todav&iacute;a m&aacute;s accesible. No hay trampa en ese aspecto: o aprendes a hacerlo bien o no apruebas, pero no te cuesta m&aacute;s dinero intentarlo de nuevo.</p>
+
+    <div class="review-rating">
+        <div class="review-rating-header">Puntuaci&oacute;n Global</div>
+        <div class="review-rating-stars">
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+            <span class="star filled">&#9733;</span>
+        </div>
+        <div class="review-rating-score">5 / 5</div>
+    </div>
+
+    <div class="review-pros-cons">
+        <div class="review-pros">
+            <h3>Lo Bueno</h3>
+            <ul class="review-list">
+                <li>Examen con puntuaci&oacute;n OPSEC &mdash; no puedes hacer trampa con t&eacute;cnicas ruidosas</li>
+                <li>Cobalt Strike como C2 principal, herramienta real del sector</li>
+                <li>Intentos de examen ilimitados</li>
+                <li>El laboratorio del curso est&aacute; muy bien montado</li>
+                <li>Material actualizado y pr&aacute;ctico desde el primer d&iacute;a</li>
+                <li>Muy buen precio para lo que ofrece</li>
+            </ul>
+        </div>
+        <div class="review-cons">
+            <h3>Lo Mejorable</h3>
+            <ul class="review-list">
+                <li>Requiere base previa en AD &mdash; no es apto para empezar desde cero</li>
+                <li>Cobalt Strike es una herramienta de pago fuera del curso, lo que limita la pr&aacute;ctica independiente</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="review-cert-proof">
+        <h3>Credencial <span class="accent">Verificable</span></h3>
+        <a href="https://certs.zeropointsecurity.co.uk/edfafbfb-1936-4596-a989-360929e5e079#acc.jvwInLMK" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top:.5rem">
+            Ver credencial en Zero-Point Security &rarr;
+        </a>
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<a href="#" class="back-top" id="backTop">&uarr;</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="/" class="footer-brand">Guarina0x0</a>
+        <span class="footer-sep">&bull;</span>
+        <span>CRTO Review</span>
+        <span class="footer-sep">&bull;</span>
+        <span>&copy; 2026</span>
+        <span class="footer-sep">&bull;</span>
+        <div class="footer-social">
+            <a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/antonio-gallego-l%C3%B3pez-14047b1bb/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/Guarina0x0" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+        </div>
+    </div>
+    <p class="footer-dimension">Guarina0x0 &middot; guarina0x0.github.io</p>
+</footer>
+
+<script src="main.js"></script>
+
+</body>
+</html>

@@ -1,12 +1,12 @@
 {
-    "name": "Guarina0x0 - Pentesting & Red Team",
+    "name": "Guarina0x0 - Pentesting & Security",
     "short_name": "Guarina0x0",
-    "description": "Portal interdimensional de Pentesting, Red Team, Vulnerabilidades y Certificaciones de Seguridad Ofensiva",
+    "description": "Portfolio de seguridad ofensiva de Antonio Gallego López. Mobile security, web, infraestructura y reseñas de certificaciones.",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",
-    "theme_color": "#050510",
-    "background_color": "#050510",
+    "theme_color": "#08080b",
+    "background_color": "#08080b",
     "lang": "es",
     "icons": [
         {

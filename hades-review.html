@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050510">
+    <meta name="theme-color" content="#08080b">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Hades ProLab Review - HackTheBox | Guarina0x0</title>
     <meta name="description" content="Review y experiencia personal del ProLab Hades de HackTheBox. Active Directory pentesting, lateral movement, privilege escalation y pivoting sin spoilers.">
@@ -34,7 +34,9 @@
     <meta name="keywords" content="Hades, ProLab, HackTheBox, Active Directory, pentesting, lateral movement, privilege escalation, Kerberos, RBCD, DPAPI, pivoting, review, experiencia">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -59,8 +61,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Portal", "item": "https://guarina0x0.github.io/"},
-            {"@type": "ListItem", "position": 2, "name": "Write-ups & CTF", "item": "https://guarina0x0.github.io/writeups.html"},
+            {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://guarina0x0.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Reseñas", "item": "https://guarina0x0.github.io/writeups.html"},
             {"@type": "ListItem", "position": 3, "name": "Hades ProLab"}
         ]
     }
@@ -72,31 +74,24 @@
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
 <div class="reading-progress" id="readingProgress"></div>
 
-<div class="grid-overlay"></div>
-
 <!-- Nav -->
 <nav class="nav" id="nav">
     <a href="/" class="nav-brand">
         <div class="nav-logo"><span>G</span></div>
-        <span class="nav-title">GUARINA0x0</span>
+        <span class="nav-title">Guarina0x0</span>
     </a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="/">Portal</a></li>
-        <li><a href="/#categorias">Categor&iacute;as</a></li>
-        <li><a href="cheatsheets.html">Cheatsheets</a></li>
-        <li><a href="writeups.html">Write-ups</a></li>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/#about">Sobre m&iacute;</a></li>
+        <li><a href="/#projects">Proyectos</a></li>
+        <li><a href="writeups.html">Rese&ntilde;as</a></li>
         <li><a href="https://github.com/Guarina0x0" target="_blank" rel="noopener noreferrer">GitHub</a></li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
         <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
     </button>
-    <button class="bg-toggle" id="bgToggle" aria-label="Toggle background effect" onclick="window.__toggleBgMode && window.__toggleBgMode()">01</button>
-    <button class="search-trigger" id="searchTrigger" aria-label="Search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <kbd>Ctrl+K</kbd>
-    </button>
-    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" tabindex="0">
+    <div class="nav-hamburger" id="hamburger" role="button" aria-label="Abrir menú" tabindex="0">
         <span></span>
         <span></span>
         <span></span>
@@ -105,16 +100,16 @@
 
 <!-- Breadcrumbs -->
 <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Portal</a>
+    <a href="/">Inicio</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="writeups.html">Write-ups &amp; CTF</a>
+    <a href="writeups.html">Rese&ntilde;as</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">Hades ProLab</span>
 </nav>
 
 <!-- Hero -->
 <section class="page-hero">
-    <div class="page-hero-tag">// Dimensi&oacute;n H-666 :: HackTheBox Red Team Operator Level 1</div>
+    <div class="page-hero-tag">// HackTheBox Red Team Operator Level 1</div>
     <h1><span class="accent">Hades</span> ProLab Review</h1>
     <p class="page-hero-desc">Mi experiencia completando el ProLab Hades de HackTheBox. Active Directory pentesting cl&aacute;sico con pivoting, Kerberos abuse, DPAPI y movimiento lateral &mdash; sin spoilers, solo valoraci&oacute;n honesta.</p>
     <div class="page-hero-reading-time">
@@ -361,9 +356,9 @@
     <div class="section-number">// 09</div>
     <h2>Veredicto <span class="accent">Final</span></h2>
 
-    <p>Hades es un ProLab s&oacute;lido que cumple exactamente lo que promete: un entorno AD realista donde practicar t&eacute;cnicas ofensivas end-to-end. No es el m&aacute;s grande ni el m&aacute;s complejo de HackTheBox, pero la calidad de las t&eacute;cnicas y la progresi&oacute;n est&aacute;n muy bien dise&ntilde;adas.</p>
+    <p>Hades es un ProLab s&oacute;lido que cumple exactamente lo que promete: un entorno AD realista donde practicar t&eacute;cnicas ofensivas de principio a fin. No es el m&aacute;s grande ni el m&aacute;s complejo de HackTheBox, pero la calidad de las t&eacute;cnicas y la progresi&oacute;n est&aacute;n muy bien dise&ntilde;adas.</p>
 
-    <p>Lo que m&aacute;s valoro es la variedad: en 6 flags cubres command injection, pivoting, Kerberos abuse, DPAPI, RBCD, ADIDNS poisoning y domain compromise. Es un compendio excelente de t&eacute;cnicas que todo pentester de AD deber&iacute;a dominar.</p>
+    <p>Lo que m&aacute;s valoro es la variedad: en 6 flags cubres command injection, pivoting, Kerberos abuse, DPAPI, RBCD, ADIDNS poisoning y domain compromise. Un compendio bastante completo de t&eacute;cnicas de AD pentesting en un entorno controlado.</p>
 
     <p>Si est&aacute;s buscando tu primer ProLab o quieres un entorno pr&aacute;ctico para consolidar conocimientos de AD pentesting, Hades es una elecci&oacute;n muy acertada.</p>
 
@@ -384,8 +379,11 @@
     </div>
 
     <div class="review-cert-proof">
-        <h3>Certificado de <span class="accent">Completado</span></h3>
-        <img src="https://media.licdn.com/dms/image/v2/D562DAQE_quqAOSGwxQ/profile-treasury-document-cover-images_1280/B56ZgiEiHFG0Aw-/0/1752918275080?e=1771758000&v=beta&t=zRqpP8-yF8hTTFIjFKvX5crZx7mdGCGwQUrvFQmrPI4" alt="Certificado de completado del ProLab Hades - HackTheBox" loading="lazy">
+        <h3>Lab <span class="accent">Completado</span></h3>
+        <div class="cert-completion-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            ProLab Hades completado
+        </div>
     </div>
 </div>
 
@@ -398,7 +396,7 @@
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-inner">
-        <a href="/" class="footer-brand">GUARINA0x0</a>
+        <a href="/" class="footer-brand">Guarina0x0</a>
         <span class="footer-sep">&bull;</span>
         <span>Hades ProLab Review</span>
         <span class="footer-sep">&bull;</span>
@@ -416,46 +414,9 @@
             </a>
         </div>
     </div>
-    <p class="footer-dimension">Transmitiendo desde la Dimensi&oacute;n C-137</p>
+    <p class="footer-dimension">Guarina0x0 &middot; guarina0x0.github.io</p>
 </footer>
 
-<!-- Search Modal -->
-<div class="search-overlay" id="searchOverlay">
-    <div class="search-modal">
-        <div class="search-input-wrap">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search commands..." autocomplete="off" spellcheck="false" aria-label="Buscar comandos">
-            <span class="search-result-count" id="searchCount"></span>
-            <span class="search-close-hint">ESC</span>
-        </div>
-        <div class="search-filters" id="searchFilters">
-            <div class="filter-row">
-                <button class="filter-chip active" data-sheet="all">All</button>
-                <button class="filter-chip" data-sheet="CRTE">CRTE</button>
-                <button class="filter-chip" data-sheet="CRTO">CRTO</button>
-                <button class="filter-chip" data-sheet="CWP">CWP</button>
-                <button class="filter-chip" data-sheet="CARTP">CARTP</button>
-            </div>
-            <div class="filter-row">
-                <button class="filter-chip lang active" data-lang="all">All Langs</button>
-                <button class="filter-chip lang" data-lang="PowerShell">PowerShell</button>
-                <button class="filter-chip lang" data-lang="Bash">Bash</button>
-                <button class="filter-chip lang" data-lang="CMD">CMD</button>
-                <button class="filter-chip lang" data-lang="Cobalt Strike">Cobalt Strike</button>
-            </div>
-        </div>
-        <div class="search-results" id="searchResults">
-            <div class="search-empty">Type to search commands across all cheatsheets...</div>
-        </div>
-        <div class="search-footer">
-            <span><kbd>&uarr;&darr;</kbd> Navigate</span>
-            <span><kbd>&crarr;</kbd> Open</span>
-            <span><kbd>esc</kbd> Close</span>
-        </div>
-    </div>
-</div>
-
-<script src="search-index.js"></script>
 <script src="main.js"></script>
 
 </body>
