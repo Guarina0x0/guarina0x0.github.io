@@ -151,6 +151,8 @@
    ============================================ */
 @media(max-width:640px){
     .hero{padding:7rem 1.2rem 2.5rem}
+    /* El puesto completo no cabe en el pill: radio menor para que un salto de linea no lo deforme */
+    .eyebrow{font-size:.7rem;padding:.3rem .7rem;border-radius:14px;max-width:100%}
     .timeline-section,.experience-section,.projects-section,.terminal-section{padding:3.5rem 1.2rem}
     .sh{flex-direction:column;align-items:flex-start}.sh p{text-align:left}
     .experience-card{padding:1.3rem}
