@@ -1,0 +1,68 @@
+<svg width="1584" height="396" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glowL" cx="12%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6e6bff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#6e6bff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowR" cx="88%" cy="60%" r="40%">
+      <stop offset="0%" stop-color="#c4a052" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#c4a052" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1584" height="396" fill="#08080b"/>
+  <rect width="1584" height="396" fill="url(#glowL)"/>
+  <rect width="1584" height="396" fill="url(#glowR)"/>
+
+  <!-- Subtle horizontal rule -->
+  <line x1="80" y1="395" x2="1504" y2="395" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+
+  <!-- Handle -->
+  <text x="80" y="158" font-family="'Helvetica Neue',Arial,sans-serif" font-size="54" font-weight="700" fill="#ffffff" letter-spacing="-1">Guarina0x0</text>
+
+  <!-- Role -->
+  <text x="82" y="208" font-family="'Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="400" fill="#a8a8bd">Security Managed Services Senior Analyst · Accenture</text>
+
+  <!-- Specialties -->
+  <text x="84" y="252" font-family="'Courier New',monospace" font-size="15" fill="#6e6bff" letter-spacing="1">Mobile &amp; Web Pentesting  ·  iOS / Android / Web / APIs</text>
+
+  <!-- Vertical separator -->
+  <line x1="700" y1="60" x2="700" y2="336" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Certs label -->
+  <text x="760" y="96" font-family="'Courier New',monospace" font-size="13" fill="#6e6bff" letter-spacing="2">// CERTIFICACIONES</text>
+
+  <!-- Row 1: CRTE, CWP, CARTP, CRTO -->
+  <rect x="760" y="116" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="835" y="140" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#8b88ff" text-anchor="middle">CRTE</text>
+  <text x="835" y="161" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">Altered Security</text>
+
+  <rect x="924" y="116" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="999" y="140" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#8b88ff" text-anchor="middle">CWP</text>
+  <text x="999" y="161" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">WiFi Challenge</text>
+
+  <rect x="1088" y="116" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="1163" y="140" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#8b88ff" text-anchor="middle">CARTP</text>
+  <text x="1163" y="161" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">Altered Security</text>
+
+  <rect x="1252" y="116" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="1327" y="140" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#8b88ff" text-anchor="middle">CRTO</text>
+  <text x="1327" y="161" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">Zero-Point Security</text>
+
+  <!-- Row 2: CRTP, eCPPTv2, eWPT -->
+  <rect x="760" y="194" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="835" y="218" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#6e6bff" text-anchor="middle">CRTP</text>
+  <text x="835" y="239" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">Altered Security</text>
+
+  <rect x="924" y="194" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="999" y="218" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#6e6bff" text-anchor="middle">eCPPTv2</text>
+  <text x="999" y="239" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">eLearnSecurity / INE</text>
+
+  <rect x="1088" y="194" width="150" height="58" rx="12" fill="#0e0e16" stroke="#6e6bff" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="1163" y="218" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#6e6bff" text-anchor="middle">eWPT</text>
+  <text x="1163" y="239" font-family="'Helvetica Neue',Arial,sans-serif" font-size="11" fill="#5a5a72" text-anchor="middle">eLearnSecurity / INE</text>
+
+  <!-- URL bottom right -->
+  <text x="1504" y="330" font-family="'Courier New',monospace" font-size="14" fill="#c4a052" text-anchor="end" letter-spacing="1">guarina0x0.github.io</text>
+</svg>
