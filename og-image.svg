@@ -36,9 +36,11 @@
   <!-- Border frame -->
   <rect x="40" y="40" width="1120" height="550" rx="24" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
 
-  <!-- Logo -->
-  <rect x="100" y="90" width="96" height="96" rx="22" fill="url(#logoGrad)"/>
-  <text x="148" y="158" font-family="'Helvetica Neue',Arial,sans-serif" font-size="58" font-weight="700" fill="#ffffff" text-anchor="middle">G</text>
+  <!-- Logo: olivo minimalista -->
+  <g transform="translate(100,75) scale(4.5) translate(-16,-12.5)">
+    <ellipse cx="16" cy="12.5" rx="10" ry="8.5" fill="#c4a052"/>
+    <rect x="14.5" y="20.5" width="3" height="7.5" rx="1.5" fill="#c4a052"/>
+  </g>
 
   <!-- Handle -->
   <text x="220" y="140" font-family="'Courier New',monospace" font-size="26" font-weight="700" fill="#8b88ff" letter-spacing="1">Guarina0x0</text>

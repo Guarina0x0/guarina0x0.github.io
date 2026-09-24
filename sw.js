@@ -1,4 +1,4 @@
-const CACHE_NAME = 'guarina0x0-v24';
+const CACHE_NAME = 'guarina0x0-v26';
 const ASSETS = [
     '/',
     '/index.html',
@@ -11,6 +11,7 @@ const ASSETS = [
     '/main.js',
     '/index.js',
     '/favicon.svg',
+    '/logo.svg',
     '/favicon-32x32.png',
     '/og-image.png'
 ];
